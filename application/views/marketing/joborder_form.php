@@ -387,6 +387,7 @@ tr.mpk-detail > td {
                                 Sheet</a></li>
                     </ul>
                     <form method="post" class="form form-horizontal" details="" action="<?php echo base_url() ?>marketing/joborder/add">
+                      <input type="hidden" name="id" value="<?php echo $header->id??''; ?>"/>
     <div class="wrapper">
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="joborder">
@@ -429,20 +430,20 @@ tr.mpk-detail > td {
                 <div class="form-group">
     <label class="control-label col-md-3" style="color: red">JO Number</label>
     <div class="col-md-9">
-        <input type="text" class="form-control input-sm input-size-md" value="<?php echo $job_no->pattern; ?>" readonly="" name="job_number">
+        <input type="text" class="form-control input-sm input-size-md" value="<?php if(empty($header->job_no)){ echo $job_no->pattern;}else{echo $header->job_no??''} ?>" readonly="" name="job_number">
         <input type="checkbox" checked> <i style="font-size: 12px;">auto-generate</i>
     </div>
 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3" style="color: red">JO Date</label>
                     <div class="col-md-2">
-                      <input placeholder="Select Date" type="date" required name="jo_date">
+                      <input placeholder="Select Date" type="date" required name="jo_date" value="<?php echo $header->jo_date??'' ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3">Customer PO No.</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control input-sm" name="customer_po">
+                        <input type="text" class="form-control input-sm" name="customer_po" >
                     </div>
                 </div>
                 <!--<div class="form-group">-->
@@ -693,7 +694,8 @@ tr.mpk-detail > td {
             </div>
         </div>
         <div class="div-tbody body_disc">
-            <!--v-for-start--><div class="div-tr" slot="body">
+          <?php if(empty($detail_discount)){?>
+            <div class="div-tr" slot="body">
                 <div class="div-td"><span class="disc_numbering">1</span><input type="hidden" value="" name="disc_id[]"></div>
                 <div class="div-td">
                     <input type="text" class="form-control input-sm" name="disc_name[]">
@@ -715,7 +717,33 @@ tr.mpk-detail > td {
                         <i class="fa fa-minus"></i>
                     </button>
                 </div>
-            </div><!--v-for-end-->
+            </div>
+          <?php }else{ $i=1; foreach ($detail_discount as $key => $value) { ?>
+              <div class="div-tr" slot="body">
+                <div class="div-td"><span class="disc_numbering"><?php echo $i; ?></span><input type="hidden" value="<?php echo $value->id??''; ?>" name="disc_id[]"></div>
+                <div class="div-td">
+                    <input type="text" class="form-control input-sm" name="disc_name[]" value="<?php echo $value->name??''; ?>">
+                </div>
+                <div class="div-td">
+                    <input type="text" class="form-control input-sm" name="disc_position[]" value="<?php echo $value->position??''; ?>">
+                </div>
+                <div class="div-td">
+                    <input type="text" class="form-control input-sm" name="disc_discount[]" value="<?php echo $value->discount??''; ?>">
+                </div>
+                <div class="div-td">
+                    <input type="text" class="form-control input-sm" name="disc_note[]" value="<?php echo $value->note??''; ?>">
+                </div>
+                <div class="div-td">
+                    <button type="button" class="btn btn-info btn-xs add_button_disc">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs remove_button_disc">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+          <?php $i++; } } ?>
+            
             
         </div>
     </div>
@@ -743,35 +771,68 @@ tr.mpk-detail > td {
                     </div>
         </div>
         <div class="div-tbody body_inv">
+          <?php if(empty($detail_inv)){?>
             <div class="div-tr" slot="body">
-                      <div class="div-td"><span class="inv_numbering">1</span>
-                          <input type="hidden" value="" name="inv_id[]">
-                      </div>
-                      <div class="div-td">
-                          <input  placeholder="Select Date" type="date" value="" name="inv_date[]">
-                      </div>
-                      <div class="div-td">
-                          <input type="text" class="form-control input-sm" name="inv_number[]">
-                      </div>
-                      <div class="div-td">
-                          <input type="text" class="form-control input-sm" name="inv_value[]">
-                      </div>
-                      <div class="div-td" style="display: flex">
-                          <input type="checkbox" style="margin-right: 10px" value="1" name="inv_paystatus[]" />
-                          <input  placeholder="Select Date" type="date" value="" name="inv_paydate[]">
-                      </div>
-                      <div class="div-td">
-                          <input type="text" class="form-control input-sm" name="inv_note[]">
-                      </div>
-                      <div class="div-td">
-                          <button type="button" class="btn btn-info btn-xs add_button_inv">
-                              <i class="fa fa-plus"></i>
-                          </button>
-                          <button type="button" class="btn btn-danger btn-xs remove_button_inv">
-                              <i class="fa fa-minus"></i>
-                          </button>
-                      </div>
+                <div class="div-td"><span class="inv_numbering">1</span>
+                    <input type="hidden" value="" name="inv_id[]">
+                </div>
+                <div class="div-td">
+                    <input  placeholder="Select Date" type="date" value="" name="inv_date[]">
+                </div>
+                <div class="div-td">
+                    <input type="text" class="form-control input-sm" name="inv_number[]">
+                </div>
+                <div class="div-td">
+                    <input type="text" class="form-control input-sm" name="inv_value[]">
+                </div>
+                <div class="div-td" style="display: flex">
+                    <input type="checkbox" style="margin-right: 10px" value="1" name="inv_paystatus[]" />
+                    <input  placeholder="Select Date" type="date" value="" name="inv_paydate[]">
+                </div>
+                <div class="div-td">
+                    <input type="text" class="form-control input-sm" name="inv_note[]">
+                </div>
+                <div class="div-td">
+                    <button type="button" class="btn btn-info btn-xs add_button_inv">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs remove_button_inv">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+          <?php }else{ $i=1; foreach ($detail_inv as $key => $value) {?>
+                <div class="div-tr" slot="body">
+                  <div class="div-td"><span class="inv_numbering"><?php echo $i; ?></span>
+                      <input type="hidden" value="<?php echo $value->id??'' ?>" name="inv_id[]">
                   </div>
+                  <div class="div-td">
+                      <input  placeholder="Select Date" type="date" value="<?php echo $value->inv_date??'' ?>" name="inv_date[]">
+                  </div>
+                  <div class="div-td">
+                      <input type="text" class="form-control input-sm" name="inv_number[]" value="<?php echo $value->invoice_number??'' ?>">
+                  </div>
+                  <div class="div-td">
+                      <input type="text" class="form-control input-sm" name="inv_value[]" value="<?php echo $value->value??'' ?>">
+                  </div>
+                  <div class="div-td" style="display: flex">
+                      <input type="checkbox" style="margin-right: 10px" value="1" name="inv_paystatus[]" />
+                      <input  placeholder="Select Date" type="date" value="<?php echo $value->payment_date??'' ?>" name="inv_paydate[]">
+                  </div>
+                  <div class="div-td">
+                      <input type="text" class="form-control input-sm" name="inv_note[]" value="<?php echo $value->note??'' ?>">
+                  </div>
+                  <div class="div-td">
+                      <button type="button" class="btn btn-info btn-xs add_button_inv">
+                          <i class="fa fa-plus"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger btn-xs remove_button_inv">
+                          <i class="fa fa-minus"></i>
+                      </button>
+                  </div>
+              </div>    
+      <?php $i++;}  } ?>
+            
             
         </div>
     </div>
@@ -796,6 +857,104 @@ tr.mpk-detail > td {
 
 <?php $this->load->view('template/footer'); ?>
 <script>
+  $(document).ready(function(){
+    var quotation_id="<?php echo $quotation_header->qn_number??'' ?>";
+    if(quotation_id!=""){
+      $("select[name='qn_number']").val(quotation_id);
+      $("select[name='qn_number']").selectpicker("refresh");
+      $.ajax({
+            url: '<?php echo base_url() ?>marketing/job_select1',
+            type: 'POST',
+            data: {qn_number: quotation_id},
+        })
+        .done(function(res) {
+            // console.log(res);
+            var plainText = "";
+            var date=new Date();
+            var salt = "salted";
+            var iv = '1111111111111111';
+            var iterations = 999;
+            var passphrase = "<?php echo $this->session->userdata('token'); ?>";
+            function getKey(passphrase, salt){
+                var key = CryptoJS.PBKDF2(passphrase, salt, {
+                    hasher: CryptoJS.algo.SHA256,
+                    keySize: 64 / 8,
+                    iterations: iterations
+                });
+                return key;
+            }
+            function userJSEncrypt(passphrase, plainText){
+                var key = getKey(passphrase, salt);
+                var encrypted = CryptoJS.AES.encrypt(plainText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+            }
+            function userJSDecrypt(passphrase, encryptedText){
+                var key = getKey(passphrase, salt);
+                var decrypted = CryptoJS.AES.decrypt(encryptedText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return decrypted.toString(CryptoJS.enc.Utf8);
+            }
+            res=userJSDecrypt(passphrase, res);
+            res=JSON.parse(res);
+            console.log(res);
+            $("input[name='customer']").val(res.res.customer_name);
+            $("input[name='project']").val(res.res.project_name);
+            $("input[name='order_type']").val(res.res.order_type);
+            var date = new Date(res.res.delivery_date);
+            var day = ("0" + date.getDate()).slice(-2);
+            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+            var date_delivery=date.getFullYear()+"-"+(month)+"-"+(day);
+            // alert(date_delivery);
+            $("input[name='delivery_date']").val(date_delivery);
+            $("textarea[name='delivery_destination']").text(res.res.delivery_to);
+            $("input[name='currency']").val(res.res.currency);
+            $("input[name='construction_fee']").val(res.res.construction_fee);
+            $("textarea[name='terms']").text(res.res.terms);
+            $("textarea[name='note']").text(res.res.note);
+            $("textarea[name='fabrication']").text(res.res.fabrication);
+            $("textarea[name='material']").text(res.res.material);
+            $("textarea[name='sandblasting']").text(res.res.sandblasting);
+            $("textarea[name='painting']").text(res.res.painting);
+            $("textarea[name='drawing']").text(res.res.asbuiltdrawing);
+            $("textarea[name='galvanished']").text(res.res.galvanished);
+            $("textarea[name='erection']").text(res.res.erection);
+            $("textarea[name='packing']").text(res.res.packing);
+            $("textarea[name='ndt']").text(res.res.ndt);
+            $("textarea[name='certificate']").text(res.res.certificate);
+            $("textarea[name='delivery']").text(res.res.delivery);
+
+            
+               
+            
+
+            for(var d=0;d<res.detail.length;d++){
+                var str='<tr name="material-0"> <td> <input type="hidden" value="" name="detail_id[]"/><span class="numbering">1</span> </td><td><textarea class="form-control input-sm" name="detail_desc[]"></textarea></td><td><input type="text" class="form-control input-sm" name="detail_qty[]"></td><td> <select class="form-control input-size-auto" style="width: 75px" name="detail_unit[]"> ';
+                for(var c=0;c<res.unit.length;c++){
+                  str+="<option value='"+res.unit[c].code+"'>"+res.unit[c].code+"</option>";
+                }
+                str+='</select> </td><td><input type="text" class="form-control input-sm" name="detail_price[]"></td><td><input type="text" class="form-control input-sm" name="detail_totalprice[]"></td><td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td><td style="width: 65px"> <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button> </td></tr>';
+                $(".body_detail").append(str);
+
+                $("input[name='detail_id[]']").eq(d).val(res.detail[d].id);
+                $("textarea[name='detail_desc[]']").eq(d).val(res.detail[d].description);
+                $("input[name='detail_qty[]']").eq(d).val(res.detail[d].qty);
+                $("select[name='detail_unit[]']").eq(d).val(res.detail[d].unit);
+                $("input[name='detail_price[]']").eq(d).val(res.detail[d].price);
+                $("input[name='detail_totalprice[]']").eq(d).val(res.detail[d].total_price);
+                $("input[name='detail_internalnote[]']").eq(d).val(res.detail[d].internal_note);
+            }
+
+            $("input[name='summary']").val(res.calc.grand_summary);
+            $("input[name='construction']").val(res.calc.construction_fee);
+            $("input[name='total_vat']").val(res.calc.grand_total_vat);
+            $("input[name='discount']").val(res.calc.rounding_discount);
+
+          });
+    }
+  });
    $(document).on("click",".add_button_inv",function(){
       $(".body_inv").append('<div class="div-tr" slot="body"> <div class="div-td"><span class="inv_numbering">1</span> <input type="hidden" value="" name="inv_id[]"> </div><div class="div-td"> <input placeholder="Select Date" type="date" value="" name="inv_date[]"> </div><div class="div-td"> <input type="text" class="form-control input-sm" name="inv_number[]"> </div><div class="div-td"> <input type="text" class="form-control input-sm" name="inv_value[]"> </div><div class="div-td" style="display: flex"> <input type="checkbox" style="margin-right: 10px" value="1" name="inv_paystatus[]"/> <input placeholder="Select Date" type="date" value="" name="inv_paydate[]"> </div><div class="div-td"> <input type="text" class="form-control input-sm" name="inv_note[]"> </div><div class="div-td"> <button type="button" class="btn btn-info btn-xs add_button_inv"> <i class="fa fa-plus"></i> </button> <button type="button" class="btn btn-danger btn-xs remove_button_inv"> <i class="fa fa-minus"></i> </button> </div></div>');
         for (var i = 0; i <= $(".inv_numbering").length; i++) {

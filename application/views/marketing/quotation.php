@@ -62,6 +62,12 @@
             </div>
         </div>
     </div>
+    <form action="<?php echo base_url() ?>marketing/quotation/create" method="POST" id="form_edit">
+      <input type="hidden" name="id"  />
+    </form>
+    <form action="<?php echo base_url() ?>marketing/quotation/delete" method="POST" id="form_delete">
+      <input type="hidden" name="id"  />
+    </form>
 <?php $this->load->view('template/footer'); ?>
 <script type="text/javascript">
     var response="<?php echo $_GET['res']??''; ?>";
@@ -88,18 +94,12 @@
      $(document).on('click',".edit_button",function(){
             var data1=$(this).attr("data");
             $("input[name='id']").val(data1);
-            $("input[name='type']").val($(this).attr("data-type"));
-            $("select[name='kom']").val($(this).attr("kom"));
-            $("select[name='kom']").selectpicker("refresh");
-            $("input[name='desc']").val($(this).attr("desc"));
-            $("input[name='order']").val($(this).attr("order"));
-            
+            $("#form_edit").submit();
         });
      $(document).on('click',".remove_button",function(){
         var data1=$(this).attr("data");
         $("input[name='id']").val(data1);
-        $("form").attr("action","<?php echo base_url() ?>marketing/sow/delete");
-        $("form").submit();
+        $("#form_delete").submit();
      });
 </script>
 </body>

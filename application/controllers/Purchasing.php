@@ -88,4 +88,14 @@ class purchasing extends CI_Controller {
 		}
 	}
 
+	public function material(){
+		$data_input=$this->input->post();
+		$this->db->select('*');
+		$this->db->from('ms_document_type');
+		$this->db->where('is_active', 1);
+		$data['table']=$this->db->get()->result();
+		// echo json_encode($data['table']);
+		$this->load->view('purchasing/material', $data);
+	}
+
 }

@@ -382,7 +382,7 @@ tr.mpk-detail > td {
         <div class="body">
             <div class="col-md-12">
                 <form method="post" class="form form-horizontal" action="<?php echo base_url() ?>marketing/quotation/add">
-    <input type="hidden" value="">
+    <input type="hidden" value="<?php echo $header->id??'' ?>" name="id"/>
     <div class="wrapper">
         <div class="box">
             <div class="box-header">
@@ -441,7 +441,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
     <label class="control-label col-md-3" style="color: red">Qn Number</label>
     <div class="col-md-9">
-        <input type="text" class="form-control input-sm input-size-md" readonly="" value="<?php echo $quotation_no->pattern; ?>" name="qn_number">
+        <input type="text" class="form-control input-sm input-size-md" readonly="" value="<?php if(empty($header)){echo $quotation_no->pattern;}else{echo $header->qn_number;} ?>" name="qn_number">
         <input type="checkbox" checked value="1" name="auto_generate"> <i style="font-size: 12px;">auto-generate</i>
         <!--<button type="button" @click="generateNumber('Quotation', 'active.no')" class="btn btn-info btn-xs">Generate</button>-->
     </div>
@@ -456,25 +456,25 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red">QN Date</label>
                             <div class="col-md-9">
-                              <input placeholder="Select Date" class="" type="date" value="" name="qn_date">
+                              <input placeholder="Select Date" class="" type="date" value="<?php echo $header->qn_date??'' ?>" name="qn_date">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Inquiry Reff</label>
                             <div class="col-md-5">
-                                <input type="text" class="form-control input-sm" name="inq_ref">
+                                <input type="text" class="form-control input-sm" name="inq_ref" value="<?php echo $header->inquiry_reff??'' ?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Revision No#</label>
                             <div class="col-md-2">
-                                <input type="text" class="form-control input-sm" name="rev_no">
+                                <input type="text" class="form-control input-sm" name="rev_no" value="<?php echo $header->rev_no??'' ?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Revision Date</label>
                             <div class="col-md-5">
-                              <input placeholder="Select Date" type="date" name="rev_date">
+                              <input placeholder="Select Date" type="date" name="rev_date" value="<?php echo $header->rev_date??'' ?>">
                             </div>
                         </div>
                     </div>
@@ -482,13 +482,13 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3">Delivery Date</label>
                             <div class="col-md-9">
-                                <input placeholder="Select Date" type="date" name="delivery_date">
+                                <input placeholder="Select Date" type="date" name="delivery_date" value="<?php echo $header->delivery_date??'' ?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Delivery To</label>
                             <div class="col-md-9">
-                                <textarea type="text" class="form-control input-size-lg" rows="2" name="delivery_to"></textarea>
+                                <textarea type="text" class="form-control input-size-lg" rows="2" name="delivery_to" ><?php echo $header->delivery_to??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -512,43 +512,43 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3">Construction Fee</label>
                             <div class="col-md-2" style="display: inherit">
-                                <input type="text" class="form-control input-sm" name="contruction_fee"> %
+                                <input type="text" class="form-control input-sm" name="contruction_fee" value="<?php echo $header->construction_fee??'' ?>"> %
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red">Terms and Condition</label>
                             <div class="col-md-9">
-                                <textarea class="form-control input-size-lg" rows="2" name="terms"></textarea>
+                                <textarea class="form-control input-size-lg" rows="2" name="terms"><?php echo $header->terms??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Lead Time</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control input-sm" name="lead">
+                                <input type="text" class="form-control input-sm" name="lead" value="<?php echo $header->lead_time??'' ?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Quotation Validity</label>
                             <div class="col-md-3" style="display: inherit">
-                                <input type="text" class="form-control input-sm" name="valid"> days
+                                <input type="text" class="form-control input-sm" name="valid" value="<?php echo $header->quotation_valid??'' ?>"> days
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Subject/Title</label>
                             <div class="col-md-7">
-                                <input type="text" class="form-control input-sm" name="subject">
+                                <input type="text" class="form-control input-sm" name="subject" value="<?php echo $header->subject??'' ?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Note</label>
                             <div class="col-md-9">
-                                <textarea rows="2" class="form-control input-size-lg" name="note"></textarea>
+                                <textarea rows="2" class="form-control input-size-lg" name="note"><?php echo $header->note??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Attachment</label>
                             <div class="col-md-9">
-                                <textarea rows="2" class="form-control input-size-lg" name="attachment"></textarea>
+                                <textarea rows="2" class="form-control input-size-lg" name="attachment"><?php echo $header->attachment??'' ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -577,7 +577,8 @@ tr.mpk-detail > td {
                             </tr>
                             </thead>
                             <tbody class="div-tbody">
-                              <tr class="material-0">
+                              <?php if(empty($detail)){?>
+                                <tr class="material-0">
                                   <td>
                                       <input type="hidden" value="" name="detail_id[]"/><span class="numbering">1</span>
                                   </td>
@@ -598,6 +599,35 @@ tr.mpk-detail > td {
                                       <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button>
                                   </td>
                               </tr>
+                              <?php }else{ $i=1; foreach ($detail as $key2 => $value2) {?>
+                                <tr class="material-0">
+                                  <td>
+                                      <input type="hidden" value="" name="detail_id[]"/><span class="numbering"><?php echo $i; ?></span>
+                                  </td>
+                                  <td><textarea class="form-control input-sm" name="detail_desc[]"><?php echo $value2->description??'' ?></textarea></td>
+                                  <td><input type="text" class="form-control input-sm" name="detail_qty[]" value="<?php echo $value2->qty??'' ?>"></td>
+                                  <td>
+                                      <select class="form-control input-size-auto" style="width: 75px" name="detail_unit[]">
+                                          <?php foreach ($measures as $key => $value) {
+                                            if($value->code==$value2->unit){?>
+                                              <option value="<?php echo $value->code; ?>" selected><?php echo $value->code; ?></option>
+                                            <?php }else{ ?>
+                                              <option value="<?php echo $value->code; ?>"><?php echo $value->code; ?></option>
+                                            <?php }?>
+                                            
+                                          <?php } ?>
+                                      </select>
+                                  </td>
+                                  <td><input type="text" class="form-control input-sm" name="detail_price[]" value="<?php echo $value2->price??'' ?>"></td>
+                                  <td><input type="text" class="form-control input-sm" name="detail_totalprice[]" value="<?php echo $value2->total_price??'' ?>"></td>
+                                  <td><input type="text" class="form-control input-sm" name="detail_internalnote[]" value="<?php echo $value2->internal_note??'' ?>"></td>
+                                  <td style="width: 65px">
+                                      <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button>
+                                      <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button>
+                                  </td>
+                              </tr>
+                              <?php $i+=1; } } ?>
+                              
                             </tbody>
                             <tfoot>
                             <tr>
@@ -610,7 +640,7 @@ tr.mpk-detail > td {
                                     <input type="text" class="form-control input-sm" readonly="">
                                 </td>
                                 <td>
-                                    <input type="text" readonly="" class="form-control input-sm" name="summary">
+                                    <input type="text" readonly="" class="form-control input-sm" name="summary" value="<?php echo $detail_calc->grand_summary??'' ?>">
                                 </td>
                                 <td colspan="2">
                                     Grand Summary
@@ -621,7 +651,7 @@ tr.mpk-detail > td {
 
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="discount">
+                                    <input type="text" class="form-control input-sm" name="discount" value="<?php echo $detail_calc->rounding_discount??'' ?>" >
                                 </td>
                                 <td colspan="2">
                                     Rounding and Discount
@@ -632,7 +662,7 @@ tr.mpk-detail > td {
 
                                 </td>
                                 <td>
-                                    <input type="text" readonly="" class="form-control input-sm" name="construction">
+                                    <input type="text" readonly="" class="form-control input-sm" name="construction" value="<?php echo $detail_calc->construction_fee??'' ?>">
                                 </td>
                                 <td colspan="2">
                                     Counstruction Fee
@@ -643,7 +673,7 @@ tr.mpk-detail > td {
 
                                 </td>
                                 <td>
-                                    <input type="text" readonly="" class="form-control input-sm" name="total_vat">
+                                    <input type="text" readonly="" class="form-control input-sm" name="total_vat" value="<?php echo $detail_calc->grand_total_vat??'' ?>">
                                 </td>
                                 <td colspan="2">
                                     Grand Total with VAT
@@ -665,37 +695,37 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3">1. Fabrication:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="fabrication"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="fabrication"><?php echo $header->fabrication??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">2. Material:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="material"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="material"><?php echo $header->material??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">3. Sandblasting:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="sandblasting"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="sandblasting"><?php echo $header->sandblasting??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">4. Painting:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="painting"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="painting"><?php echo $header->painting??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">5. As Built Drawing:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="drawing"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="drawing"><?php echo $header->asbuiltdrawing??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">6. Galvanished:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="galvanished"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="galvanished"><?php echo $header->galvanished??'' ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -703,31 +733,31 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3">7. Erection:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="erection"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="erection"><?php echo $header->erection??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">8. Packing:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="packing"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="packing"><?php echo $header->packing??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">9. NDT:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="ndt"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="ndt"><?php echo $header->ndt??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">10. Certificate:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="certificate"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="certificate"><?php echo $header->certificate??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">11. Delivery:</label>
                             <div class="col-md-9">
-                            <textarea rows="2" class="form-control input-size-lg" name="delivery"></textarea>
+                            <textarea rows="2" class="form-control input-size-lg" name="delivery"><?php echo $header->delivery??'' ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -748,6 +778,161 @@ tr.mpk-detail > td {
 
 <?php $this->load->view('template/footer'); ?>
 <script>
+  $(document).ready(function(){
+    var customer="<?php echo $header->customer_id??''; ?>";
+    if(customer!=""){
+      $("select[name='customer']").val(customer);
+      $("select[name='customer']").selectpicker('refresh');
+      $.ajax({
+            url: '<?php echo base_url() ?>marketing/quotation_select',
+            type: 'POST',
+            data: {id: customer},
+        })
+        .done(function(res) {
+            // console.log(res);
+            var plainText = "";
+            var date=new Date();
+            var salt = "salted";
+            var iv = '1111111111111111';
+            var iterations = 999;
+            var passphrase = "<?php echo $this->session->userdata('token'); ?>";
+            function getKey(passphrase, salt){
+                var key = CryptoJS.PBKDF2(passphrase, salt, {
+                    hasher: CryptoJS.algo.SHA256,
+                    keySize: 64 / 8,
+                    iterations: iterations
+                });
+                return key;
+            }
+            function userJSEncrypt(passphrase, plainText){
+                var key = getKey(passphrase, salt);
+                var encrypted = CryptoJS.AES.encrypt(plainText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+            }
+            function userJSDecrypt(passphrase, encryptedText){
+                var key = getKey(passphrase, salt);
+                var decrypted = CryptoJS.AES.decrypt(encryptedText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return decrypted.toString(CryptoJS.enc.Utf8);
+            }
+            res=userJSDecrypt(passphrase, res);
+            res=JSON.parse(res);
+            // console.log(res);
+            $("select[name='project']").html();
+            for (var i = 0; i < res.length; i++) {
+              $("select[name='project']").append("<option value='"+res[i].id+"'>"+res[i].name+"</option>");
+            }
+            $("select[name='project']").selectpicker("refresh");
+            var project_id="<?php echo $header->project_id??''; ?>";
+            if(project_id!=''){
+              $("select[name='project']").val(project_id);
+              $("select[name='project']").selectpicker("refresh");
+            }
+          });
+    }
+    var project_id="<?php echo $header->project_id??''; ?>";
+    $.ajax({
+            url: '<?php echo base_url() ?>marketing/quotation_select2',
+            type: 'POST',
+            data: {id: project_id},
+        })
+        .done(function(res) {
+            // console.log(res);
+            var plainText = "";
+            var date=new Date();
+            var salt = "salted";
+            var iv = '1111111111111111';
+            var iterations = 999;
+            var passphrase = "<?php echo $this->session->userdata('token'); ?>";
+            function getKey(passphrase, salt){
+                var key = CryptoJS.PBKDF2(passphrase, salt, {
+                    hasher: CryptoJS.algo.SHA256,
+                    keySize: 64 / 8,
+                    iterations: iterations
+                });
+                return key;
+            }
+            function userJSEncrypt(passphrase, plainText){
+                var key = getKey(passphrase, salt);
+                var encrypted = CryptoJS.AES.encrypt(plainText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+            }
+            function userJSDecrypt(passphrase, encryptedText){
+                var key = getKey(passphrase, salt);
+                var decrypted = CryptoJS.AES.decrypt(encryptedText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return decrypted.toString(CryptoJS.enc.Utf8);
+            }
+            res=userJSDecrypt(passphrase, res);
+            res=JSON.parse(res);
+            console.log(res);
+            $("select[name='pic']").html();
+            for (var i = 0; i < res.length; i++) {
+              $("select[name='pic']").append("<option value='"+res[i].id+"'>"+res[i].name+"</option>");
+            }
+            $("select[name='pic']").selectpicker("refresh");
+            var pic_id="<?php echo $header->pic_id??''; ?>";
+            if(pic_id!=""){
+              $("select[name='pic']").val(pic_id);
+              $("select[name='pic']").selectpicker('refresh');
+            }
+            
+          });
+        var pic_id="<?php echo $header->pic_id??''; ?>";
+        $.ajax({
+            url: '<?php echo base_url() ?>marketing/quotation_select3',
+            type: 'POST',
+            data: {id: pic_id},
+        })
+        .done(function(res) {
+            // console.log(res);
+            var plainText = "";
+            var date=new Date();
+            var salt = "salted";
+            var iv = '1111111111111111';
+            var iterations = 999;
+            var passphrase = "<?php echo $this->session->userdata('token'); ?>";
+            function getKey(passphrase, salt){
+                var key = CryptoJS.PBKDF2(passphrase, salt, {
+                    hasher: CryptoJS.algo.SHA256,
+                    keySize: 64 / 8,
+                    iterations: iterations
+                });
+                return key;
+            }
+            function userJSEncrypt(passphrase, plainText){
+                var key = getKey(passphrase, salt);
+                var encrypted = CryptoJS.AES.encrypt(plainText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+            }
+            function userJSDecrypt(passphrase, encryptedText){
+                var key = getKey(passphrase, salt);
+                var decrypted = CryptoJS.AES.decrypt(encryptedText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return decrypted.toString(CryptoJS.enc.Utf8);
+            }
+            res=userJSDecrypt(passphrase, res);
+            res=JSON.parse(res);
+            console.log(res);
+            $("textarea[name='pic_phone']").text(res.handphone);
+            $("textarea[name='pic_email']").text(res.email);
+          });
+
+        var currency="<?php echo $header->currency??'' ?>";
+        if(currency!=""){
+          $("select[name='currency']").val(currency);
+        }
+        
+  });
   $(document).on("change","select[name='customer']",function(){
     var data1=$(this).val()
     $.ajax({
@@ -794,6 +979,14 @@ tr.mpk-detail > td {
             }
             $("select[name='project']").selectpicker("refresh");
           });
+
+
+        var order_type="<?php echo $header->order_type??''; ?>";
+        if(order_type!=""){
+          $("select[name='order_type']").val(order_type);
+        }
+
+
   });
   $(document).on("change","select[name='project']",function(){
     var data1=$(this).val()
