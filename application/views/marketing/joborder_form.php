@@ -430,7 +430,7 @@ tr.mpk-detail > td {
                 <div class="form-group">
     <label class="control-label col-md-3" style="color: red">JO Number</label>
     <div class="col-md-9">
-        <input type="text" class="form-control input-sm input-size-md" value="<?php if(empty($header->job_no)){ echo $job_no->pattern;}else{echo $header->job_no??''} ?>" readonly="" name="job_number">
+        <input type="text" class="form-control input-sm input-size-md" value="<?php if(empty($header->job_number)){ echo $job_no->pattern;}else{echo $header->job_number??'';} ?>" readonly="" name="job_number">
         <input type="checkbox" checked> <i style="font-size: 12px;">auto-generate</i>
     </div>
 </div>

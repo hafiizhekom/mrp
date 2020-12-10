@@ -989,7 +989,8 @@ tr.mpk-detail > td {
 
   });
   $(document).on("change","select[name='project']",function(){
-    var data1=$(this).val()
+    var data1=$("select[name='customer']").val();
+    // var data1=$(this).val()
     $.ajax({
             url: '<?php echo base_url() ?>marketing/quotation_select2',
             type: 'POST',

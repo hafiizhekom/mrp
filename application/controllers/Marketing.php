@@ -717,9 +717,9 @@ class Marketing extends CI_Controller {
 	public function quotation_select2(){
 		$data_input=$this->input->post();
 		$this->db->select('*');
-		$this->db->from('project_contact');
+		$this->db->from('customer_contact');
 		$this->db->where('is_active', 1);
-		$this->db->where('project_id', $data_input['id']);
+		$this->db->where('customer_id', $data_input['id']);
 		$response=$this->db->get()->result();
 		$response=json_encode($response);
 		$phpEncryptedText = $this->userPHPEncrypt($this->session->userdata('token'), $response);
@@ -1446,7 +1446,12 @@ class Marketing extends CI_Controller {
 				foreach ($result as $key2 => $value2) {
 					$progress+=floatval(trim($value2->value));
 				}
-				$value->progress=round($progress/$grand_total_vat*100)."%";
+				if($grand_total_vat!=0){
+					$value->progress=round($progress/$grand_total_vat*100)."%";
+				}else{
+					$value->progres="0%";
+				}
+				
 			}
 
 
