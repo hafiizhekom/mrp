@@ -19,3 +19,4 @@
 <script type="text/javascript" src="<?php echo base_url() ?>plugin/selectpicker/js/bootstrap-select.js"></script>
 <script src="<?php echo base_url() ?>script/crypto.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>plugin/toast/jquery.toast.min.js"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url() ?>script/simplemoneyformat.js"></script> -->

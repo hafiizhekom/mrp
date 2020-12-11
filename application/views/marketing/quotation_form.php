@@ -591,8 +591,8 @@ tr.mpk-detail > td {
                                           <?php } ?>
                                       </select>
                                   </td>
-                                  <td><input type="text" class="form-control input-sm" name="detail_price[]"></td>
-                                  <td><input type="text" class="form-control input-sm" name="detail_totalprice[]"></td>
+                                  <td><input type="text" class="form-control input-sm money" name="detail_price[]"></td>
+                                  <td><input type="text" class="form-control input-sm money" name="detail_totalprice[]"></td>
                                   <td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td>
                                   <td style="width: 65px">
                                       <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button>
@@ -618,8 +618,8 @@ tr.mpk-detail > td {
                                           <?php } ?>
                                       </select>
                                   </td>
-                                  <td><input type="text" class="form-control input-sm" name="detail_price[]" value="<?php echo $value2->price??'' ?>"></td>
-                                  <td><input type="text" class="form-control input-sm" name="detail_totalprice[]" value="<?php echo $value2->total_price??'' ?>"></td>
+                                  <td><input type="text" class="form-control input-sm money" name="detail_price[]" value="<?php echo $value2->price??'' ?>"></td>
+                                  <td><input type="text" class="form-control input-sm money" name="detail_totalprice[]" value="<?php echo $value2->total_price??'' ?>"></td>
                                   <td><input type="text" class="form-control input-sm" name="detail_internalnote[]" value="<?php echo $value2->internal_note??'' ?>"></td>
                                   <td style="width: 65px">
                                       <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button>
@@ -640,7 +640,7 @@ tr.mpk-detail > td {
                                     <input type="text" class="form-control input-sm" readonly="">
                                 </td>
                                 <td>
-                                    <input type="text" readonly="" class="form-control input-sm" name="summary" value="<?php echo $detail_calc->grand_summary??'' ?>">
+                                    <input type="text" readonly="" class="form-control input-sm " name="summary" value="<?php echo $detail_calc->grand_summary??'' ?>">
                                 </td>
                                 <td colspan="2">
                                     Grand Summary
@@ -651,7 +651,7 @@ tr.mpk-detail > td {
 
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control input-sm" name="discount" value="<?php echo $detail_calc->rounding_discount??'' ?>" >
+                                    <input type="text" class="form-control input-sm " name="discount" value="<?php echo $detail_calc->rounding_discount??'' ?>" >
                                 </td>
                                 <td colspan="2">
                                     Rounding and Discount
@@ -662,7 +662,7 @@ tr.mpk-detail > td {
 
                                 </td>
                                 <td>
-                                    <input type="text" readonly="" class="form-control input-sm" name="construction" value="<?php echo $detail_calc->construction_fee??'' ?>">
+                                    <input type="text" readonly="" class="form-control input-sm " name="construction" value="<?php echo $detail_calc->construction_fee??'' ?>">
                                 </td>
                                 <td colspan="2">
                                     Counstruction Fee
@@ -673,7 +673,7 @@ tr.mpk-detail > td {
 
                                 </td>
                                 <td>
-                                    <input type="text" readonly="" class="form-control input-sm" name="total_vat" value="<?php echo $detail_calc->grand_total_vat??'' ?>">
+                                    <input type="text" readonly="" class="form-control input-sm " name="total_vat" value="<?php echo $detail_calc->grand_total_vat??'' ?>">
                                 </td>
                                 <td colspan="2">
                                     Grand Total with VAT
@@ -931,8 +931,41 @@ tr.mpk-detail > td {
         if(currency!=""){
           $("select[name='currency']").val(currency);
         }
+        // $('.money').simpleMoneyFormat();
+        for (var i = 0; i < $("input[name='detail_price[]']").length; i++) {
+           var money=$("input[name='detail_price[]']").eq(i).val();
+           $("input[name='detail_price[]']").eq(i).val(addCommas(money));
+
+           var money=$("input[name='detail_totalprice[]']").eq(i).val();
+           $("input[name='detail_totalprice[]']").eq(i).val(addCommas(money));
+        }
         
+        $("input[name='total_vat']").val("IDR "+addCommas(total_vat))
+      function addCommas(nStr)
+      {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+      }
   });
+    function addCommas(nStr)
+      {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+      }
   $(document).on("change","select[name='customer']",function(){
     var data1=$(this).val()
     $.ajax({
@@ -1126,11 +1159,12 @@ tr.mpk-detail > td {
             for(var d=0;d<res.length;d++){
               str+="<option value='"+res[d].code+"'>"+res[d].code+"</option>";
             }
-            str+='</select> </td><td><input type="text" class="form-control input-sm" name="detail_price[]"></td><td><input type="text" class="form-control input-sm" name="detail_totalprice[]"></td><td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td><td style="width: 65px"> <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button> </td></tr>';
+            str+='</select> </td><td><input type="text" class="form-control input-sm money" name="detail_price[]"></td><td><input type="text" class="form-control input-sm money" name="detail_totalprice[]"></td><td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td><td style="width: 65px"> <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button> </td></tr>';
             $(".div-tbody").append(str);
             for (var i = 0; i <= $(".numbering").length; i++) {
                 $(".numbering").eq(i).text(i+1);
             }
+            // $('.money').simpleMoneyFormat();
           });
     
     // $(".div-tbody").append('');
@@ -1151,11 +1185,11 @@ function count_all(){
   for(var c=0;c<counter;c++){
     var qty=0;
     var price=0;
-    qty+=$("input[name='detail_qty[]']").eq(c).val();
-    price+=$("input[name='detail_price[]']").eq(c).val();
+    qty+=(parseInt($("input[name='detail_qty[]']").eq(c).val().replace(',','')));
+    price+=(parseInt($("input[name='detail_price[]']").eq(c).val().replace(',','')));
     total_price+=qty*price;
   }
-  $("input[name='summary']").val("IDR "+total_price);
+  $("input[name='summary']").val("IDR "+addCommas(total_price));
 
   var construction_fee=0;
   if($("input[name='contruction_fee']").val()!=""){
@@ -1164,17 +1198,19 @@ function count_all(){
     console.log(construction_fee);
   }
   var combined=total_price*construction_fee;
-  $("input[name='construction']").val("IDR "+combined);
+  $("input[name='construction']").val("IDR "+addCommas(combined));
   if($("input[name='discount']").val()!=""){
     var total_vat=(total_price*0.1)+total_price-$("input[name='discount']").val()+(total_price*construction_fee);
   }else{
     var total_vat=(total_price*0.1)+total_price+(total_price*construction_fee);
   }
   
-  $("input[name='total_vat']").val("IDR "+total_vat);
+  $("input[name='total_vat']").val("IDR "+addCommas(total_vat));
+  var discount_val=$("input[name='discount']").val();
+  $("input[name='discount']").val("IDR "+addCommas(discount_val));
 }
 
-$(document).on("keyup","input[name='discount']",function(){
+$(document).on("focusout","input[name='discount']",function(){
   count_all();
 });
 
@@ -1190,8 +1226,16 @@ $(document).on("keyup","input[name='contruction_fee']",function(){
 $(document).on("keyup","input[name='detail_price[]']",function(){
   var price_row=$(this).val();
   var qty_row=$(this).parent().siblings("td").children("input[name='detail_qty[]']").val();
-  $(this).parent().siblings("td").children("input[name='detail_totalprice[]']").val(price_row*qty_row);
+  // $(this).val(addCommas(price_row));
+  price_row=price_row.replace(',','');
+  price_row=(parseInt(price_row));
+  $(this).parent().siblings("td").children("input[name='detail_totalprice[]']").val(addCommas(price_row*qty_row));
   count_all();
+
 });
+$(document).on("focusout","input[name='detail_price[]']",function(){
+  var price_row=$(this).val();
+  $(this).val(addCommas(price_row));
+})
 </script>
 </body></html>

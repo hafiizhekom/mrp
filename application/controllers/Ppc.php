@@ -395,4 +395,114 @@ class ppc extends CI_Controller {
 		// exit();
 		redirect('ppc/dkm','refresh');
 	}
+
+	public function mpk($param=null){
+		if($param=="create"){
+
+			$this->db->select('*');
+			$this->db->from('bill_quotation');
+			$this->db->where('is_active', 1);
+			$data['boq']=$this->db->get()->result();
+
+			$this->db->select('*');
+			$this->db->from('doc_numbering');
+			$this->db->where('is_active', 1);
+			$this->db->where('document', 'MPK');
+			$data['mpk_no']=$this->db->get()->row();
+
+
+
+			$this->db->select('count(*) as angka');
+			$this->db->from('mpk');
+			$angka=$this->db->get()->row();
+			// echo strpos($data['job_no']->pattern, "XXX");
+			// exit();
+			if(strpos($data['mpk_no']->pattern, "XXXX")>=0){
+				$nomor=$angka->angka+1;
+				if($nomor<=9){
+					$nomor="000".$nomor;
+				}else if($nomor<=99){
+					$nomor="00".$nomor;
+				}else if($nomor<=999){
+					$nomor="0".$nomor;
+				}
+				$data['mpk_no']->pattern=str_replace("XXXX", $nomor, $data['mpk_no']->pattern);
+			}
+			if(strpos($data['mpk_no']->pattern, "XXX")>=0){
+				$nomor=$angka->angka+1;
+				if($nomor<=9){
+					$nomor="00".$nomor;
+				}else if($nomor<=99){
+					$nomor="0".$nomor;
+				}else if($nomor<=999){
+					$nomor=$nomor;
+				}
+				$data['mpk_no']->pattern=str_replace("XXX", $nomor, $data['mpk_no']->pattern);
+			}
+			if(strpos($data['mpk_no']->pattern, "XX")>=0){
+				$nomor=$angka->angka+1;
+				if($nomor<=9){
+					$nomor="0".$nomor;
+				}else if($nomor<=99){
+					$nomor=$nomor;
+				}
+				$data['mpk_no']->pattern=str_replace("XX", $nomor, $data['mpk_no']->pattern);
+			}
+			if(strpos($data['mpk_no']->pattern, "X")>=0){
+				$nomor=$angka->angka+1;
+				if($nomor<=9){
+					$nomor=$nomor;
+				}
+				$data['mpk_no']->pattern=str_replace("X", $nomor, $data['mpk_no']->pattern);
+			}
+			
+			if(strpos($data['mpk_no']->pattern, "FF")){
+				$data['mpk_no']->pattern=str_replace("FF",date('m'), $data['mpk_no']->pattern);
+			}
+			if(strpos($data['mpk_no']->pattern, "YYYY")){
+				$data['mpk_no']->pattern=str_replace("YYYY",date('Y'), $data['mpk_no']->pattern);
+			}
+			if(strpos($data['mpk_no']->pattern, "YY")){
+				$data['mpk_no']->pattern=str_replace("YY",date('y'), $data['mpk_no']->pattern);
+			}
+			if(strpos($data['mpk_no']->pattern, "ff")){
+				if(date('m')=="01"){
+					$roman="I";
+				}else if(date('m')=="02"){
+					$roman="II";
+				}else if(date('m')=="03"){
+					$roman="III";
+				}else if(date('m')=="04"){
+					$roman="IV";
+				}else if(date('m')=="05"){
+					$roman="V";
+				}else if(date('m')=="06"){
+					$roman="VI";
+				}else if(date('m')=="07"){
+					$roman="VII";
+				}else if(date('m')=="08"){
+					$roman="VIII";
+				}else if(date('m')=="09"){
+					$roman="IX";
+				}else if(date('m')=="10"){
+					$roman="X";
+				}else if(date('m')=="11"){
+					$roman="XI";
+				}else if(date('m')=="12"){
+					$roman="XII";
+				}
+				$data['mpk_no']->pattern=str_replace("ff",$roman, $data['mpk_no']->pattern);
+			}
+
+
+			$this->load->view('ppic/mpk_form',$data);
+		}else if($param=="add"){
+			$data_input=$this->input->post();
+
+			redirect('ppc/mpk','refresh');
+
+		}else{
+			$this->load->view('ppic/mpk');
+		}
+	}
 }

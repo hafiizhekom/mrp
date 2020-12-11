@@ -12,11 +12,11 @@
 
     <div class="container-fluid" style="min-height: 76.6vh;">
         <div class="header">
-            <h5 style="font-weight: bold;">DKM List</h5>
+            <h5 style="font-weight: bold;">MPK List</h5>
         </div>
         <div class="body">
             <div class="col-md-3 col-md-offset-9" style="text-align:right;">
-                <a href="<?php echo base_url() ?>ppc/dkm/create"><button class="btn btn-success"><i class="fa fa-plus"></i> Add New DKM</button></a>
+                <a href="<?php echo base_url() ?>ppc/mpk/create"><button class="btn btn-success"><i class="fa fa-plus"></i> Add New MPK</button></a>
             </div>
             <div class="col-md-12">
                 <table class="table table-striped table-bordered" id="table_1" width="100%">
@@ -25,7 +25,9 @@
                             <td>#</td>
                             <td>Customer</td>
                             <td>Project</td>
-                            <td>Joborder No</td>
+                            <td>Jo No</td>
+                            <td>Boq No</td>
+                            <td>MPK No</td>
                             <td>Date</td>
                             <td>DKM No</td>
                             <td>Revision No</td>
@@ -34,19 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i=1; foreach ($table as $key => $value) {?>
-                            <tr>
-                            <td><?php echo $i; ?></td>
-                            <td><?php echo $value->customer_name ?></td>
-                            <td><?php echo $value->project_name ?></td>
-                            <td><?php echo $value->job_number ?></td>
-                            <td><?php echo $value->date ?></td>
-                            <td><?php echo $value->dkm_number ?></td>
-                            <td><?php echo $value->rev_no ?></td>
-                            <td><?php echo $value->rev_date ?></td>                            <td><center><button class="btn btn-info edit_button" data="<?php echo $value->id; ?>"><i class="fa fa-edit"></i> Edit</button>&nbsp;<button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button></td>
-                            </tr>
-                        <?php $i++; } ?>
-                        <!-- <td><center><button class="btn btn-info edit_button" data="<?php echo $value->id; ?>"><i class="fa fa-edit"></i> Edit</button>&nbsp;<button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button>&nbsp;<button class="btn btn-success permission_button" data="<?php echo $value->id; ?>"><i class="fa fa-users"></i> Permission</button></center></td> -->
+                        
                     </tbody>
                 </table>
             </div>
