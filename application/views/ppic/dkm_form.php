@@ -439,7 +439,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3">Date</label>
                             <div class="col-md-5">
-                                <input  placeholder="Select Date" class="form-control" type="date" value="<?php echo $header->date??'' ?>" name="date">
+                                <input  placeholder="Select Date" type="date" value="<?php echo $header->date??'' ?>" name="date">
                             </div>
                         </div>
                         <div class="form-group">

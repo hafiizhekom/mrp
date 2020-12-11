@@ -437,7 +437,7 @@ tr.mpk-detail > td {
                 <div class="form-group">
                     <label class="control-label col-md-3" style="color: red">JO Date</label>
                     <div class="col-md-2">
-                      <input placeholder="Select Date" type="date" required name="jo_date" value="<?php echo $header->jo_date??'' ?>">
+                      <input placeholder="Select Date" type="date" required name="jo_date" value="<?php echo $header->jo_date??'' ?>" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -502,7 +502,7 @@ tr.mpk-detail > td {
                     <label class="control-label col-md-3" style="color: red">Terms and Condition</label>
 
                     <div class="col-md-6">
-                    <textarea rows="2" class="form-control input-sm" name="terms"></textarea>
+                    <textarea rows="2" class="form-control input-sm" name="terms" required></textarea>
                     </div>
                 </div>
                 <div class="form-group">

@@ -394,7 +394,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red; text-align: left; font-size: 10pt">Customer</label>
                             <div class="col-md-9">
-                                <select class="form-control selectpicker" data-live-search="true" name="customer">
+                                <select class="form-control selectpicker" data-live-search="true" name="customer" required>
                                     <option selected disabled>Please Choose</option>
                                     <?php foreach ($customer as $key => $value) {?>
                                       <option value="<?php echo $value->id; ?>"><?php echo $value->name; ?></option>
@@ -406,7 +406,7 @@ tr.mpk-detail > td {
                             <label class="control-label col-md-3" style="color: red; text-align: left; font-size: 10pt">Project
                                 Name</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control input-sm input-size-md" name="name" value="<?php echo $project->name??''; ?>">
+                                <input type="text" class="form-control input-sm input-size-md" name="name" value="<?php echo $project->name??''; ?>" required>
                             </div>
                         </div>
                         <div class="form-group">

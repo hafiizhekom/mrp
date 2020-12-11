@@ -395,13 +395,13 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red;">Customer Code</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control input-sm input-size-xs" name="code" value="<?php echo $table->code??''; ?>">
+                                <input type="text" class="form-control input-sm input-size-xs" name="code" value="<?php echo $table->code??''; ?>" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red;">Customer Name</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control input-sm input-size-md" name="name" value="<?php echo $table->name??''; ?>">
+                                <input type="text" class="form-control input-sm input-size-md" name="name" value="<?php echo $table->name??''; ?>" required>
                             </div>
                         </div>
                         <div class="form-group">

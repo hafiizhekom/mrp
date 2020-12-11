@@ -394,7 +394,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red;">Joborder No</label>
                             <div class="col-md-9">
-                              <select class="form-control selectpicker" name="job_number">
+                              <select class="form-control selectpicker" name="job_number" required>
                                 <option selected disabled>Please Choose</option>
                                 <?php foreach ($joborder as $key => $value) {?>
                                   <option value="<?php echo $value->job_number; ?>"><?php echo $value->job_number; ?></option>
@@ -425,7 +425,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3">Date</label>
                             <div class="col-md-9">
-                              <input placeholder="Select Date" type="date" name="date" value="<?php echo $header->date??'' ?>" />
+                              <input placeholder="Select Date" type="date" name="date" value="<?php echo $header->date??'' ?>" required />
                             </div>
                         </div>
                     </div>

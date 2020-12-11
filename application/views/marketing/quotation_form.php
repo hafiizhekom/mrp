@@ -394,7 +394,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red">Customer</label>
                             <div class="col-md-8">
-                                <select class="selectpicker form-control" data-live-search="true" name="customer">
+                                <select class="selectpicker form-control" data-live-search="true" name="customer" required>
                                   <option selected disabled>Please Choose</option>
                                   <?php foreach ($customer as $key => $value) {?>
                                     <option value="<?php echo $value->id; ?>"><?php echo $value->name; ?></option>
@@ -405,7 +405,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3">Project Name</label>
                             <div class="col-md-8">
-                            <select class="selectpicker form-control" data-live-search="true" name="project">
+                            <select class="selectpicker form-control" data-live-search="true" name="project" required>
                                   <option selected disabled>Please Choose</option>
                                 </select>
                             </div>
@@ -413,7 +413,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3">Attention to (PIC)</label>
                             <div class="col-md-8">
-                            <select class="selectpicker form-control" data-live-search="true" name="pic">
+                            <select class="selectpicker form-control" data-live-search="true" name="pic" required>
                                   <option selected disabled>Please Choose</option>
                                 </select>
                             </div>
@@ -518,7 +518,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red">Terms and Condition</label>
                             <div class="col-md-9">
-                                <textarea class="form-control input-size-lg" rows="2" name="terms"><?php echo $header->terms??'' ?></textarea>
+                                <textarea class="form-control input-size-lg" rows="2" name="terms" required><?php echo $header->terms??'' ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
