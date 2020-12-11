@@ -17,7 +17,7 @@
                 <a href="<?php echo base_url() ?>/marketing" class="btn btn-default" type="button">HOME</a>
                 <a href="<?php echo base_url() ?>/change-language" class="btn btn-default" type="button"
                    title="Change report language to EN">LANG: ID</a>
-                <a href="<?php echo base_url() ?>/change-password" class="btn btn-default" type="button">CHANGE PASSWORD</a>
+                <a href="<?php echo base_url() ?>password" class="btn btn-default" type="button">CHANGE PASSWORD</a>
                 <a href="<?php echo base_url() ?>login/log_out" class="btn btn-default">LOGOUT</a>
             </div>
         </div>
