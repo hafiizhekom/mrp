@@ -1200,30 +1200,42 @@ function count_all(){
   var combined=total_price*construction_fee;
   $("input[name='construction']").val("IDR "+addCommas(combined));
   if($("input[name='discount']").val()!=""){
-    var total_vat=(total_price*0.1)+total_price-$("input[name='discount']").val()+(total_price*construction_fee);
+    var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
+    discount_valueonly=discount_valueonly.replace(",","");
+    if(discount_valueonly==""){
+      discount_valueonly=0;
+    }
+    discount_valueonly=parseFloat(discount_valueonly.trim());
+    var total_vat=(total_price*0.1)+total_price-discount_valueonly+(total_price*construction_fee);
   }else{
     var total_vat=(total_price*0.1)+total_price+(total_price*construction_fee);
   }
   
   $("input[name='total_vat']").val("IDR "+addCommas(total_vat));
-  var discount_val=$("input[name='discount']").val();
-  $("input[name='discount']").val("IDR "+addCommas(discount_val));
+  // var discount_val=$("input[name='discount']").val();
+  var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
+  discount_valueonly=discount_valueonly.replace(",","");
+  if(discount_valueonly==""){
+    discount_valueonly=0;
+  }
+  discount_valueonly=parseFloat(discount_valueonly.trim());
+  $("input[name='discount']").val("IDR "+addCommas(discount_valueonly));
 }
 
 $(document).on("focusout","input[name='discount']",function(){
   count_all();
 });
 
-$(document).on("keyup","input[name='detail_qty[]']",function(){
+$(document).on("focusout","input[name='detail_qty[]']",function(){
   var price_row=$(this).parent().siblings("td").children("input[name='detail_price[]']").val();
   var qty_row=$(this).val();
   $(this).parent().siblings("td").siblings('td').children("input[name='detail_totalprice[]']").val(price_row*qty_row);
   count_all();
 });
-$(document).on("keyup","input[name='contruction_fee']",function(){
+$(document).on("focusout","input[name='contruction_fee']",function(){
   $("input[name='construction']").val($(this).val());
 });
-$(document).on("keyup","input[name='detail_price[]']",function(){
+$(document).on("focusout","input[name='detail_price[]']",function(){
   var price_row=$(this).val();
   var qty_row=$(this).parent().siblings("td").children("input[name='detail_qty[]']").val();
   // $(this).val(addCommas(price_row));
