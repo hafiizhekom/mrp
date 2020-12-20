@@ -999,7 +999,7 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['inv_id']) ; $i++) { 
 					if($data_input['inv_id'][$i]!=""){
 						$insert_detail = array(
-							'job_id' =>$kode_job->id ,
+							'job_id' =>$data_input['id'] ,
 							'invoice_date'=>$data_input['inv_date'][$i],
 							'invoice_number'=>$data_input['inv_number'][$i],
 							'value'=>$data_input['inv_value'][$i],
@@ -1011,7 +1011,7 @@ class Marketing extends CI_Controller {
 						$this->db->insert('job_detail_inv', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'job_id' =>$kode_job->id ,
+							'job_id' =>$data_input['id'] ,
 							'invoice_date'=>$data_input['inv_date'][$i],
 							'invoice_number'=>$data_input['inv_number'][$i],
 							'value'=>$data_input['inv_value'][$i],
@@ -1030,7 +1030,7 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['disc_id']) ; $i++) { 
 					if($data_input['disc_id'][$i]!=""){
 						$insert_detail = array(
-							'job_id' =>$kode_job->id,
+							'job_id' =>$data_input['id'],
 							'name'=>$data_input['disc_name'][$i],
 							'position'=>$data_input['disc_position'][$i],
 							'note'=>$data_input['disc_note'][$i],
@@ -1040,7 +1040,7 @@ class Marketing extends CI_Controller {
 						$this->db->insert('job_detail_discount', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'job_id' =>$kode_job->id ,
+							'job_id' =>$data_input['id'] ,
 							'name'=>$data_input['disc_name'][$i],
 							'position'=>$data_input['disc_position'][$i],
 							'note'=>$data_input['disc_note'][$i],
@@ -1084,7 +1084,7 @@ class Marketing extends CI_Controller {
 				$this->db->where('id', $data_input['id']);
 				$this->db->update('job_order', $insert_header);
 
-				$kode_job->id=$data_input['id'];
+				// $data_input['id']=$data_input['id'];
 
 
 				$this->db->select('id');
@@ -1145,7 +1145,7 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['inv_id']) ; $i++) { 
 					if($data_input['inv_id'][$i]!=""){
 						$insert_detail = array(
-							'job_id' =>$kode_job->id,
+							'job_id' =>$data_input['id'],
 							'invoice_date'=>$data_input['inv_date'][$i],
 							'invoice_number'=>$data_input['inv_number'][$i],
 							'value'=>$data_input['inv_value'][$i],
@@ -1157,7 +1157,7 @@ class Marketing extends CI_Controller {
 						$this->db->insert('job_detail_inv', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'job_id' =>$kode_job->id ,
+							'job_id' =>$data_input['id'] ,
 							'invoice_date'=>$data_input['inv_date'][$i],
 							'invoice_number'=>$data_input['inv_number'][$i],
 							'value'=>$data_input['inv_value'][$i],
@@ -1180,7 +1180,7 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['disc_id']) ; $i++) { 
 					if($data_input['disc_id'][$i]!=""){
 						$insert_detail = array(
-							'job_id' =>$kode_job->id,
+							'job_id' =>$data_input['id'],
 							'name'=>$data_input['disc_name'][$i],
 							'position'=>$data_input['disc_position'][$i],
 							'note'=>$data_input['disc_note'][$i],
@@ -1190,7 +1190,7 @@ class Marketing extends CI_Controller {
 						$this->db->insert('job_detail_discount', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'job_id' =>$kode_job->id ,
+							'job_id' =>$data_input['id'] ,
 							'name'=>$data_input['disc_name'][$i],
 							'position'=>$data_input['disc_position'][$i],
 							'note'=>$data_input['disc_note'][$i],
