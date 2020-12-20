@@ -418,7 +418,6 @@ tr.mpk-detail > td {
     <label class="control-label col-md-3" style="color: red">Bill Of Quantity No</label>
     <div class="col-md-9">
         <input type="text" class="form-control input-sm input-size-md" readonly="" value="<?php echo $boq_no->pattern; ?>" name="boq_no" formula="<?php echo $boq_no->pattern; ?>">
-        <input type="checkbox" checked> <i style="font-size: 12px;">auto-generate</i>
         <!--<button type="button" @click="generateNumber('Quotation', 'active.no')" class="btn btn-info btn-xs">Generate</button>-->
     </div>
 </div><!--v-component-->

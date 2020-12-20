@@ -431,7 +431,6 @@ tr.mpk-detail > td {
     <label class="control-label col-md-3" style="color: red">JO Number</label>
     <div class="col-md-9">
         <input type="text" class="form-control input-sm input-size-md" value="<?php if(empty($header->job_number)){ echo $job_no->pattern;}else{echo $header->job_number??'';} ?>" readonly="" name="job_number">
-        <input type="checkbox" checked> <i style="font-size: 12px;">auto-generate</i>
     </div>
 </div>
                 <div class="form-group">
@@ -574,7 +573,7 @@ tr.mpk-detail > td {
                                     <input type="text" readonly="" class="form-control input-sm" name="construction">
                                 </td>
                                 <td colspan="2">
-                                    Counstruction Fee
+                                    Construction Fee
                                 </td>
                             </tr>
                             <tr>
@@ -954,7 +953,31 @@ tr.mpk-detail > td {
 
           });
     }
+    function addCommas(nStr)
+      {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+      }
   });
+    function addCommas(nStr)
+      {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+      }
    $(document).on("click",".add_button_inv",function(){
       $(".body_inv").append('<div class="div-tr" slot="body"> <div class="div-td"><span class="inv_numbering">1</span> <input type="hidden" value="" name="inv_id[]"> </div><div class="div-td"> <input placeholder="Select Date" type="date" value="" name="inv_date[]"> </div><div class="div-td"> <input type="text" class="form-control input-sm" name="inv_number[]"> </div><div class="div-td"> <input type="text" class="form-control input-sm" name="inv_value[]"> </div><div class="div-td" style="display: flex"> <input type="checkbox" style="margin-right: 10px" value="1" name="inv_paystatus[]"/> <input placeholder="Select Date" type="date" value="" name="inv_paydate[]"> </div><div class="div-td"> <input type="text" class="form-control input-sm" name="inv_note[]"> </div><div class="div-td"> <button type="button" class="btn btn-info btn-xs add_button_inv"> <i class="fa fa-plus"></i> </button> <button type="button" class="btn btn-danger btn-xs remove_button_inv"> <i class="fa fa-minus"></i> </button> </div></div>');
         for (var i = 0; i <= $(".inv_numbering").length; i++) {
@@ -1139,51 +1162,80 @@ $(document).on("click",".button_remove",function(){
 
 function count_all(){
   var counter=$("input[name='detail_qty[]']").length;
+  console.log(counter);
   var total_price=0;
   for(var c=0;c<counter;c++){
     var qty=0;
     var price=0;
-    qty+=$("input[name='detail_qty[]']").eq(c).val();
-    price+=$("input[name='detail_price[]']").eq(c).val();
+    console.log($("input[name='detail_price[]']").eq(c).val());
+    qty+=(parseInt($("input[name='detail_qty[]']").eq(c).val().replace(/\,/g, '')));
+    price+=(parseInt($("input[name='detail_price[]']").eq(c).val().replace(/\,/g, '')));
     total_price+=qty*price;
+    console.log(total_price);
   }
-  $("input[name='summary']").val("IDR "+total_price);
+  $("input[name='summary']").val("IDR "+addCommas(total_price));
 
   var construction_fee=0;
-  if($("input[name='construction_fee']").val()!=""){
-    construction_fee=$("input[name='construction_fee']").val();
+  if($("input[name='construction']").val()!=""){
+    construction_fee=$("input[name='construction']").val();
+    construction_fee=construction_fee.replace("IDR","");
+    construction_fee=parseFloat(construction_fee.trim());
     construction_fee=construction_fee/100;
     console.log(construction_fee);
   }
   var combined=total_price*construction_fee;
-  $("input[name='construction']").val("IDR "+combined);
+  $("input[name='construction']").val("IDR "+addCommas(combined));
   if($("input[name='discount']").val()!=""){
-    var total_vat=(total_price*0.1)+total_price-$("input[name='discount']").val()+(total_price*construction_fee);
+    var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
+    discount_valueonly=discount_valueonly.replace(",","");
+    if(discount_valueonly==""){
+      discount_valueonly="0";
+    }
+    discount_valueonly=parseFloat(discount_valueonly.trim());
+    var total_vat=(total_price*0.1)+total_price-discount_valueonly+(total_price*construction_fee);
   }else{
     var total_vat=(total_price*0.1)+total_price+(total_price*construction_fee);
   }
   
-  $("input[name='total_vat']").val("IDR "+total_vat);
+  $("input[name='total_vat']").val("IDR "+addCommas(total_vat));
+  // var discount_val=$("input[name='discount']").val();
+  var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
+  discount_valueonly=discount_valueonly.replace(/\,/g, '');
+  if(discount_valueonly==""){
+    discount_valueonly="0";
+  }
+  discount_valueonly=parseFloat(discount_valueonly.trim());
+  $("input[name='discount']").val("IDR "+addCommas(discount_valueonly));
 }
 
-$(document).on("keyup","input[name='discount']",function(){
+$(document).on("focusout","input[name='discount']",function(){
   count_all();
 });
 
-$(document).on("keyup","input[name='detail_qty[]']",function(){
+$(document).on("focusout","input[name='detail_qty[]']",function(){
   var price_row=$(this).parent().siblings("td").children("input[name='detail_price[]']").val();
+  price_row=price_row.replace(/\,/g, '');
+  price_row=(parseInt(price_row));
   var qty_row=$(this).val();
   $(this).parent().siblings("td").siblings('td').children("input[name='detail_totalprice[]']").val(price_row*qty_row);
+
   count_all();
 });
-$(document).on("keyup","input[name='construction_fee']",function(){
+$(document).on("focusout","input[name='construction']",function(){
   $("input[name='construction']").val($(this).val());
 });
-$(document).on("keyup","input[name='detail_price[]']",function(){
+$(document).on("focusout","input[name='detail_price[]']",function(){
   var price_row=$(this).val();
   var qty_row=$(this).parent().siblings("td").children("input[name='detail_qty[]']").val();
-  $(this).parent().siblings("td").children("input[name='detail_totalprice[]']").val(price_row*qty_row);
+  // $(this).val(addCommas(price_row));
+  // console.log("sebelum di replace",price_row);
+  price_row=price_row.replace(/\,/g, '');
+  // console.log("setelah replace",price_row)
+  price_row=(parseInt(price_row));
+  // console.log("setelah convert to int",price_row);
+  $(this).parent().siblings("td").children("input[name='detail_totalprice[]']").val(addCommas(price_row*qty_row));
   count_all();
+  $(this).val(addCommas(price_row));
 });
 </script>
 </body></html>

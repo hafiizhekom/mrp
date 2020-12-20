@@ -434,7 +434,16 @@ tr.mpk-detail > td {
                             <label class="control-label col-md-3" style="color: red">Order Type</label>
                             <div class="col-md-3">
                                 <select class="form-control input-sm" name="order_type">
-                                    <!--v-for-start--><option value="Repair">Repair</option><option value="Special Request">Special Request</option><option value="Maintenance">Maintenance</option><option value="New Installation">New Installation</option><option value="Supply Only">Supply Only</option><!--v-for-end-->
+                                  <?php if(!empty($header->order_type)){?>
+                                    <?php if($header->order_type=="Repair"){ ?><option value="Repair">Repair</option><?php } ?>
+                                    <?php if($header->order_type=="Special Request"){ ?><option value="Special Request">Special Request</option><?php } ?>
+                                    <?php if($header->order_type=="Maintenance"){ ?><option value="Maintenance">Maintenance</option><?php } ?>
+                                    <?php if($header->order_type=="New Installation"){ ?><option value="New Installation">New Installation</option><?php } ?>
+                                    <?php if($header->order_type=="Supply Only"){ ?><option value="Supply Only">Supply Only</option><?php } ?>
+                                  <?php }else{?>
+                                    <option value="Repair">Repair</option><option value="Special Request">Special Request</option><option value="Maintenance">Maintenance</option><option value="New Installation">New Installation</option><option value="Supply Only">Supply Only</option>
+                                  <?php } ?>
+                                    <!--v-for-start--><!--v-for-end-->
                                 </select>
                             </div>
                         </div>
@@ -442,7 +451,6 @@ tr.mpk-detail > td {
     <label class="control-label col-md-3" style="color: red">Qn Number</label>
     <div class="col-md-9">
         <input type="text" class="form-control input-sm input-size-md" readonly="" value="<?php if(empty($header)){echo $quotation_no->pattern;}else{echo $header->qn_number;} ?>" name="qn_number">
-        <input type="checkbox" checked value="1" name="auto_generate"> <i style="font-size: 12px;">auto-generate</i>
         <!--<button type="button" @click="generateNumber('Quotation', 'active.no')" class="btn btn-info btn-xs">Generate</button>-->
     </div>
 </div><!--v-component-->
@@ -591,8 +599,8 @@ tr.mpk-detail > td {
                                           <?php } ?>
                                       </select>
                                   </td>
-                                  <td><input type="text" class="form-control input-sm money" name="detail_price[]"></td>
-                                  <td><input type="text" class="form-control input-sm money" name="detail_totalprice[]" readonly></td>
+                                  <td><input type="text" class="form-control input-sm" name="detail_price[]"></td>
+                                  <td><input type="text" class="form-control input-sm" name="detail_totalprice[]" readonly></td>
                                   <td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td>
                                   <td style="width: 65px">
                                       <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button>
@@ -618,8 +626,8 @@ tr.mpk-detail > td {
                                           <?php } ?>
                                       </select>
                                   </td>
-                                  <td><input type="text" class="form-control input-sm money" name="detail_price[]" value="<?php echo $value2->price??'' ?>"></td>
-                                  <td><input type="text" class="form-control input-sm money" name="detail_totalprice[]" readonly value="<?php echo $value2->total_price??'' ?>"></td>
+                                  <td><input type="text" class="form-control input-sm" name="detail_price[]" value="<?php echo $value2->price??'' ?>"></td>
+                                  <td><input type="text" class="form-control input-sm" name="detail_totalprice[]" readonly value="<?php echo $value2->total_price??'' ?>"></td>
                                   <td><input type="text" class="form-control input-sm" name="detail_internalnote[]" value="<?php echo $value2->internal_note??'' ?>"></td>
                                   <td style="width: 65px">
                                       <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button>
@@ -833,7 +841,8 @@ tr.mpk-detail > td {
             }
           });
     }
-    var project_id="<?php echo $header->project_id??''; ?>";
+    var project_id="<?php echo $header->customer_id??''; ?>";
+
     $.ajax({
             url: '<?php echo base_url() ?>marketing/quotation_select2',
             type: 'POST',
@@ -1159,7 +1168,7 @@ tr.mpk-detail > td {
             for(var d=0;d<res.length;d++){
               str+="<option value='"+res[d].code+"'>"+res[d].code+"</option>";
             }
-            str+='</select> </td><td><input type="text" class="form-control input-sm money" name="detail_price[]"></td><td><input type="text" class="form-control input-sm money" name="detail_totalprice[]" readonly></td><td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td><td style="width: 65px"> <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button> </td></tr>';
+            str+='</select> </td><td><input type="text" class="form-control input-sm" name="detail_price[]"></td><td><input type="text" class="form-control input-sm" name="detail_totalprice[]" readonly></td><td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td><td style="width: 65px"> <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button> </td></tr>';
             $(".div-tbody").append(str);
             for (var i = 0; i <= $(".numbering").length; i++) {
                 $(".numbering").eq(i).text(i+1);
@@ -1187,8 +1196,8 @@ function count_all(){
     var qty=0;
     var price=0;
     console.log($("input[name='detail_price[]']").eq(c).val());
-    qty+=(parseInt($("input[name='detail_qty[]']").eq(c).val().replace(',','')));
-    price+=(parseInt($("input[name='detail_price[]']").eq(c).val().replace(',','')));
+    qty+=(parseInt($("input[name='detail_qty[]']").eq(c).val().replace(/\,/g, '')));
+    price+=(parseInt($("input[name='detail_price[]']").eq(c).val().replace(/\,/g, '')));
     total_price+=qty*price;
     console.log(total_price);
   }
@@ -1217,7 +1226,7 @@ function count_all(){
   $("input[name='total_vat']").val("IDR "+addCommas(total_vat));
   // var discount_val=$("input[name='discount']").val();
   var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
-  discount_valueonly=discount_valueonly.replace(",","");
+  discount_valueonly=discount_valueonly.replace(/\,/g, '');
   if(discount_valueonly==""){
     discount_valueonly="0";
   }
@@ -1231,8 +1240,11 @@ $(document).on("focusout","input[name='discount']",function(){
 
 $(document).on("focusout","input[name='detail_qty[]']",function(){
   var price_row=$(this).parent().siblings("td").children("input[name='detail_price[]']").val();
+  price_row=price_row.replace(/\,/g, '');
+  price_row=(parseInt(price_row));
   var qty_row=$(this).val();
   $(this).parent().siblings("td").siblings('td').children("input[name='detail_totalprice[]']").val(price_row*qty_row);
+
   count_all();
 });
 $(document).on("focusout","input[name='contruction_fee']",function(){
@@ -1242,15 +1254,14 @@ $(document).on("focusout","input[name='detail_price[]']",function(){
   var price_row=$(this).val();
   var qty_row=$(this).parent().siblings("td").children("input[name='detail_qty[]']").val();
   // $(this).val(addCommas(price_row));
-  price_row=price_row.replace(',','');
+  // console.log("sebelum di replace",price_row);
+  price_row=price_row.replace(/\,/g, '');
+  // console.log("setelah replace",price_row)
   price_row=(parseInt(price_row));
+  // console.log("setelah convert to int",price_row);
   $(this).parent().siblings("td").children("input[name='detail_totalprice[]']").val(addCommas(price_row*qty_row));
   count_all();
-
-});
-$(document).on("focusout","input[name='detail_price[]']",function(){
-  var price_row=$(this).val();
   $(this).val(addCommas(price_row));
-})
+});
 </script>
 </body></html>

@@ -442,7 +442,6 @@ class Marketing extends CI_Controller {
 				$this->db->where('is_active', 1);
 				$data['header']=$this->db->get()->row();
 
-
 				$this->db->select('*');
 				$this->db->from('quotation_detail');
 				$this->db->where('quotation_id', $data_input['id']);
@@ -581,6 +580,7 @@ class Marketing extends CI_Controller {
 					'subject'=>$data_input['subject'],
 					'note'=>$data_input['note'],
 					'attachment'=>$data_input['attachment'],
+					'fabrication'=>$data_input['fabrication'],
 					'material'=>$data_input['material'],
 					'sandblasting'=>$data_input['sandblasting'],
 					'painting'=>$data_input['painting'],
@@ -624,7 +624,7 @@ class Marketing extends CI_Controller {
 					);
 					$this->db->insert('quotation_detail', $insert_detail);
 				}
-				header("Location: ".base_url()."marketing/quotation?res=success");
+				header("Location:".base_url()."marketing/quotation?res=success");
 			}else{
 				$insert_table = array(
 					'customer_id' =>$data_input['customer'],
@@ -648,13 +648,14 @@ class Marketing extends CI_Controller {
 					'subject'=>$data_input['subject'],
 					'note'=>$data_input['note'],
 					'attachment'=>$data_input['attachment'],
+					'fabrication'=>$data_input['fabrication'],
 					'material'=>$data_input['material'],
 					'sandblasting'=>$data_input['sandblasting'],
 					'painting'=>$data_input['painting'],
 					'asbuiltdrawing'=>$data_input['drawing'],
 					'galvanished'=>$data_input['galvanished'],
 					'erection'=>$data_input['erection'],
-					'packing'=>$data_input['packing'],
+					'packing'=>$data_input ['packing'],
 					'ndt'=>$data_input['ndt'],
 					'certificate'=>$data_input['certificate'],
 					'delivery'=>$data_input['delivery'],
@@ -663,7 +664,9 @@ class Marketing extends CI_Controller {
 				$this->db->where('id', $data_input['id']);
 				$this->db->update('quotation', $insert_table);
 
-				$kode->id=$data_input['id'];
+				// $kode=null;
+				// $kode->id=null;
+				$kode=$data_input['id'];
 
 				$insert_detail_calc = array(
 					'grand_summary'=>$data_input['summary'],
@@ -672,16 +675,16 @@ class Marketing extends CI_Controller {
 					'grand_total_vat'=>$data_input['total_vat'],
 					'is_active'=>1 
 				);
-				$this->db->where('quotation_id', $kode->id);
+				$this->db->where('quotation_id', $kode);
 				$this->db->update('quotation_calc', $insert_detail_calc);
 
 				$arrayName = array('is_active' =>0 );
-				$this->db->where('quotation_id', $kode->id);
+				$this->db->where('quotation_id', $kode);
 				$this->db->update('quotation_detail', $arrayName);
 
 				for ($i=0; $i <count($data_input['detail_id']) ; $i++) { 
 					$insert_detail = array(
-						'quotation_id' =>$kode->id ,
+						'quotation_id' =>$kode,
 						'description'=>$data_input['detail_desc'][$i],
 						'qty'=>$data_input['detail_qty'][$i],
 						'unit'=>$data_input['detail_unit'][$i],
@@ -691,7 +694,7 @@ class Marketing extends CI_Controller {
 					);
 					$this->db->insert('quotation_detail', $insert_detail);
 				}
-				header("Location: ".base_url()."marketing/quotation?res=success");
+				header("Location:".base_url()."marketing/quotation?res=success");
 			}
 			
 		}else if($param=="delete"){
@@ -740,7 +743,7 @@ class Marketing extends CI_Controller {
 	public function quotation_select3(){
 		$data_input=$this->input->post();
 		$this->db->select('*');
-		$this->db->from('project_contact');
+		$this->db->from('customer_contact');
 		$this->db->where('is_active', 1);
 		$this->db->where('id', $data_input['id']);
 		$response=$this->db->get()->row();
@@ -1520,3 +1523,4 @@ class Marketing extends CI_Controller {
 		$this->load->view('marketing/document_form', $data);
 	}
 }
+?>

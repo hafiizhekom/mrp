@@ -432,7 +432,6 @@ tr.mpk-detail > td {
                             <label class="control-label col-md-3" style="color: red">MPK No</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control input-sm input-size-md" readonly="" name="mpk_no" value="<?php echo $mpk_no->pattern??'' ?>">
-                                <input type="checkbox" checked> <i style="font-size: 12px;">auto-generate</i>
                                 <!--<button type="button" @click="generateNumber('Quotation', 'active.no')" class="btn btn-info btn-xs">Generate</button>-->
                             </div>
                         </div>
