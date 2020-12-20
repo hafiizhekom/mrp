@@ -90,7 +90,7 @@
                             <ul class="dropdown-menu">
                                                                     <li><a href="<?php echo base_url() ?>marketing/quotation">Quotation List</a></li>
                                                                     <li><a href="<?php echo base_url() ?>marketing/quotation/create">Add New Quotation</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>engineering/boq">BQ and Documents</a></li>
+                                                                    <li><a href="<?php echo base_url() ?>marketing/document">BQ and Documents</a></li>
                                                             </ul>
                         </li>
                                             <li class="dropdown">
@@ -99,7 +99,7 @@
                             <ul class="dropdown-menu">
                                                                     <li><a href="<?php echo base_url() ?>marketing/joborder">Job Orders List</a></li>
                                                                     <li><a href="<?php echo base_url() ?>marketing/joborder/create">Add New Job Order</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>marketing/joborder/list">Job Order Documents</a></li>
+                                                                    <li><a href="<?php echo base_url() ?>marketing/document">Job Order Documents</a></li>
                                                             </ul>
                         </li>
                                             <li class="dropdown">
@@ -158,7 +158,7 @@
                 <ul class="dropdown-menu">
                                             <li><a href="<?php echo base_url() ?>marketing/quotation">Quotation List</a></li>
                                             <li><a href="<?php echo base_url() ?>marketing/quotation/create">Add New Quotation</a></li>
-                                            <li><a href="<?php echo base_url() ?>engineering/boq">BQ and Documents</a></li>
+                                            <li><a href="<?php echo base_url() ?>marketing/document">BQ and Documents</a></li>
                                     </ul>
             </li>
                     <li class="dropdown">
@@ -167,7 +167,7 @@
                 <ul class="dropdown-menu">
                                             <li><a href="<?php echo base_url() ?>marketing/joborder">Job Orders List</a></li>
                                             <li><a href="<?php echo base_url() ?>marketing/joborder/create">Add New Job Order</a></li>
-                                            <li><a href="<?php echo base_url() ?>marketing/joborder/list">Job Order Documents</a></li>
+                                            <li><a href="<?php echo base_url() ?>marketing/document">Job Order Documents</a></li>
                                     </ul>
             </li>
                     <li class="dropdown">
@@ -230,7 +230,7 @@
             <ul class="Menu-content">
                                     <li class="Menu-submenu"><a href="<?php echo base_url() ?>marketing/quotation">Quotation List</a></li>
                                     <li class="Menu-submenu"><a href="<?php echo base_url() ?>marketing/quotation/create">Add New Quotation</a></li>
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>engineering/boq">BQ and Documents</a></li>
+                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>marketing/document">BQ and Documents</a></li>
                             </ul>
         </div>
     </div>
@@ -242,7 +242,7 @@
             <ul class="Menu-content">
                                     <li class="Menu-submenu"><a href="<?php echo base_url() ?>marketing/joborder">Job Orders List</a></li>
                                     <li class="Menu-submenu"><a href="<?php echo base_url() ?>marketing/joborder/create">Add New Job Order</a></li>
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>marketing/joborder/list">Job Order Documents</a></li>
+                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>marketing/document">Job Order Documents</a></li>
                             </ul>
         </div>
     </div>

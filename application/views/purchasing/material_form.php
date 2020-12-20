@@ -372,7 +372,7 @@ tr.mpk-detail > td {
 </style></head>
 <body style="padding-bottom: 30px;">
 
-<?php $this->load->view('engineering/header'); ?>
+<?php $this->load->view('purchasing/header'); ?>
 
     <div class="container-fluid" style="min-height: 77.5vh">
         <div class="header">
@@ -386,7 +386,7 @@ tr.mpk-detail > td {
         </div>
         <div class="body">
             <div class="col-md-12">
-                <form class="form form-horizontal"method="POST" action="<?php echo base_url() ?>engineering/master/create_add">
+                <form class="form form-horizontal"method="POST" action="<?php echo base_url() ?>purchasing/material/create_add">
     <input type="hidden" name="id" value="<?php echo $master_part->id??''; ?>">
     <div class="wrapper">
         <div class="box">
@@ -625,6 +625,68 @@ tr.mpk-detail > td {
                 </div>
             </div>
         </div>
+        <div class="box">
+            <div class="box-header">
+                <h5>COMMERCIAL & SUPPLY</h5>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Minimum Order Qty</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control input-sm" name="minimum_qty">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Minimum Stock</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control input-sm" name="stock">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Proses Cost</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control input-sm" name="cost">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" style="color:red;">Supplier Name</label>
+                            <div class="col-md-9">
+                               <select class="form-control" name="supplier">
+                                <option selected disabled>Please Choose</option>
+                                 <?php foreach ($vendor as $key => $value) {?>
+                                   <option value="<?php echo $value->id??'' ?>"><?php echo $value->supplier_name??'' ?></option>
+                                 <?php } ?>
+                               </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Supply Lead Time</label>
+                            <div class="col-md-9">
+                                <textarea type="text" class="form-control input-sm" rows="3" name="lead_time"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Currency</label>
+                            <div class="col-md-9">
+                                <select class="form-control input-sm" name="currency">
+                                    <option value="IDR">
+                                        IDR
+                                    </option>
+                                    <option value="USD">
+                                        USD
+                                    </option>
+                                    <option value="¥en">
+                                        ¥en
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="box-footer">
             <button type="submit" id="check_form" disabled class="btn btn-info btn-xs">Save</button>
         </div>
@@ -651,7 +713,7 @@ tr.mpk-detail > td {
   $(document).on("focusout","input[name='material_id']",function(){
     var data=$(this).val();
     $.ajax({
-        url: '<?php echo base_url() ?>engineering/material_check',
+        url: '<?php echo base_url() ?>purchasing/material_check',
         type: 'POST',
         dataType: 'json',
         data: {id: data},

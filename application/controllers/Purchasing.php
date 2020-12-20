@@ -88,14 +88,170 @@ class purchasing extends CI_Controller {
 		}
 	}
 
-	public function material(){
-		$data_input=$this->input->post();
-		$this->db->select('*');
-		$this->db->from('ms_document_type');
-		$this->db->where('is_active', 1);
-		$data['table']=$this->db->get()->result();
-		// echo json_encode($data['table']);
-		$this->load->view('purchasing/material', $data);
+	public function material($param=null){
+		if($param=="delete"){
+			$data_input=$this->input->post();
+			$table = array('is_active' => 0);
+			$this->db->where('id', $data_input['id']);
+			$this->db->update('master_material', $table);
+			header("Location: ".base_url()."purchasing/material");
+		}else if($param=="create"){
+			$data_input=$this->input->post();
+
+			$this->db->select('*');
+			$this->db->from('ms_warehouse');
+			$this->db->where('is_active', 1);
+			$data['warehouse']=$this->db->get()->result();
+
+			$this->db->select('*');
+			$this->db->from('ms_product');
+			$this->db->where('is_active', 1);
+			$data['product']=$this->db->get()->result();
+
+			$this->db->select('*');
+			$this->db->from('ms_pic');
+			$this->db->where('is_active', 1);
+			$data['pic']=$this->db->get()->result();
+
+			$this->db->select('*');
+			$this->db->from('unit_of_measures');
+			$this->db->where('is_active', 1);
+			$data['unit']=$this->db->get()->result();
+
+			$this->db->select('*');
+			$this->db->from('ms_vendor');
+			$this->db->where('is_active', 1);
+			$data['vendor']=$this->db->get()->result();
+
+			if(!empty($data_input['id'])){
+				$this->db->select('*');
+				$this->db->from('master_material');
+				$this->db->where('is_active', 1);
+				$this->db->where('id', $data_input['id']);
+				$data['master_part']=$this->db->get()->row();
+			}
+
+			$this->load->view('purchasing/material_form',$data);
+		}else if($param=="create_add"){
+			$data_input=$this->input->post();
+
+			// echo var_dump($data_input);
+			if(empty($data_input['id'])){
+				$insert_table = array(
+					'material_id' => $data_input['material_id'],
+					'part_code'=>$data_input['part_code'],
+					'product_code'=>$data_input['product_code'],
+					'product_category'=>$data_input['product']??"",
+					'warehouse_location'=>$data_input['warehouse']??"",
+					'packing_type'=>$data_input['packing_type'],
+					'pic'=>$data_input['pic']??"",
+					'iqc_check'=>$data_input['iqc_check']??"",
+					'note'=>$data_input['note']??"",
+					'unit_measures'=>$data_input['unit']??"",
+					'dimension_type'=>$data_input['dimension_type']??"",
+					'material_group'=>$data_input['material_group']??"",
+					'material_type'=>$data_input['material_type']??"",
+					'material_density'=>$data_input['material_density']??"",
+					'weight_factor'=>$data_input['weight_factor']??"",
+					'surface_area'=>$data_input['surface_area']??"",
+					'hs_number'=>$data_input['hs_number'],
+					'point_factor'=>$data_input['paint_factor'],
+					'length'=>$data_input['length'],
+					'width'=>$data_input['width'],
+					'thick'=>$data_input['thick'],
+					'weight'=>$data_input['weight'],
+					'wielding_type'=>$data_input['wielding_type'],
+					'drawing_number'=>$data_input['drawing_number'],
+					'volume_formula'=>$data_input['volume_formula'],
+					'area_formula'=>$data_input['area_formula'],
+					'minimum_order_qty'=>$data_input['minimum_qty']??'',
+					'minimum_stock'=>$data_input['stock']??'',
+					'process_cost'=>$data_input['cost']??'',
+					'process_cost_supplier_name'=>$data_input['supplier']??'',
+					'lead_time'=>$data_input['lead_time']??'',
+					'currency'=>$data_input['currency']??'',
+					'is_active'=>1 
+				);
+
+				$this->db->insert('master_material', $insert_table);
+			}else{
+				$insert_table = array(
+					'material_id' => $data_input['material_id'],
+					'part_code'=>$data_input['part_code'],
+					'product_code'=>$data_input['product_code'],
+					'product_category'=>$data_input['product']??"",
+					'warehouse_location'=>$data_input['warehouse']??"",
+					'packing_type'=>$data_input['packing_type'],
+					'pic'=>$data_input['pic']??"",
+					'iqc_check'=>$data_input['iqc_check']??"",
+					'note'=>$data_input['note']??"",
+					'unit_measures'=>$data_input['unit']??"",
+					'dimension_type'=>$data_input['dimension_type']??"",
+					'material_group'=>$data_input['material_group']??"",
+					'material_type'=>$data_input['material_type']??"",
+					'material_density'=>$data_input['material_density']??"",
+					'weight_factor'=>$data_input['weight_factor']??"",
+					'surface_area'=>$data_input['surface_area']??"",
+					'hs_number'=>$data_input['hs_number'],
+					'point_factor'=>$data_input['paint_factor'],
+					'length'=>$data_input['length'],
+					'width'=>$data_input['width'],
+					'thick'=>$data_input['thick'],
+					'weight'=>$data_input['weight'],
+					'wielding_type'=>$data_input['wielding_type'],
+					'drawing_number'=>$data_input['drawing_number'],
+					'volume_formula'=>$data_input['volume_formula'],
+					'area_formula'=>$data_input['area_formula'],
+					'minimum_order_qty'=>$data_input['minimum_qty']??'',
+					'minimum_stock'=>$data_input['stock']??'',
+					'process_cost'=>$data_input['cost']??'',
+					'process_cost_supplier_name'=>$data_input['supplier']??'',
+					'lead_time'=>$data_input['lead_time']??'',
+					'currency'=>$data_input['currency']??'',
+					'is_active'=>1 
+				);
+				$this->db->where('id', $data_input['id']);
+				$this->db->update('master_material', $insert_table);
+			}
+			
+			header("Location: ".base_url()."purchasing/material");
+		}else{
+			$this->db->select('*');
+			$this->db->from('master_material');
+			$this->db->where('is_active', 1);
+			$data['table']=$this->db->get()->result();
+			$this->load->view('purchasing/material',$data);
+		}
+		
 	}
 
-}
+	public function material_check(){
+		$data_input=$this->input->post();
+
+		$this->db->select('*');
+		$this->db->from('master_material');
+		$this->db->like('material_id', $data_input['id'], 'BOTH');
+		$result=$this->db->get()->result();
+		echo json_encode($result);
+	}
+
+	public function spb($param=null){
+		if($param=="create"){
+			$this->db->select('*');
+			$this->db->from('user_account');
+			$data['user']=$this->db->get()->result();
+
+			$this->load->view('purchasing/spb_form', $data);
+
+		}else{
+			$this->db->select('*');
+			$this->db->from('spb');
+			$this->db->where('is_active', 1);
+			$data['table']=$this->db->get()->result();
+
+			$this->load->view('purchasing/spb', $data);	
+		}
+		
+	}
+
+}	

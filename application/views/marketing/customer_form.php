@@ -579,7 +579,7 @@ tr.mpk-detail > td {
             </div>
         </div>
         <div class="box-footer">
-            <button type="submit" class="btn btn-info btn-xs">Save</button>
+            <button type="submit" id="check_form" class="btn btn-info btn-xs" disabled>Save</button>
             <button type="reset" class="btn btn-warning btn-xs">Reset</button>
         </div>
     </div>
@@ -589,20 +589,6 @@ tr.mpk-detail > td {
         </div>
     </div>
 
-<footer class="navbar-fixed-bottom" style="z-index: 1;">
-    <h6 class="pull-left">MRP-LITE
-                    | Copyright © PT. DIAN INNOVATIVE SOLUSINDO.
-            </h6>
-    <div class="clearfix visible-xs"></div>
-    <div class="footer-menu">
-        <ul>
-            <li><a href="<?php echo base_url() ?>marketing">HOME</a></li>
-            <li><a href="#">HELP</a></li>
-            <li><a href="<?php echo base_url() ?>change-password">CHANGE PASSWORD</a></li>
-            <li><a href="<?php echo base_url() ?>logout">LOGOUT</a></li>
-        </ul>
-    </div>
-</footer>
 <?php $this->load->view('template/footer'); ?>
 <script>
     $(document).ready(function(){
@@ -620,7 +606,32 @@ tr.mpk-detail > td {
                 $(".numbering").eq(i).text(i+1);
             }
         });
+        if($("input[name='id_header']").val()!=""){
+          $("#check_form").attr("disabled",false);
+        }
     });
+    $(document).on("focusout","input[name='code']",function(){
+      var data=$(this).val();
+      $.ajax({
+        url: '<?php echo base_url() ?>marketing/customer_check',
+        type: 'POST',
+        dataType: 'json',
+        data: {id: data},
+      })
+      .done(function(res) {
+        console.log(res);
+        if(res==""){
+          $("#check_form").attr("disabled",false);
+        }else{
+          $("#check_form").attr("disabled",true);
+        }
+
+        if($("input[name='id_header']").val()!=""){
+          $("#check_form").attr("disabled",false);
+        }
+      })
+      
+    })
 </script>
 </body>
 </html>

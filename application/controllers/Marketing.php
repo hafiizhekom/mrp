@@ -190,6 +190,17 @@ class Marketing extends CI_Controller {
 		
 	}
 
+	public function customer_check(){
+		$data_input=$this->input->post();
+
+		$this->db->select('*');
+		$this->db->from('customer');
+		$this->db->where('code', $data_input['id']);
+		$result=$this->db->get()->result();
+
+		echo json_encode($result);
+	}
+
 	public function sot($param=null){
 		if($param=="add"){
 			$data_input=$this->input->post();
@@ -1471,17 +1482,20 @@ class Marketing extends CI_Controller {
 		$this->db->select('b.*');
 		$this->db->from('quotation as a');
 		$this->db->join('quotation_detail as b', 'a.id=b.quotation_id', 'left');
+		$this->db->where('a.qn_number', $data_input['qn_number']);
 		$this->db->where('b.is_active', 1);
 		$detail_data=$this->db->get()->result();
 
 		$this->db->select('b.*');
 		$this->db->from('quotation as a');
 		$this->db->join('quotation_calc as b', 'a.id=b.quotation_id', 'left');
+		$this->db->where('a.qn_number', $data_input['qn_number']);
 		$this->db->where('b.is_active', 1);
 		$detail_calc=$this->db->get()->row();
 
 		$this->db->select('*');
 		$this->db->from('unit_of_measures');
+		// $this->db->where('a.qn_number', $data_input['qn_number']);
 		$this->db->where('is_active', 1);
 		$measures=$this->db->get()->result();
 
@@ -1495,5 +1509,14 @@ class Marketing extends CI_Controller {
 		$response=json_encode($array);
 		$phpEncryptedText = $this->userPHPEncrypt($this->session->userdata('token'), $response);
 		echo $phpEncryptedText;
+	}
+
+	public function document(){
+		$this->db->select('*');
+		$this->db->from('job_order');
+		$this->db->where('is_active', 1);
+		$data['jo']=$this->db->get()->result();
+
+		$this->load->view('marketing/document_form', $data);
 	}
 }

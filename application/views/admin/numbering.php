@@ -461,6 +461,11 @@ tr.mpk-detail > td {
                                 <td>Plain number.</td>
                                 <td>XX =&gt; 01, XXX =&gt; 001, etc.</td>
                             </tr><!--v-for-end-->
+                            <tr>
+                              <td>JO_NO</td>
+                              <td>Job Order Number</td>
+                              <td>-</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

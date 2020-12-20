@@ -431,7 +431,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
 						    <label class="control-label col-md-3" style="color: red">DKM Number.</label>
 						    <div class="col-md-9">
-						        <input type="text" class="form-control input-sm input-size-md" readonly="" name="dkm_number" value="<?php if(empty($header)){ echo $dkm_no->pattern;}else{ echo $header->dkm_number??'';} ?>">
+						        <input type="text" class="form-control input-sm input-size-md" readonly="" name="dkm_number" value="<?php if(empty($header)){ echo $dkm_no->pattern;}else{ echo $header->dkm_number??'';}?>" formula="<?php echo $dkm_no->pattern??''?>">
 						        <input type="checkbox" checked> <i style="font-size: 12px;">auto-generate</i>
 						        <!--<button type="button" @click="generateNumber('Quotation', 'active.no')" class="btn btn-info btn-xs">Generate</button>-->
 						    </div>
@@ -498,7 +498,7 @@ tr.mpk-detail > td {
 									        <select class="form-control selectpicker" name="detail_material[]" data-live-search="true">
 					                        <option selected disabled>Please Choose</option>
 					                        <?php foreach ($material as $key => $value) {?>
-					                          <option value="<?php echo $value->material_id; ?>" desc="<?php echo $value->product_name; ?>" unit="<?php echo $value->unit_measures; ?>" weight="<?php echo $value->weight; ?>"><?php echo $value->material_id; ?></option>
+					                          <option value="<?php echo $value->material_id; ?>" desc="<?php echo $value->product_name; ?>" unit="<?php echo $value->unit_measures; ?>" weight="<?php echo $value->weight; ?>" formula="<?php echo $value->volume_formula??'' ?>" weight_factor="<?php echo $value->weight_factor??'' ?>" material_density="<?php echo $value->material_density??'' ?>" length="<?php echo $value->length??'' ?>" width="<?php echo $value->width??'' ?>" thick="<?php echo $value->thick??'' ?>"><?php echo $value->product_name; ?></option>
 					                        <?php } ?>
 					                      </select>
 									    </td>
@@ -544,9 +544,9 @@ tr.mpk-detail > td {
 					                        <!-- <option selected disabled>Please Choose</option> -->
 					                        <?php foreach ($material as $key => $value) {
 					                        	if($value2->material==$value->material_id){?>
-					                        		<option value="<?php echo $value->material_id; ?>" desc="<?php echo $value->product_name; ?>" unit="<?php echo $value->unit_measures; ?>" weight="<?php echo $value->weight; ?>" selected><?php echo $value->material_id; ?></option>
+					                        		<option value="<?php echo $value->material_id; ?>" desc="<?php echo $value->product_name; ?>" unit="<?php echo $value->unit_measures; ?>" weight="<?php echo $value->weight; ?>" formula="<?php echo $value->volume_formula??'' ?>" weight_factor="<?php echo $value->weight_factor??'' ?>" material_density="<?php echo $value->material_density??'' ?>" length="<?php echo $value->length??'' ?>" width="<?php echo $value->width??'' ?>" thick="<?php echo $value->thick??'' ?>" selected><?php echo $value->product_name; ?></option>
 					                        	<?php }else{?>
-					                        		<option value="<?php echo $value->material_id; ?>" desc="<?php echo $value->product_name; ?>" unit="<?php echo $value->unit_measures; ?>" weight="<?php echo $value->weight; ?>"><?php echo $value->material_id; ?></option>
+					                        		<option value="<?php echo $value->material_id; ?>" desc="<?php echo $value->product_name; ?>" unit="<?php echo $value->unit_measures; ?>" weight="<?php echo $value->weight; ?>" formula="<?php echo $value->volume_formula??'' ?>" weight_factor="<?php echo $value->weight_factor??'' ?>" material_density="<?php echo $value->material_density??'' ?>" length="<?php echo $value->length??'' ?>" width="<?php echo $value->width??'' ?>" thick="<?php echo $value->thick??'' ?>"><?php echo $value->product_name; ?></option>
 					                        	<?php }?>
 					                          
 					                        <?php } ?>
@@ -663,6 +663,11 @@ tr.mpk-detail > td {
             $("input[name='rev_no']").val(res.rev_no);
             $("textarea[name='note']").text(res.note);
           });
+        var total=0;
+        for (var i = 0; i < ($("input[name='detail_weight[]']").length); i++) {
+          total+=parseFloat($("input[name='detail_weight[]']").eq(i).val());
+        }
+        $("input[name='detail_total_weight']").val(total);
 	});
 
 	$(document).on('change','select[name="boq_number"]',function(){
@@ -712,6 +717,11 @@ tr.mpk-detail > td {
             $("input[name='rev_date']").val(res.rev_date);
             $("input[name='rev_no']").val(res.rev_no);
             $("textarea[name='note']").text(res.note);
+            var pattern_formula=$("input[name='dkm_number']").attr("formula");
+            if(pattern_formula.includes("JO_NO")==true){
+              pattern_formula=pattern_formula.replace("JO_NO", res.job_number);
+            }
+            $("input[name='dkm_number']").val(pattern_formula);
           });
 	});
 
@@ -719,12 +729,37 @@ tr.mpk-detail > td {
 		var weight=$('option:selected', this).attr('weight');
 		var unit=$('option:selected', this).attr('unit');
 		var desc=$('option:selected', this).attr('desc');
-
-		console.log(desc)
+    var formula=$('option:selected', this).attr('formula');
+    var weight_factor=parseFloat($('option:selected', this).attr('weight_factor'));
+    var length=parseFloat($('option:selected', this).attr('length'));
+    var width=parseFloat($('option:selected', this).attr('width'));
+    var thick=parseFloat($('option:selected', this).attr('thick'));
+    var material_density=parseFloat($('option:selected', this).attr('material_density'));
+    if(formula.includes("length")==true){
+      formula=formula.replace("length", length);
+    }
+    if(formula.includes("width")==true){
+      formula=formula.replace("width", width);
+    }
+    if(formula.includes("thick")==true){
+      formula=formula.replace("thick", thick);
+    }
+    var total_volume=eval(formula);
+    if(!material_density){
+        material_density=1;
+    }
+    if(!weight_factor){
+      weight_factor=1;
+    }
+    total_volume=total_volume/1000000;
+		// console.log(desc)
+  //   console.log(total_volume);
+  //   console.log(material_density);
+  //   console.log(weight_factor);
 		$(this).parent().parent().siblings("td").children("input[name='detail_desc[]']").val(desc);
 		$(this).parent().parent().siblings("td").children("input[name='detail_unit[]']").val(unit);
-		$(this).parent().parent().siblings("td").children("input[name='detail_weight[]']").val(weight);
-		$(this).parent().parent().siblings("td").children("input[name='detail_weight[]']").attr("weight",weight);
+		$(this).parent().parent().siblings("td").children("input[name='detail_weight[]']").val(total_volume*material_density*weight_factor);
+		$(this).parent().parent().siblings("td").children("input[name='detail_weight[]']").attr("weight",total_volume*material_density*weight_factor);
 	});
 
 	$(document).on("click",".add_button",function(){
@@ -770,8 +805,9 @@ tr.mpk-detail > td {
             str="";
             str='<tr><td style="text-align: center;"><span class="numbering">1</span> <input type="hidden" value=""></td><td> <select class="form-control selectpicker" name="detail_material[]" data-live-search="true"><option selected disabled>Please Choose</option>';
             for (var i = 0; i < res.length; i++) {
-            	str+='<option value="'+res[i].material_id+'" desc="'+res[i].product_name+'" unit="'+res[i].unit_measures+'" weight="'+res[i].weight+'">'+res[i].material_id+'</option>';
+            	str+='<option value="'+res[i].material_id+'" desc="'+res[i].product_name+'" unit="'+res[i].unit_measures+'" weight="'+res[i].weight+'" formula="'+res[i].volume_formula+'" weight_factor="'+res[i].weight_factor+'" material_density="'+res[i].material_density+'" length="'+res[i].length+'" width="'+res[i].width+'" thick="'+res[i].thick+'">'+res[i].product_name+'</option>';
             }
+
             
             str+='</select></td><td> <input type="text" class="form-control" name="detail_desc[]"></td><td> <input type="text" class="form-control" name="detail_pcs[]"></td><td> <input type="text" class="form-control" readonly="" name="detail_unit[]"></td><td> <input type="text" class="form-control" readonly="" name="detail_weight[]"></td><td> <input type="date" class="form-control" name="detail_planing[]"/></td><td> <input type="date" class="form-control" name="detail_input[]" /></td><td> <input type="date" class="form-control" name="detail_output[]" /></td><td><center> <button type="button" class="btn btn-info btn-xs add_button"> <i class="fa fa-plus"></i> </button> <button type="button" class="btn btn-danger btn-xs remove_button"> <i class="fa fa-minus"></i> </button></center></td></tr>';
              
@@ -794,6 +830,13 @@ tr.mpk-detail > td {
 		var qty=$(this).val();
 		var weight=$(this).parent().siblings("td").children("input[name='detail_weight[]']").attr("weight");
 		$(this).parent().siblings("td").children("input[name='detail_weight[]']").val(qty*weight);
+    var total=0;
+    var length=$("input[name='detail_weight[]']").length;
+    // console.log(length);
+    for (var i = 0; i < ($("input[name='detail_weight[]']").length); i++) {
+      total+=parseFloat($("input[name='detail_weight[]']").eq(i).val());
+    }
+    $("input[name='detail_total_weight']").val(total);
 	});
 </script>	
 </body></html>

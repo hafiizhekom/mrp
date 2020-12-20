@@ -417,7 +417,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
     <label class="control-label col-md-3" style="color: red">Bill Of Quantity No</label>
     <div class="col-md-9">
-        <input type="text" class="form-control input-sm input-size-md" readonly="" value="<?php echo $boq_no->pattern; ?>" name="boq_no">
+        <input type="text" class="form-control input-sm input-size-md" readonly="" value="<?php echo $boq_no->pattern; ?>" name="boq_no" formula="<?php echo $boq_no->pattern; ?>">
         <input type="checkbox" checked> <i style="font-size: 12px;">auto-generate</i>
         <!--<button type="button" @click="generateNumber('Quotation', 'active.no')" class="btn btn-info btn-xs">Generate</button>-->
     </div>
@@ -561,7 +561,7 @@ tr.mpk-detail > td {
                                     <select class="form-control selectpicker" name="material_id[]" key="0">
                                       <option selected disabled>Please Choose</option>
                                       <?php foreach ($material as $key => $value) {?>
-                                          <option value="<?php echo $value->material_id; ?>"><?php echo $value->material_id; ?></option>
+                                          <option value="<?php echo $value->material_id; ?>"><?php echo $value->product_name; ?></option>
                                       <?php } ?>
                                     </select>
                                 </td>
@@ -780,6 +780,11 @@ tr.mpk-detail > td {
           $("input[name='project']").val(res.project_name);
           $("input[name='rev_no']").val(res.rev_no);
           $("input[name='rev_date']").val(res.rev_date);
+          var perubahan=$("input[name='boq_no']").attr("formula");
+          if(perubahan.includes("JO_NO")==true){
+            perubahan=perubahan.replace("JO_NO", data1);
+          }
+          $("input[name='boq_no']").val(perubahan);
       });
   });
   $(document).on("click",".add_button_assembly",function(){
@@ -837,7 +842,7 @@ tr.mpk-detail > td {
           str="";
           str+='<tr> <td style="text-align: center;"><span class="numbering_material">1</span> <input type="hidden" value="" name="material_idhidden[]"> </td><td> <select class="form-control selectpicker" name="material_id[]"> <option selected disabled>Please Choose</option>';
           for (var i = 0; i < res.length; i++) {
-            str+='<option value="'+res[i].material_id+'">'+res[i].material_id+'</option>';
+            str+='<option value="'+res[i].material_id+'">'+res[i].product_name+'</option>';
           }
           str+='</select> </td><td> <select class="form-control input-sm" name="material_assemblymark[]"> <option value=""></option> </select> </td><td><input type="text" class="form-control" name="material_part[]" required></td><td> <input type="text" class="form-control" name="material_desc[]" readonly=""> </td><td><input type="text" class="form-control" name="material_qty[]"></td><td><input type="text" class="form-control" name="material_length[]"></td><td><input type="text" class="form-control" name="material_width[]"></td><td><input type="text" class="form-control" name="material_thick[]"></td><td><input type="text" class="form-control" name="material_areaunit[]" readonly=""></td><td><input type="text" class="form-control" name="material_areatotal[]" readonly=""></td><td><input type="text" class="form-control" name="material_weightunit[]" readonly=""></td><td><input type="text" class="form-control" name="material_total[]" readonly=""></td><td><input type="text" class="form-control" name="material_note[]"></td><td style="width: 57px;"> <button type="button" class="btn btn-info btn-xs add_button_material"> <i class="fa fa-plus"></i> </button> <button type="button" class="btn btn-danger btn-xs remove_button_material"> <i class="fa fa-minus"></i> </button> </td></tr>';
           $(".body-material").append(str);
@@ -914,7 +919,10 @@ tr.mpk-detail > td {
           $("input[name='material_width[]']").eq(res.index).val(res.res.width);
           $("input[name='material_thick[]']").eq(res.index).val(res.res.thick);
           $("input[name='material_areaunit[]']").eq(res.index).attr("formula",res.res.area_formula);
-          $("input[name='material_weightunit[]']").eq(res.index).val(res.res.weight_factor);
+          $("input[name='material_weightunit[]']").eq(res.index).val(res.res.weight);
+          $("input[name='material_weightunit[]']").eq(res.index).attr("formula",res.res.volume_formula);
+          $("input[name='material_weightunit[]']").eq(res.index).attr("density",res.res.material_density);
+          $("input[name='material_weightunit[]']").eq(res.index).attr("weight_factor",res.res.weight_factor);
           $("input[name='material_desc[]']").eq(res.index).val(res.res.product_name);
         });
   });
@@ -929,6 +937,9 @@ tr.mpk-detail > td {
       var width=$("input[name='material_width[]']").eq(i).val();
       var thick=$("input[name='material_thick[]']").eq(i).val();
       var weight=$("input[name='material_weightunit[]']").eq(i).val();
+      var formula_volume=$("input[name='material_weightunit[]']").eq(i).attr("formula");
+      var density=parseFloat($("input[name='material_weightunit[]']").eq(i).attr("density"));
+      var weight_factor=parseFloat($("input[name='material_weightunit[]']").eq(i).attr("weight_factor"));
       if(formula.includes("length")==true){
         formula=formula.replace("length", length);
       }
@@ -938,11 +949,29 @@ tr.mpk-detail > td {
       if(formula.includes("thick")==true){
         formula=formula.replace("thick", thick);
       }
+      if(formula_volume.includes("length")==true){
+        formula_volume=formula_volume.replace("length", length);
+      }
+      if(formula_volume.includes("width")==true){
+        formula_volume=formula_volume.replace("width", width);
+      }
+      if(formula_volume.includes("thick")==true){
+        formula_volume=formula_volume.replace("thick", thick);
+      }
+      var total_volume=eval(formula_volume);
       var total_area = eval(formula);
+      if(!density){
+        density=1;
+      }
+      if(!weight_factor){
+        weight_factor=1;
+      }
       total_area = total_area/1000000;
+      total_volume=total_volume/1000000;
       $("input[name='material_areaunit[]']").eq(i).val(total_area);
       $("input[name='material_areatotal[]']").eq(i).val(total_area*qty);
-      $("input[name='material_total[]']").eq(i).val(weight*qty);
+      $("input[name='material_total[]']").eq(i).val(total_volume*qty*density*weight_factor);
+      $("input[name='material_weightunit[]']").eq(i).val(total_volume*density*weight_factor);
       total_grand_qty+=parseInt(qty);
       total_grand_area+=total_area*qty;
       total_grand_weight+=weight*qty;

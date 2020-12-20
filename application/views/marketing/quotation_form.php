@@ -592,7 +592,7 @@ tr.mpk-detail > td {
                                       </select>
                                   </td>
                                   <td><input type="text" class="form-control input-sm money" name="detail_price[]"></td>
-                                  <td><input type="text" class="form-control input-sm money" name="detail_totalprice[]"></td>
+                                  <td><input type="text" class="form-control input-sm money" name="detail_totalprice[]" readonly></td>
                                   <td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td>
                                   <td style="width: 65px">
                                       <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button>
@@ -619,7 +619,7 @@ tr.mpk-detail > td {
                                       </select>
                                   </td>
                                   <td><input type="text" class="form-control input-sm money" name="detail_price[]" value="<?php echo $value2->price??'' ?>"></td>
-                                  <td><input type="text" class="form-control input-sm money" name="detail_totalprice[]" value="<?php echo $value2->total_price??'' ?>"></td>
+                                  <td><input type="text" class="form-control input-sm money" name="detail_totalprice[]" readonly value="<?php echo $value2->total_price??'' ?>"></td>
                                   <td><input type="text" class="form-control input-sm" name="detail_internalnote[]" value="<?php echo $value2->internal_note??'' ?>"></td>
                                   <td style="width: 65px">
                                       <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button>
@@ -1159,7 +1159,7 @@ tr.mpk-detail > td {
             for(var d=0;d<res.length;d++){
               str+="<option value='"+res[d].code+"'>"+res[d].code+"</option>";
             }
-            str+='</select> </td><td><input type="text" class="form-control input-sm money" name="detail_price[]"></td><td><input type="text" class="form-control input-sm money" name="detail_totalprice[]"></td><td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td><td style="width: 65px"> <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button> </td></tr>';
+            str+='</select> </td><td><input type="text" class="form-control input-sm money" name="detail_price[]"></td><td><input type="text" class="form-control input-sm money" name="detail_totalprice[]" readonly></td><td><input type="text" class="form-control input-sm" name="detail_internalnote[]"></td><td style="width: 65px"> <button type="button" class="btn btn-info btn-xs button_add"><i class="fa fa-plus"></i></button> <button type="button" class="btn btn-danger btn-xs button_remove"><i class="fa fa-minus"></i></button> </td></tr>';
             $(".div-tbody").append(str);
             for (var i = 0; i <= $(".numbering").length; i++) {
                 $(".numbering").eq(i).text(i+1);
@@ -1181,13 +1181,16 @@ $(document).on("click",".button_remove",function(){
 
 function count_all(){
   var counter=$("input[name='detail_qty[]']").length;
+  console.log(counter);
   var total_price=0;
   for(var c=0;c<counter;c++){
     var qty=0;
     var price=0;
+    console.log($("input[name='detail_price[]']").eq(c).val());
     qty+=(parseInt($("input[name='detail_qty[]']").eq(c).val().replace(',','')));
     price+=(parseInt($("input[name='detail_price[]']").eq(c).val().replace(',','')));
     total_price+=qty*price;
+    console.log(total_price);
   }
   $("input[name='summary']").val("IDR "+addCommas(total_price));
 
@@ -1203,7 +1206,7 @@ function count_all(){
     var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
     discount_valueonly=discount_valueonly.replace(",","");
     if(discount_valueonly==""){
-      discount_valueonly=0;
+      discount_valueonly="0";
     }
     discount_valueonly=parseFloat(discount_valueonly.trim());
     var total_vat=(total_price*0.1)+total_price-discount_valueonly+(total_price*construction_fee);
@@ -1216,7 +1219,7 @@ function count_all(){
   var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
   discount_valueonly=discount_valueonly.replace(",","");
   if(discount_valueonly==""){
-    discount_valueonly=0;
+    discount_valueonly="0";
   }
   discount_valueonly=parseFloat(discount_valueonly.trim());
   $("input[name='discount']").val("IDR "+addCommas(discount_valueonly));

@@ -375,41 +375,30 @@ tr.mpk-detail > td {
 <?php $this->load->view('purchasing/header'); ?>
     <div class="container-fluid" style="min-height: 76.6vh;">
         <div class="header">
-            <h5 style="font-weight: bold;">Master Data List</h5>
+            <h5 style="font-weight: bold;">Surat Permintaan Barang</h5>
         </div>
         <div class="body">
             <div class="col-md-3 col-md-offset-9" style="text-align:right;">
-                <a href="<?php echo base_url() ?>purchasing/material/create"><button class="btn btn-success"><i class="fa fa-plus"></i> Add New Master Material</button></a>
+                <a href="<?php echo base_url() ?>purchasing/spb/create"><button class="btn btn-success"><i class="fa fa-plus"></i> Add New SPB</button></a>
             </div>
             <div class="col-md-12">
                 <table class="table table-striped table-bordered" id="table_1" width="100%">
                     <thead>
                         <tr>
-                            <td rowspan="2" style="vertical-align: middle">No</td>
-                            <td colspan="5" style="text-align: center">Information</td>
-                            <td rowspan="2" style="vertical-align: middle">Material Type</td>
-                            <td rowspan="2" style="vertical-align: middle">Material Group</td>
-                            <td rowspan="2" style="vertical-align: middle">Remarks</td>
-                        </tr>
-                        <tr>
-                          <td>Material ID</td>
-                          <td>Material Name</td>
-                          <td>UoM</td>
-                          <td>Drawing</td>
-                          <td>Origin</td>
+                          <td>No.</td>
+                          <td>SPB No.</td>
+                          <td>Date</td>
+                          <td>Receive</td>
+                          <td>Remarks</td>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i=1; foreach ($table as $key => $value) {?>
                         <tr>
                           <td><?php echo $i; ?></td>
-                          <td><?php echo $value->material_id; ?></td>
-                          <td><?php echo $value->product_name; ?></td>
-                          <td><?php echo $value->unit_measures; ?></td>
-                          <td><?php echo $value->drawing_number; ?></td>
-                          <td><?php echo $value->warehouse_location; ?></td>
-                          <td><?php echo $value->product_code; ?></td>
-                          <td><?php echo $value->product_category; ?></td>
+                          <td><?php echo $value->spb_no??'' ?></td>
+                          <td><?php echo $value->date??'' ?></td>
+                          <td><?php echo $value->receiver??'' ?></td>
                           <td><center><button class="btn btn-info edit_button" data="<?php echo $value->id; ?>"><i class="fa fa-edit"></i> Edit</button>&nbsp;<button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button></center></td>
                         </tr>
                         <?php $i++; } ?>

@@ -54,10 +54,10 @@ class ppc extends CI_Controller {
 				$this->db->where('is_active', 1);
 				$this->db->order_by('id', 'desc');
 				$data['boq']=$this->db->get()->result();	
-
-
+				// echo $this->db->last_query();
+				// exit();
 				$this->db->select('*');
-				$this->db->from('master_part_material');
+				$this->db->from('master_material');
 				$this->db->where('is_active', 1);
 				$data['material']=$this->db->get()->result();
 
@@ -177,7 +177,7 @@ class ppc extends CI_Controller {
 
 
 				$this->db->select('*');
-				$this->db->from('master_part_material');
+				$this->db->from('master_material');
 				$this->db->where('is_active', 1);
 				$data['material']=$this->db->get()->result();
 
@@ -314,7 +314,7 @@ class ppc extends CI_Controller {
 	}
 	public function dkm_select2(){
 		$this->db->select('*');
-		$this->db->from('master_part_material');
+		$this->db->from('master_material');
 		$this->db->where('is_active', 1);
 		$data['material']=$this->db->get()->result();
 		$response=json_encode($data['material']);

@@ -300,6 +300,7 @@ class Engineering extends CI_Controller {
 					'dimension_type'=>$data_input['dimension_type']??"",
 					'material_group'=>$data_input['material_group']??"",
 					'material_type'=>$data_input['material_type']??"",
+					'material_density'=>$data_input['material_density']??"",
 					'weight_factor'=>$data_input['weight_factor']??"",
 					'surface_area'=>$data_input['surface_area']??"",
 					'hs_number'=>$data_input['hs_number'],
@@ -332,6 +333,7 @@ class Engineering extends CI_Controller {
 					'material_group'=>$data_input['material_group']??"",
 					'material_type'=>$data_input['material_type']??"",
 					'weight_factor'=>$data_input['weight_factor']??"",
+					'material_density'=>$data_input['material_density']??"",
 					'surface_area'=>$data_input['surface_area']??"",
 					'hs_number'=>$data_input['hs_number'],
 					'point_factor'=>$data_input['paint_factor'],
@@ -358,6 +360,16 @@ class Engineering extends CI_Controller {
 			$this->load->view('engineering/part_list',$data);
 		}
 		
+	}
+
+	public function material_check(){
+		$data_input=$this->input->post();
+
+		$this->db->select('*');
+		$this->db->from('master_part_material');
+		$this->db->like('material_id', $data_input['id'], 'BOTH');
+		$result=$this->db->get()->result();
+		echo json_encode($result);
 	}
 
 	public function material_list(){
