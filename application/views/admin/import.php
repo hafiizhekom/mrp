@@ -381,8 +381,6 @@ tr.mpk-detail > td {
         <div class="body">
             <div class="col-md-12">
                 <form method="POST" enctype="multipart/form-data" class="form form-horizontal" action="<?php echo base_url() ?>admin/import_data">
-    <input type="hidden" class="hidden" value="">
-    <input type="hidden" name="_token" value="I9HSMgOy9cOAeVQlhF68qUm3WgPS3boaS8MzkUUk">
     <div class="wrapper">
         <div class="box">
             <div class="box-body">
@@ -394,7 +392,7 @@ tr.mpk-detail > td {
                             </label>
                             <div class="col-md-9">
                                 <select class="selectpicker form-control" data-live-search="true" name="module">
-                                    <option selected disalbed>Please Select</option>
+                                    <option selected disabled>Please Select</option>
                                     <option value="project">Project</option>
                                     <option value="customer">Customer</option>
                                     <option value="Quotation">Quotation</option>
@@ -435,4 +433,24 @@ tr.mpk-detail > td {
     </div>
 
 <?php $this->load->view('template/footer'); ?>
+<script>
+var data="<?php echo $_GET['res']??'' ?>";
+if(data=="fail"){
+  $.toast({
+      heading: 'Error',
+      text: 'Password Not Correct',
+      showHideTransition: 'slide',
+      icon: 'error',
+      position : 'top-center'
+  })
+}else if(data=="success"){
+  $.toast({
+      heading: 'Success',
+      text: 'Successfuly Login',
+      showHideTransition: 'slide',
+      icon: 'success',
+      position : 'middle'
+  })
+}
+</script>
 </body></html>

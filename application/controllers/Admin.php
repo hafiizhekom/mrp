@@ -940,6 +940,468 @@ class admin extends CI_Controller {
 	}
 
 	public function import_data(){
-		header("Location: ".base_url()."admin/import");
+		$data_input=$this->input->post();
+		if($data_input['module']=="material"){
+			$cekpertama=explode('.', $_FILES['file']['name']);
+			if($cekpertama[1]!="xlsx"){
+				$response = array(
+					'response' => 'failed',
+				);
+				echo json_encode($response);
+				header("Location: ".base_url()."admin/import?res=failed");
+				exit();
+			}
+			$spreadsheet = new Spreadsheet();
+			$sheet = $spreadsheet->getActiveSheet();
+			$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
+			$spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+			$i=1;
+			$cellValue="1";
+			while (!empty($cellValue)) {
+				$cellValue = $spreadsheet->getActiveSheet()->getCell('A'.$i)->getValue();
+				$i+=1;
+			}
+			$berakhir=$i-1;
+			$tempat_save = array();
+			for ($i=2; $i < $berakhir ; $i++) {
+				$data_addendum = array(
+					'vendor_outsource'=>$spreadsheet->getActiveSheet()->getCell('B'.$i)->getValue(),
+					'part_code'=>$spreadsheet->getActiveSheet()->getCell('C'.$i)->getValue(),
+					'product_name'=>$spreadsheet->getActiveSheet()->getCell('D'.$i)->getValue(),
+					'product_code'=>$spreadsheet->getActiveSheet()->getCell('I'.$i)->getValue(),
+					'unit_measures'=>$spreadsheet->getActiveSheet()->getCell('R'.$i)->getValue(),
+					'dimension_type'=>$spreadsheet->getActiveSheet()->getCell('S'.$i)->getValue(),
+					'material_group'=>$spreadsheet->getActiveSheet()->getCell('T'.$i)->getValue(),
+					'weight_factor'=>$spreadsheet->getActiveSheet()->getCell('Z'.$i)->getValue(),
+					'length'=>$spreadsheet->getActiveSheet()->getCell('Y'.$i)->getValue(),
+					'width'=>$spreadsheet->getActiveSheet()->getCell('AO'.$i)->getValue(),
+					'thick'=>$spreadsheet->getActiveSheet()->getCell('AN'.$i)->getValue(),
+					'volume_formula'=>$spreadsheet->getActiveSheet()->getCell('AP'.$i)->getValue(),
+					'area_formula'=>$spreadsheet->getActiveSheet()->getCell('AS'.$i)->getValue(),
+					'code'=>$spreadsheet->getActiveSheet()->getCell('C'.$i)->getValue(),
+					'is_active'=>1
+				);
+				array_push($tempat_save, $data_addendum);
+			}
+			foreach ($tempat_save as $key => $value) {
+				if($value['code']=="A36"){
+					$this->db->select('material_id');
+					$this->db->from('master_material');
+					$this->db->like('material_id', 'PLS', 'AFTER');
+					$this->db->order_by('material_id', 'desc');
+					$this->db->limit(1);
+					$terakhir=$this->db->get()->row();
+					if(empty($terakhir->material_id)){
+						$terakhir->material_id='PLS00'.$terakhir->material_id;
+					}else{
+						$terakhir->material_id=str_replace('PLS', '', $terakhir->material_id);
+						$terakhir->material_id=((int)$terakhir->material_id)+1;
+						if($terakhir->material_id>99){
+							$terakhir->material_id='PLS'.$terakhir->material_id;
+						}else if($terakhir->material_id>9){
+							$terakhir->material_id='PLS0'.$terakhir->material_id;
+						}else{
+							$terakhir->material_id='PLS00'.$terakhir->material_id;
+						}	
+					}
+					
+					$weight_formula=$value['volume_formula'];
+					// echo $weight_formula;
+					// echo "<br>";
+					if(strpos($value['volume_formula'], 'length')>=0){
+						$weight_formula=str_replace('length', $value['length'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'width')>=0){
+						$weight_formula=str_replace('width', $value['width'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'thick')>=0){
+						$weight_formula=str_replace('thick', $value['thick'], $weight_formula);
+					}
+					// echo $weight_formula;
+					$weight_formula=eval('return '.$weight_formula.';');
+					$weight_formula=floatval($weight_formula)/1000000;
+					if($value['weight_factor']==""){
+						$value['weight_factor']=1;
+					}
+					
+					$weight_formula=$weight_formula*$value['weight_factor'];
+
+					$insert_array = array(
+						'material_id'=>$terakhir->material_id,
+						'vendor_outsource'=>$value['vendor_outsource'],
+						'part_code'=>$value['part_code'],
+						'product_name'=>$value['product_name'],
+						'product_code'=>$value['product_code'],
+						'unit_measures'=>$value['unit_measures'],
+						'dimension_type'=>$value['dimension_type'],
+						'material_group'=>$value['material_group'],
+						'weight_factor'=>$value['weight_factor'],
+						'length'=>$value['length'],
+						'width'=>$value['width'],
+						'thick'=>$value['thick'],
+						'volume_formula'=>$value['volume_formula'],
+						'area_formula'=>$value['area_formula'],
+						'weight'=>$weight_formula,
+						'is_active'=>1
+					);
+					$this->db->insert('master_material', $insert_array);
+				}else if($value['code']=="S45C"){
+					$this->db->select('material_id');
+					$this->db->from('master_material');
+					$this->db->like('material_id', 'RBS', 'AFTER');
+					$this->db->order_by('material_id', 'desc');
+					$this->db->limit(1);
+					$terakhir=$this->db->get()->row();
+					if(empty($terakhir->material_id)){
+						$terakhir->material_id='RBS00'.$terakhir->material_id;
+					}else{
+						$terakhir->material_id=str_replace('RBS', '', $terakhir->material_id);
+						$terakhir->material_id=((int)$terakhir->material_id)+1;
+						if($terakhir->material_id>99){
+							$terakhir->material_id='RBS'.$terakhir->material_id;
+						}else if($terakhir->material_id>9){
+							$terakhir->material_id='RBS0'.$terakhir->material_id;
+						}else{
+							$terakhir->material_id='RBS00'.$terakhir->material_id;
+						}	
+					}
+					
+					$weight_formula=$value['volume_formula'];
+					// echo $weight_formula;
+					// echo "<br>";
+					if(strpos($value['volume_formula'], 'length')>=0){
+						$weight_formula=str_replace('length', $value['length'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'width')>=0){
+						$weight_formula=str_replace('width', $value['width'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'thick')>=0){
+						$weight_formula=str_replace('thick', $value['thick'], $weight_formula);
+					}
+					// echo $weight_formula;
+					$weight_formula=eval('return '.$weight_formula.';');
+					$weight_formula=floatval($weight_formula)/1000000;
+					if($value['weight_factor']==""){
+						$value['weight_factor']=1;
+					}
+					
+					$weight_formula=$weight_formula*$value['weight_factor'];
+
+					$insert_array = array(
+						'material_id'=>$terakhir->material_id,
+						'vendor_outsource'=>$value['vendor_outsource'],
+						'part_code'=>$value['part_code'],
+						'product_name'=>$value['product_name'],
+						'product_code'=>$value['product_code'],
+						'unit_measures'=>$value['unit_measures'],
+						'dimension_type'=>$value['dimension_type'],
+						'material_group'=>$value['material_group'],
+						'weight_factor'=>$value['weight_factor'],
+						'length'=>$value['length'],
+						'width'=>$value['width'],
+						'thick'=>$value['thick'],
+						'volume_formula'=>$value['volume_formula'],
+						'area_formula'=>$value['area_formula'],
+						'weight'=>$weight_formula,
+						'is_active'=>1
+					);
+					$this->db->insert('master_material', $insert_array);
+				}else if($value['code']=="SS41"){
+					$this->db->select('material_id');
+					$this->db->from('master_material');
+					$this->db->like('material_id', 'ROS', 'AFTER');
+					$this->db->order_by('material_id', 'desc');
+					$this->db->limit(1);
+					$terakhir=$this->db->get()->row();
+					if(empty($terakhir->material_id)){
+						$terakhir->material_id='ROS00'.$terakhir->material_id;
+					}else{
+						$terakhir->material_id=str_replace('ROS', '', $terakhir->material_id);
+						$terakhir->material_id=((int)$terakhir->material_id)+1;
+						if($terakhir->material_id>99){
+							$terakhir->material_id='ROS'.$terakhir->material_id;
+						}else if($terakhir->material_id>9){
+							$terakhir->material_id='ROS0'.$terakhir->material_id;
+						}else{
+							$terakhir->material_id='ROS00'.$terakhir->material_id;
+						}	
+					}
+					
+					$weight_formula=$value['volume_formula'];
+					// echo $weight_formula;
+					// echo "<br>";
+					if(strpos($value['volume_formula'], 'length')>=0){
+						$weight_formula=str_replace('length', $value['length'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'width')>=0){
+						$weight_formula=str_replace('width', $value['width'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'thick')>=0){
+						$weight_formula=str_replace('thick', $value['thick'], $weight_formula);
+					}
+					// echo $weight_formula;
+					$weight_formula=eval('return '.$weight_formula.';');
+					$weight_formula=floatval($weight_formula)/1000000;
+					if($value['weight_factor']==""){
+						$value['weight_factor']=1;
+					}
+					
+					$weight_formula=$weight_formula*$value['weight_factor'];
+
+					$insert_array = array(
+						'material_id'=>$terakhir->material_id,
+						'vendor_outsource'=>$value['vendor_outsource'],
+						'part_code'=>$value['part_code'],
+						'product_name'=>$value['product_name'],
+						'product_code'=>$value['product_code'],
+						'unit_measures'=>$value['unit_measures'],
+						'dimension_type'=>$value['dimension_type'],
+						'material_group'=>$value['material_group'],
+						'weight_factor'=>$value['weight_factor'],
+						'length'=>$value['length'],
+						'width'=>$value['width'],
+						'thick'=>$value['thick'],
+						'volume_formula'=>$value['volume_formula'],
+						'area_formula'=>$value['area_formula'],
+						'weight'=>$weight_formula,
+						'is_active'=>1
+					);
+					$this->db->insert('master_material', $insert_array);
+				}
+			}
+			// echo json_encode($tempat_save);
+			header("Location: ".base_url()."admin/import?res=success");
+		}else if ($data_input['module']=="master_part"){
+			$cekpertama=explode('.', $_FILES['file']['name']);
+			if($cekpertama[1]!="xlsx"){
+				$response = array(
+					'response' => 'failed',
+				);
+				header("Location: ".base_url()."admin/import?res=failed");
+				exit();
+			}
+			$spreadsheet = new Spreadsheet();
+			$sheet = $spreadsheet->getActiveSheet();
+			$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader("Xlsx");
+			$spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+			$i=1;
+			$cellValue="1";
+			while (!empty($cellValue)) {
+				$cellValue = $spreadsheet->getActiveSheet()->getCell('A'.$i)->getValue();
+				$i+=1;
+			}
+			$berakhir=$i-1;
+			$tempat_save = array();
+			for ($i=2; $i < $berakhir ; $i++) {
+				$data_addendum = array(
+					'vendor_outsource'=>$spreadsheet->getActiveSheet()->getCell('B'.$i)->getValue(),
+					'part_code'=>$spreadsheet->getActiveSheet()->getCell('C'.$i)->getValue(),
+					'product_name'=>$spreadsheet->getActiveSheet()->getCell('D'.$i)->getValue(),
+					'product_code'=>$spreadsheet->getActiveSheet()->getCell('I'.$i)->getValue(),
+					'unit_measures'=>$spreadsheet->getActiveSheet()->getCell('R'.$i)->getValue(),
+					'dimension_type'=>$spreadsheet->getActiveSheet()->getCell('S'.$i)->getValue(),
+					'material_group'=>$spreadsheet->getActiveSheet()->getCell('T'.$i)->getValue(),
+					'weight_factor'=>$spreadsheet->getActiveSheet()->getCell('Z'.$i)->getValue(),
+					'length'=>$spreadsheet->getActiveSheet()->getCell('Y'.$i)->getValue(),
+					'width'=>$spreadsheet->getActiveSheet()->getCell('AO'.$i)->getValue(),
+					'thick'=>$spreadsheet->getActiveSheet()->getCell('AN'.$i)->getValue(),
+					'volume_formula'=>$spreadsheet->getActiveSheet()->getCell('AP'.$i)->getValue(),
+					'area_formula'=>$spreadsheet->getActiveSheet()->getCell('AS'.$i)->getValue(),
+					'code'=>$spreadsheet->getActiveSheet()->getCell('C'.$i)->getValue(),
+					'is_active'=>1
+				);
+				array_push($tempat_save, $data_addendum);
+			}
+			foreach ($tempat_save as $key => $value) {
+				if($value['code']=="A36"){
+					$this->db->select('material_id');
+					$this->db->from('master_part_material');
+					$this->db->like('material_id', 'PLS', 'AFTER');
+					$this->db->order_by('material_id', 'desc');
+					$this->db->limit(1);
+					$terakhir=$this->db->get()->row();
+					if(empty($terakhir->material_id)){
+						$terakhir->material_id='PLS00'.$terakhir->material_id;
+					}else{
+						$terakhir->material_id=str_replace('PLS', '', $terakhir->material_id);
+						$terakhir->material_id=((int)$terakhir->material_id)+1;
+						if($terakhir->material_id>99){
+							$terakhir->material_id='PLS'.$terakhir->material_id;
+						}else if($terakhir->material_id>9){
+							$terakhir->material_id='PLS0'.$terakhir->material_id;
+						}else{
+							$terakhir->material_id='PLS00'.$terakhir->material_id;
+						}	
+					}
+					
+					$weight_formula=$value['volume_formula'];
+					// echo $weight_formula;
+					// echo "<br>";
+					if(strpos($value['volume_formula'], 'length')>=0){
+						$weight_formula=str_replace('length', $value['length'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'width')>=0){
+						$weight_formula=str_replace('width', $value['width'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'thick')>=0){
+						$weight_formula=str_replace('thick', $value['thick'], $weight_formula);
+					}
+					// echo $weight_formula;
+					$weight_formula=eval('return '.$weight_formula.';');
+					$weight_formula=floatval($weight_formula)/1000000;
+					if($value['weight_factor']==""){
+						$value['weight_factor']=1;
+					}
+					
+					$weight_formula=$weight_formula*$value['weight_factor'];
+
+					$insert_array = array(
+						'material_id'=>$terakhir->material_id,
+						'vendor_outsource'=>$value['vendor_outsource'],
+						'part_code'=>$value['part_code'],
+						'product_name'=>$value['product_name'],
+						'product_code'=>$value['product_code'],
+						'unit_measures'=>$value['unit_measures'],
+						'dimension_type'=>$value['dimension_type'],
+						'material_group'=>$value['material_group'],
+						'weight_factor'=>$value['weight_factor'],
+						'length'=>$value['length'],
+						'width'=>$value['width'],
+						'thick'=>$value['thick'],
+						'volume_formula'=>$value['volume_formula'],
+						'area_formula'=>$value['area_formula'],
+						'weight'=>$weight_formula,
+						'is_active'=>1
+					);
+					$this->db->insert('master_part_material', $insert_array);
+				}else if($value['code']=="S45C"){
+					$this->db->select('material_id');
+					$this->db->from('master_part_material');
+					$this->db->like('material_id', 'RBS', 'AFTER');
+					$this->db->order_by('material_id', 'desc');
+					$this->db->limit(1);
+					$terakhir=$this->db->get()->row();
+					if(empty($terakhir->material_id)){
+						$terakhir->material_id='RBS00'.$terakhir->material_id;
+					}else{
+						$terakhir->material_id=str_replace('RBS', '', $terakhir->material_id);
+						$terakhir->material_id=((int)$terakhir->material_id)+1;
+						if($terakhir->material_id>99){
+							$terakhir->material_id='RBS'.$terakhir->material_id;
+						}else if($terakhir->material_id>9){
+							$terakhir->material_id='RBS0'.$terakhir->material_id;
+						}else{
+							$terakhir->material_id='RBS00'.$terakhir->material_id;
+						}	
+					}
+					
+					$weight_formula=$value['volume_formula'];
+					// echo $weight_formula;
+					// echo "<br>";
+					if(strpos($value['volume_formula'], 'length')>=0){
+						$weight_formula=str_replace('length', $value['length'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'width')>=0){
+						$weight_formula=str_replace('width', $value['width'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'thick')>=0){
+						$weight_formula=str_replace('thick', $value['thick'], $weight_formula);
+					}
+					// echo $weight_formula;
+					$weight_formula=eval('return '.$weight_formula.';');
+					$weight_formula=floatval($weight_formula)/1000000;
+					if($value['weight_factor']==""){
+						$value['weight_factor']=1;
+					}
+					
+					$weight_formula=$weight_formula*$value['weight_factor'];
+
+					$insert_array = array(
+						'material_id'=>$terakhir->material_id,
+						'vendor_outsource'=>$value['vendor_outsource'],
+						'part_code'=>$value['part_code'],
+						'product_name'=>$value['product_name'],
+						'product_code'=>$value['product_code'],
+						'unit_measures'=>$value['unit_measures'],
+						'dimension_type'=>$value['dimension_type'],
+						'material_group'=>$value['material_group'],
+						'weight_factor'=>$value['weight_factor'],
+						'length'=>$value['length'],
+						'width'=>$value['width'],
+						'thick'=>$value['thick'],
+						'volume_formula'=>$value['volume_formula'],
+						'area_formula'=>$value['area_formula'],
+						'weight'=>$weight_formula,
+						'is_active'=>1
+					);
+					$this->db->insert('master_part_material', $insert_array);
+				}else if($value['code']=="SS41"){
+					$this->db->select('material_id');
+					$this->db->from('master_part_material');
+					$this->db->like('material_id', 'ROS', 'AFTER');
+					$this->db->order_by('material_id', 'desc');
+					$this->db->limit(1);
+					$terakhir=$this->db->get()->row();
+					if(empty($terakhir->material_id)){
+						$terakhir->material_id='ROS00'.$terakhir->material_id;
+					}else{
+						$terakhir->material_id=str_replace('ROS', '', $terakhir->material_id);
+						$terakhir->material_id=((int)$terakhir->material_id)+1;
+						if($terakhir->material_id>99){
+							$terakhir->material_id='ROS'.$terakhir->material_id;
+						}else if($terakhir->material_id>9){
+							$terakhir->material_id='ROS0'.$terakhir->material_id;
+						}else{
+							$terakhir->material_id='ROS00'.$terakhir->material_id;
+						}	
+					}
+					
+					$weight_formula=$value['volume_formula'];
+					// echo $weight_formula;
+					// echo "<br>";
+					if(strpos($value['volume_formula'], 'length')>=0){
+						$weight_formula=str_replace('length', $value['length'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'width')>=0){
+						$weight_formula=str_replace('width', $value['width'], $weight_formula);
+					}
+					if(strpos($value['volume_formula'], 'thick')>=0){
+						$weight_formula=str_replace('thick', $value['thick'], $weight_formula);
+					}
+					// echo $weight_formula;
+					$weight_formula=eval('return '.$weight_formula.';');
+					$weight_formula=floatval($weight_formula)/1000000;
+					if($value['weight_factor']==""){
+						$value['weight_factor']=1;
+					}
+					
+					$weight_formula=$weight_formula*$value['weight_factor'];
+
+					$insert_array = array(
+						'material_id'=>$terakhir->material_id,
+						'vendor_outsource'=>$value['vendor_outsource'],
+						'part_code'=>$value['part_code'],
+						'product_name'=>$value['product_name'],
+						'product_code'=>$value['product_code'],
+						'unit_measures'=>$value['unit_measures'],
+						'dimension_type'=>$value['dimension_type'],
+						'material_group'=>$value['material_group'],
+						'weight_factor'=>$value['weight_factor'],
+						'length'=>$value['length'],
+						'width'=>$value['width'],
+						'thick'=>$value['thick'],
+						'volume_formula'=>$value['volume_formula'],
+						'area_formula'=>$value['area_formula'],
+						'weight'=>$weight_formula,
+						'is_active'=>1
+					);
+					$this->db->insert('master_part_material', $insert_array);
+				}
+			}
+			header("Location: ".base_url()."admin/import?res=success");
+		}
+		// redirect('','refresh')
+
+		
 	}
 }
