@@ -1316,7 +1316,7 @@ class Marketing extends CI_Controller {
 				$this->db->select('*');
 				$this->db->from('quotation');
 				$this->db->where('is_active', 1);
-				$this->db->where('id', $data_input['id']);
+				$this->db->where('qn_number', $data['header']->quotation_id);
 				$data['quotation_header']=$this->db->get()->row();
 
 				$this->db->select('*');
@@ -1442,7 +1442,7 @@ class Marketing extends CI_Controller {
 			$this->db->select('a.*,c.name as customer_name,b.qn_number,d.name as project_name,b.order_type,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,e.name as marketing,calc.grand_total_vat');
 			$this->db->from('job_order as a');
 			$this->db->where('a.is_active', 1);
-			$this->db->join('quotation as b', 'a.quotation_id = b.id', 'left');
+			$this->db->join('quotation as b', 'a.quotation_id = b.qn_number', 'left');
 			$this->db->join('customer as c', 'c.id = b.customer_id', 'left');
 			$this->db->join('project as d', 'd.id = b.project_id', 'left');
 			$this->db->join('project_contact as e', 'e.id =b.pic_id ', 'left');

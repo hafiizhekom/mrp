@@ -400,6 +400,7 @@ tr.mpk-detail > td {
                                     <option value="Quotation">Quotation</option>
                                     <option value="job order">Job Order</option>
                                     <option value="material">Material</option>
+                                    <option value="master_part">Master Part</option>
                                     <option value="consumable">Consumable</option>
                                     <option value="equipment">Equipment</option>
                                 </select>
