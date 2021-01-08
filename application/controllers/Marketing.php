@@ -1515,10 +1515,70 @@ class Marketing extends CI_Controller {
 	}
 
 	public function document(){
-		$this->db->select('*');
-		$this->db->from('job_order');
-		$this->db->where('is_active', 1);
-		$data['jo']=$this->db->get()->result();
+		$data_input=$this->input->post();
+		if(!empty($data_input)){
+			if(!empty($_FILES['file'])){
+				// echo var_dump($_FILES['file']);
+				$target_dir = "images/";
+				$target_file = $target_dir . basename($_FILES["file"]["name"]);
+				move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+				if(!empty($data_input['id'])){
+					$insert_update = array(
+						'jo_no' =>$data_input['job_number']??"",
+						'title'=>$data_input['title']??"",
+						'type_name'=>$data_input['type_id']??"",
+						'note'=>$data_input['note']??"",
+						'file_name'=>$_FILES["file"]["name"]??"",
+						'valid_from'=>$data_input['start_date']??"",
+						'valid_until'=>$data_input['end_date']??"",
+						'reminder'=>$data_input['reminder']??"",
+						'is_active'=>1 
+					);
+					$this->db->where('id', $data_input['id']);
+					$this->db->update('marketing_document', $insert_update);
+				}else{
+					$insert_update = array(
+						'jo_no' =>$data_input['job_number']??"",
+						'title'=>$data_input['title']??"",
+						'type_name'=>$data_input['type_id']??"",
+						'note'=>$data_input['note']??"",
+						'file_name'=>$_FILES["file"]["name"]??"",
+						'valid_from'=>$data_input['start_date']??"",
+						'valid_until'=>$data_input['end_date']??"",
+						'reminder'=>$data_input['reminder']??"",
+						'is_active'=>1 
+					);
+					$this->db->insert('marketing_document', $insert_update);
+				}
+			}
+			if(!empty($data_input['id_delete'])){
+				$insert_update = array(
+						'is_active'=>0 
+					);
+				$this->db->where('id', $data_input['id_delete']);
+				$this->db->update('marketing_document', $insert_update);
+			}
+			$this->db->select('a.id,a.job_number,b.delivery_date as po_date,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,b.order_type,b.status,c.name as company_name,b.created_by');
+			$this->db->from('job_order as a');
+			$this->db->join('quotation as b', 'a.quotation_id=b.id', 'left');
+			$this->db->join('customer as c', 'b.customer_id=c.id', 'left');
+			$this->db->where('a.is_active', 1);
+			$this->db->where('a.job_number', $data_input['job_number']);
+			$data['header']=$this->db->get()->row();
+
+			$this->db->select('*');
+			$this->db->from('marketing_document');
+			$this->db->where('jo_no', $data_input['job_number']);
+			$this->db->where('is_active', 1);
+			$data['table']=$this->db->get()->result();
+
+		}
+		
+
+		$this->db->select('a.id,a.job_number');
+		$this->db->where('a.is_active', 1);
+		$this->db->from('job_order as a');
+		$data['choice']=$this->db->get()->result();
 
 		$this->load->view('marketing/document_form', $data);
 	}

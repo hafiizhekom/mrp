@@ -396,6 +396,11 @@ class ppc extends CI_Controller {
 		redirect('ppc/dkm','refresh');
 	}
 
+	public function packing(){
+		$data=null;
+		$this->load->view('ppic/packing', $data);
+	}
+
 	public function mpk($param=null){
 		if($param=="create"){
 
