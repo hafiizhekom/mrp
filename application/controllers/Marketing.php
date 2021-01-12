@@ -559,38 +559,38 @@ class Marketing extends CI_Controller {
 			$data_input=$this->input->post();
 			if(empty($data_input['id'])){
 				$insert_table = array(
-					'customer_id' =>$data_input['customer'],
-					'project_id'=>$data_input['project'],
-					'pic_id'=>$data_input['pic'],
-					'qn_number'=>$data_input['qn_number'],
-					'order_type'=>$data_input['order_type'],
-					'qn_date'=>$data_input['qn_date'],
-					'inquiry_reff'=>$data_input['inq_ref'],
-					'rev_no'=>$data_input['rev_no'],
-					'rev_date'=>$data_input['rev_date'],
+					'customer_id' =>$data_input['customer']??"",
+					'project_id'=>$data_input['project']??"",
+					'pic_id'=>$data_input['pic']??"",
+					'qn_number'=>$data_input['qn_number']??"",
+					'order_type'=>$data_input['order_type']??"",
+					'qn_date'=>$data_input['qn_date']??"",
+					'inquiry_reff'=>$data_input['inq_ref']??"",
+					'rev_no'=>$data_input['rev_no']??"",
+					'rev_date'=>$data_input['rev_date']??"",
 					'status'=>"on progress",
-					'delivery_date'=>$data_input['delivery_date'],
-					'delivery_to'=>$data_input['delivery_to'],
-					'currency'=>$data_input['currency'],
-					'vat'=>$data_input['vat'],
-					'construction_fee'=>$data_input['contruction_fee'],
-					'terms'=>$data_input['terms'],
-					'lead_time'=>$data_input['lead'],
-					'quotation_valid'=>$data_input['valid'],
-					'subject'=>$data_input['subject'],
-					'note'=>$data_input['note'],
-					'attachment'=>$data_input['attachment'],
-					'fabrication'=>$data_input['fabrication'],
-					'material'=>$data_input['material'],
-					'sandblasting'=>$data_input['sandblasting'],
-					'painting'=>$data_input['painting'],
-					'asbuiltdrawing'=>$data_input['drawing'],
-					'galvanished'=>$data_input['galvanished'],
-					'erection'=>$data_input['erection'],
-					'packing'=>$data_input['packing'],
-					'ndt'=>$data_input['ndt'],
-					'certificate'=>$data_input['certificate'],
-					'delivery'=>$data_input['delivery'],
+					'delivery_date'=>$data_input['delivery_date']??"",
+					'delivery_to'=>$data_input['delivery_to']??"",
+					'currency'=>$data_input['currency']??"",
+					'vat'=>$data_input['vat']??"",
+					'construction_fee'=>$data_input['contruction_fee']??"",
+					'terms'=>$data_input['terms']??"",
+					'lead_time'=>$data_input['lead']??"",
+					'quotation_valid'=>$data_input['valid']??"",
+					'subject'=>$data_input['subject']??"",
+					'note'=>$data_input['note']??"",
+					'attachment'=>$data_input['attachment']??"",
+					'fabrication'=>$data_input['fabrication']??"",
+					'material'=>$data_input['material']??"",
+					'sandblasting'=>$data_input['sandblasting']??"",
+					'painting'=>$data_input['painting']??"",
+					'asbuiltdrawing'=>$data_input['drawing']??"",
+					'galvanished'=>$data_input['galvanished']??"",
+					'erection'=>$data_input['erection']??"",
+					'packing'=>$data_input['packing']??"",
+					'ndt'=>$data_input['ndt']??"",
+					'certificate'=>$data_input['certificate']??"",
+					'delivery'=>$data_input['delivery']??"",
 					'is_active'=>1 
 				);
 				$this->db->insert('quotation', $insert_table);
@@ -604,10 +604,10 @@ class Marketing extends CI_Controller {
 
 				$insert_detail_calc = array(
 					'quotation_id' => $kode->id,
-					'grand_summary'=>$data_input['summary'],
-					'rounding_discount'=>$data_input['discount'],
-					'construction_fee'=>$data_input['construction'],
-					'grand_total_vat'=>$data_input['total_vat'],
+					'grand_summary'=>$data_input['summary']??"",
+					'rounding_discount'=>$data_input['discount']??"",
+					'construction_fee'=>$data_input['construction']??"",
+					'grand_total_vat'=>$data_input['total_vat']??"",
 					'is_active'=>1 
 				);
 				$this->db->insert('quotation_calc', $insert_detail_calc);
@@ -615,11 +615,11 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['detail_id']) ; $i++) { 
 					$insert_detail = array(
 						'quotation_id' =>$kode->id ,
-						'description'=>$data_input['detail_desc'][$i],
-						'qty'=>$data_input['detail_qty'][$i],
-						'unit'=>$data_input['detail_unit'][$i],
-						'price'=>$data_input['detail_price'][$i],
-						'total_price'=>$data_input['detail_totalprice'][$i],
+						'description'=>$data_input['detail_desc'][$i]??"",
+						'qty'=>$data_input['detail_qty'][$i]??"",
+						'unit'=>$data_input['detail_unit'][$i]??"",
+						'price'=>$data_input['detail_price'][$i]??"",
+						'total_price'=>$data_input['detail_totalprice'][$i]??"",
 						'is_active'=>1 
 					);
 					$this->db->insert('quotation_detail', $insert_detail);
@@ -627,38 +627,38 @@ class Marketing extends CI_Controller {
 				header("Location:".base_url()."marketing/quotation?res=success");
 			}else{
 				$insert_table = array(
-					'customer_id' =>$data_input['customer'],
-					'project_id'=>$data_input['project'],
-					'pic_id'=>$data_input['pic'],
-					'qn_number'=>$data_input['qn_number'],
-					'order_type'=>$data_input['order_type'],
-					'qn_date'=>$data_input['qn_date'],
-					'inquiry_reff'=>$data_input['inq_ref'],
-					'rev_no'=>$data_input['rev_no'],
-					'rev_date'=>$data_input['rev_date'],
+					'customer_id' =>$data_input['customer']??"",
+					'project_id'=>$data_input['project']??"",
+					'pic_id'=>$data_input['pic']??"",
+					'qn_number'=>$data_input['qn_number']??"",
+					'order_type'=>$data_input['order_type']??"",
+					'qn_date'=>$data_input['qn_date']??"",
+					'inquiry_reff'=>$data_input['inq_ref']??"",
+					'rev_no'=>$data_input['rev_no']??"",
+					'rev_date'=>$data_input['rev_date']??"",
 					'status'=>"on progress",
-					'delivery_date'=>$data_input['delivery_date'],
-					'delivery_to'=>$data_input['delivery_to'],
-					'currency'=>$data_input['currency'],
-					'vat'=>$data_input['vat'],
-					'construction_fee'=>$data_input['contruction_fee'],
-					'terms'=>$data_input['terms'],
-					'lead_time'=>$data_input['lead'],
-					'quotation_valid'=>$data_input['valid'],
-					'subject'=>$data_input['subject'],
-					'note'=>$data_input['note'],
-					'attachment'=>$data_input['attachment'],
-					'fabrication'=>$data_input['fabrication'],
-					'material'=>$data_input['material'],
-					'sandblasting'=>$data_input['sandblasting'],
-					'painting'=>$data_input['painting'],
-					'asbuiltdrawing'=>$data_input['drawing'],
-					'galvanished'=>$data_input['galvanished'],
-					'erection'=>$data_input['erection'],
-					'packing'=>$data_input ['packing'],
-					'ndt'=>$data_input['ndt'],
-					'certificate'=>$data_input['certificate'],
-					'delivery'=>$data_input['delivery'],
+					'delivery_date'=>$data_input['delivery_date']??"",
+					'delivery_to'=>$data_input['delivery_to']??"",
+					'currency'=>$data_input['currency']??"",
+					'vat'=>$data_input['vat']??"",
+					'construction_fee'=>$data_input['contruction_fee']??"",
+					'terms'=>$data_input['terms']??"",
+					'lead_time'=>$data_input['lead']??"",
+					'quotation_valid'=>$data_input['valid']??"",
+					'subject'=>$data_input['subject']??"",
+					'note'=>$data_input['note']??"",
+					'attachment'=>$data_input['attachment']??"",
+					'fabrication'=>$data_input['fabrication']??"",
+					'material'=>$data_input['material']??"",
+					'sandblasting'=>$data_input['sandblasting']??"",
+					'painting'=>$data_input['painting']??"",
+					'asbuiltdrawing'=>$data_input['drawing']??"",
+					'galvanished'=>$data_input['galvanished']??"",
+					'erection'=>$data_input['erection']??"",
+					'packing'=>$data_input ['packing']??"",
+					'ndt'=>$data_input['ndt']??"",
+					'certificate'=>$data_input['certificate']??"",
+					'delivery'=>$data_input['delivery']??"",
 					'is_active'=>1 
 				);
 				$this->db->where('id', $data_input['id']);
@@ -685,11 +685,11 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['detail_id']) ; $i++) { 
 					$insert_detail = array(
 						'quotation_id' =>$kode,
-						'description'=>$data_input['detail_desc'][$i],
-						'qty'=>$data_input['detail_qty'][$i],
-						'unit'=>$data_input['detail_unit'][$i],
-						'price'=>$data_input['detail_price'][$i],
-						'total_price'=>$data_input['detail_totalprice'][$i],
+						'description'=>$data_input['detail_desc'][$i]??"",
+						'qty'=>$data_input['detail_qty'][$i]??"",
+						'unit'=>$data_input['detail_unit'][$i]??"",
+						'price'=>$data_input['detail_price'][$i]??"",
+						'total_price'=>$data_input['detail_totalprice'][$i]??"",
 						'is_active'=>1 
 					);
 					$this->db->insert('quotation_detail', $insert_detail);
@@ -801,12 +801,12 @@ class Marketing extends CI_Controller {
 					$finished=1;
 				}
 				$insert_table = array(
-					'customer_id'=>$data_input['customer'],
-					'name'=>$data_input['name'],
-					'location'=>$data_input['location'],
-					'note'=>$data_input['note'],
-					'start_date'=>$data_input['start_date'],
-					'end_date'=>$data_input['end_date'],
+					'customer_id'=>$data_input['customer']??"",
+					'name'=>$data_input['name']??"",
+					'location'=>$data_input['location']??"",
+					'note'=>$data_input['note']??"",
+					'start_date'=>$data_input['start_date']??"",
+					'end_date'=>$data_input['end_date']??"",
 					'is_finished'=>$finished,
 					'is_active'=>1, 
 				);
@@ -819,11 +819,11 @@ class Marketing extends CI_Controller {
 
 				for ($i=0; $i <count($data_input['contact_id']) ; $i++) { 
 					$insert_detail = array(
-						'project_id'=>$data_input['contact_id'][$i],
-						'name'=>$data_input['contact_name'][$i],
-						'handphone'=>$data_input['contact_handphone'][$i],
-						'email'=>$data_input['contact_email'][$i],
-						'position'=>$data_input['contact_position'][$i],
+						'project_id'=>$data_input['contact_id'][$i]??"",
+						'name'=>$data_input['contact_name'][$i]??"",
+						'handphone'=>$data_input['contact_handphone'][$i]??"",
+						'email'=>$data_input['contact_email'][$i]??"",
+						'position'=>$data_input['contact_position'][$i]??"",
 						'is_active'=>1, 
 					);
 					$this->db->insert('project_contact', $insert_detail);
@@ -836,12 +836,12 @@ class Marketing extends CI_Controller {
 					$finished=1;
 				}
 				$insert_table = array(
-					'customer_id'=>$data_input['customer'],
-					'name'=>$data_input['name'],
-					'location'=>$data_input['location'],
-					'note'=>$data_input['note'],
-					'start_date'=>$data_input['start_date'],
-					'end_date'=>$data_input['end_date'],
+					'customer_id'=>$data_input['customer']??"",
+					'name'=>$data_input['name']??"",
+					'location'=>$data_input['location']??"",
+					'note'=>$data_input['note']??"",
+					'start_date'=>$data_input['start_date']??"",
+					'end_date'=>$data_input['end_date']??"",
 					'is_finished'=>$finished,
 					'is_active'=>1, 
 				);
@@ -855,21 +855,21 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['contact_id']) ; $i++) { 
 					if(empty($data_input['contact_id'][$i])){
 						$insert_detail = array(
-							'project_id'=>$data_input['id'],
-							'name'=>$data_input['contact_name'][$i],
-							'handphone'=>$data_input['contact_handphone'][$i],
-							'email'=>$data_input['contact_email'][$i],
-							'position'=>$data_input['contact_position'][$i],
+							'project_id'=>$data_input['id']??"",
+							'name'=>$data_input['contact_name'][$i]??"",
+							'handphone'=>$data_input['contact_handphone'][$i]??"",
+							'email'=>$data_input['contact_email'][$i]??"",
+							'position'=>$data_input['contact_position'][$i]??"",
 							'is_active'=>1, 
 						);
 						$this->db->insert('project_contact', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'project_id'=>$data_input['id'],
-							'name'=>$data_input['contact_name'][$i],
-							'handphone'=>$data_input['contact_handphone'][$i],
-							'email'=>$data_input['contact_email'][$i],
-							'position'=>$data_input['contact_position'][$i],
+							'project_id'=>$data_input['id']??"",
+							'name'=>$data_input['contact_name'][$i]??"",
+							'handphone'=>$data_input['contact_handphone'][$i]??"",
+							'email'=>$data_input['contact_email'][$i]??"",
+							'position'=>$data_input['contact_position'][$i]??"",
 							'is_active'=>1, 
 						);
 						$this->db->where('id', $data_input['contact_id'][$i]);
@@ -912,28 +912,28 @@ class Marketing extends CI_Controller {
 			// exit();
 			if(empty($data_input['id'])){
 				$insert_header = array(
-					'quotation_id' => $data_input['qn_number'],
-					'job_number'=>$data_input['job_number'],
-					'delivery_date'=>$data_input['delivery_date'],
+					'quotation_id' => $data_input['qn_number']??"",
+					'job_number'=>$data_input['job_number']??"",
+					'delivery_date'=>$data_input['delivery_date']??"",
 					'is_internal'=>$data_input['is_internal']??"",
-					'delivery_destination'=>$data_input['delivery_destination'],
-					'currency'=>$data_input['currency'],
+					'delivery_destination'=>$data_input['delivery_destination']??"",
+					'currency'=>$data_input['currency']??"",
 					'vat'=>10,
-					'construction_fee'=>$data_input['construction_fee'],
-					'terms'=>$data_input['terms'],
-					'note'=>$data_input['note'],
+					'construction_fee'=>$data_input['construction_fee']??"",
+					'terms'=>$data_input['terms']??"",
+					'note'=>$data_input['note']??"",
 					'status'=>'On Going',
-					'fabricator'=>$data_input['fabrication'],
-					'material'=>$data_input['material'],
-					'sandblasting'=>$data_input['sandblasting'],
-					'painting'=>$data_input['painting'],
-					'asbuiltdrawing'=>$data_input['drawing'],
-					'galvanished'=>$data_input['galvanished'],
-					'erection'=>$data_input['erection'],
-					'packing'=>$data_input['packing'],
-					'NDT'=>$data_input['ndt'],
-					'certificate'=>$data_input['certificate'],
-					'delivery'=>$data_input['delivery'],
+					'fabricator'=>$data_input['fabrication']??"",
+					'material'=>$data_input['material']??"",
+					'sandblasting'=>$data_input['sandblasting']??"",
+					'painting'=>$data_input['painting']??"",
+					'asbuiltdrawing'=>$data_input['drawing']??"",
+					'galvanished'=>$data_input['galvanished']??"",
+					'erection'=>$data_input['erection']??"",
+					'packing'=>$data_input['packing']??"",
+					'NDT'=>$data_input['ndt']??"",
+					'certificate'=>$data_input['certificate']??"",
+					'delivery'=>$data_input['delivery']??"",
 					'is_active'=>1, 
 				);
 				$this->db->insert('job_order', $insert_header);
@@ -972,22 +972,22 @@ class Marketing extends CI_Controller {
 					if($data_input['detail_id'][$i]!=""){
 						$insert_detail = array(
 							'quotation_id' =>$kode->id ,
-							'description'=>$data_input['detail_desc'][$i],
-							'qty'=>$data_input['detail_qty'][$i],
-							'unit'=>$data_input['detail_unit'][$i],
-							'price'=>$data_input['detail_price'][$i],
-							'total_price'=>$data_input['detail_totalprice'][$i],
+							'description'=>$data_input['detail_desc'][$i]??"",
+							'qty'=>$data_input['detail_qty'][$i]??"",
+							'unit'=>$data_input['detail_unit'][$i]??"",
+							'price'=>$data_input['detail_price'][$i]??"",
+							'total_price'=>$data_input['detail_totalprice'][$i]??"",
 							'is_active'=>1 
 						);
 						$this->db->insert('quotation_detail', $insert_detail);
 					}else{
 						$insert_detail = array(
 							'quotation_id' =>$kode->id ,
-							'description'=>$data_input['detail_desc'][$i],
-							'qty'=>$data_input['detail_qty'][$i],
-							'unit'=>$data_input['detail_unit'][$i],
-							'price'=>$data_input['detail_price'][$i],
-							'total_price'=>$data_input['detail_totalprice'][$i],
+							'description'=>$data_input['detail_desc'][$i]??"",
+							'qty'=>$data_input['detail_qty'][$i]??"",
+							'unit'=>$data_input['detail_unit'][$i]??"",
+							'price'=>$data_input['detail_price'][$i]??"",
+							'total_price'=>$data_input['detail_totalprice'][$i]??"",
 							'is_active'=>1 
 						);
 						$this->db->where('id', $data_input['detail_id'][$i]);
@@ -999,25 +999,25 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['inv_id']) ; $i++) { 
 					if($data_input['inv_id'][$i]!=""){
 						$insert_detail = array(
-							'job_id' =>$data_input['id'] ,
-							'invoice_date'=>$data_input['inv_date'][$i],
-							'invoice_number'=>$data_input['inv_number'][$i],
-							'value'=>$data_input['inv_value'][$i],
-							'payment_date'=>$data_input['inv_paydate'][$i],
-							'status'=>$data_input['inv_paystatus'][$i],
-							'note'=>$data_input['inv_note'][$i],
+							'job_id' =>$data_input['id']??"",
+							'invoice_date'=>$data_input['inv_date'][$i]??"",
+							'invoice_number'=>$data_input['inv_number'][$i]??"",
+							'value'=>$data_input['inv_value'][$i]??"",
+							'payment_date'=>$data_input['inv_paydate'][$i]??"",
+							'status'=>$data_input['inv_paystatus'][$i]??"",
+							'note'=>$data_input['inv_note'][$i]??"",
 							'is_active'=>1 
 						);
 						$this->db->insert('job_detail_inv', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'job_id' =>$data_input['id'] ,
-							'invoice_date'=>$data_input['inv_date'][$i],
-							'invoice_number'=>$data_input['inv_number'][$i],
-							'value'=>$data_input['inv_value'][$i],
-							'payment_date'=>$data_input['inv_paydate'][$i],
-							'status'=>$data_input['inv_paystatus'][$i],
-							'note'=>$data_input['inv_note'][$i],
+							'job_id' =>$data_input['id']??"",
+							'invoice_date'=>$data_input['inv_date'][$i]??"",
+							'invoice_number'=>$data_input['inv_number'][$i]??"",
+							'value'=>$data_input['inv_value'][$i]??"",
+							'payment_date'=>$data_input['inv_paydate'][$i]??"",
+							'status'=>$data_input['inv_paystatus'][$i]??"",
+							'note'=>$data_input['inv_note'][$i]??"",
 							'is_active'=>1 
 						);
 						
@@ -1030,21 +1030,21 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['disc_id']) ; $i++) { 
 					if($data_input['disc_id'][$i]!=""){
 						$insert_detail = array(
-							'job_id' =>$data_input['id'],
-							'name'=>$data_input['disc_name'][$i],
-							'position'=>$data_input['disc_position'][$i],
-							'note'=>$data_input['disc_note'][$i],
-							'discount'=>$data_input['disc_discount'][$i],
+							'job_id' =>$data_input['id']??"",
+							'name'=>$data_input['disc_name'][$i]??"",
+							'position'=>$data_input['disc_position'][$i]??"",
+							'note'=>$data_input['disc_note'][$i]??"",
+							'discount'=>$data_input['disc_discount'][$i]??"",
 							'is_active'=>1 
 						);
 						$this->db->insert('job_detail_discount', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'job_id' =>$data_input['id'] ,
-							'name'=>$data_input['disc_name'][$i],
-							'position'=>$data_input['disc_position'][$i],
-							'note'=>$data_input['disc_note'][$i],
-							'discount'=>$data_input['disc_discount'][$i],
+							'job_id' =>$data_input['id']??"",
+							'name'=>$data_input['disc_name'][$i]??"",
+							'position'=>$data_input['disc_position'][$i]??"",
+							'note'=>$data_input['disc_note'][$i]??"",
+							'discount'=>$data_input['disc_discount'][$i]??"",
 							'is_active'=>1 
 						);
 						
@@ -1056,29 +1056,29 @@ class Marketing extends CI_Controller {
 				header("Location: ".base_url()."marketing/joborder?res=success");
 			}else{
 				$insert_header = array(
-					'quotation_id' => $data_input['qn_number'],
-					'job_number'=>$data_input['job_number'],
-					'jo_date'=>$data_input['jo_date'],
-					'delivery_date'=>$data_input['delivery_date'],
+					'quotation_id' => $data_input['qn_number']??"",
+					'job_number'=>$data_input['job_number']??"",
+					'jo_date'=>$data_input['jo_date']??"",
+					'delivery_date'=>$data_input['delivery_date']??"",
 					'is_internal'=>$data_input['is_internal']??"",
-					'delivery_destination'=>$data_input['delivery_destination'],
-					'currency'=>$data_input['currency'],
+					'delivery_destination'=>$data_input['delivery_destination']??"",
+					'currency'=>$data_input['currency']??"",
 					'vat'=>10,
-					'construction_fee'=>$data_input['construction_fee'],
-					'terms'=>$data_input['terms'],
-					'note'=>$data_input['note'],
+					'construction_fee'=>$data_input['construction_fee']??"",
+					'terms'=>$data_input['terms']??"",
+					'note'=>$data_input['note']??"",
 					'status'=>'On Going',
-					'fabricator'=>$data_input['fabrication'],
-					'material'=>$data_input['material'],
-					'sandblasting'=>$data_input['sandblasting'],
-					'painting'=>$data_input['painting'],
-					'asbuiltdrawing'=>$data_input['drawing'],
-					'galvanished'=>$data_input['galvanished'],
-					'erection'=>$data_input['erection'],
-					'packing'=>$data_input['packing'],
-					'NDT'=>$data_input['ndt'],
-					'certificate'=>$data_input['certificate'],
-					'delivery'=>$data_input['delivery'],
+					'fabricator'=>$data_input['fabrication']??"",
+					'material'=>$data_input['material']??"",
+					'sandblasting'=>$data_input['sandblasting']??"",
+					'painting'=>$data_input['painting']??"",
+					'asbuiltdrawing'=>$data_input['drawing']??"",
+					'galvanished'=>$data_input['galvanished']??"",
+					'erection'=>$data_input['erection']??"",
+					'packing'=>$data_input['packing']??"",
+					'NDT'=>$data_input['ndt']??"",
+					'certificate'=>$data_input['certificate']??"",
+					'delivery'=>$data_input['delivery']??"",
 					'is_active'=>1, 
 				);
 				$this->db->where('id', $data_input['id']);
@@ -1097,10 +1097,10 @@ class Marketing extends CI_Controller {
 
 
 				$insert_detail_calc = array(
-					'grand_summary'=>$data_input['summary'],
-					'rounding_discount'=>$data_input['discount'],
-					'construction_fee'=>$data_input['construction'],
-					'grand_total_vat'=>$data_input['total_vat'],
+					'grand_summary'=>$data_input['summary']??"",
+					'rounding_discount'=>$data_input['discount']??"",
+					'construction_fee'=>$data_input['construction']??"",
+					'grand_total_vat'=>$data_input['total_vat']??"",
 					'is_active'=>1 
 				);
 				$this->db->where('quotation_id', $kode->id);
@@ -1114,22 +1114,22 @@ class Marketing extends CI_Controller {
 					if($data_input['detail_id'][$i]!=""){
 						$insert_detail = array(
 							'quotation_id' =>$kode->id ,
-							'description'=>$data_input['detail_desc'][$i],
-							'qty'=>$data_input['detail_qty'][$i],
-							'unit'=>$data_input['detail_unit'][$i],
-							'price'=>$data_input['detail_price'][$i],
-							'total_price'=>$data_input['detail_totalprice'][$i],
+							'description'=>$data_input['detail_desc'][$i]??"",
+							'qty'=>$data_input['detail_qty'][$i]??"",
+							'unit'=>$data_input['detail_unit'][$i]??"",
+							'price'=>$data_input['detail_price'][$i]??"",
+							'total_price'=>$data_input['detail_totalprice'][$i]??"",
 							'is_active'=>1 
 						);
 						$this->db->insert('quotation_detail', $insert_detail);
 					}else{
 						$insert_detail = array(
 							'quotation_id' =>$kode->id ,
-							'description'=>$data_input['detail_desc'][$i],
-							'qty'=>$data_input['detail_qty'][$i],
-							'unit'=>$data_input['detail_unit'][$i],
-							'price'=>$data_input['detail_price'][$i],
-							'total_price'=>$data_input['detail_totalprice'][$i],
+							'description'=>$data_input['detail_desc'][$i]??"",
+							'qty'=>$data_input['detail_qty'][$i]??"",
+							'unit'=>$data_input['detail_unit'][$i]??"",
+							'price'=>$data_input['detail_price'][$i]??"",
+							'total_price'=>$data_input['detail_totalprice'][$i]??"",
 							'is_active'=>1 
 						);
 						$this->db->where('id', $data_input['detail_id'][$i]);
@@ -1145,25 +1145,25 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['inv_id']) ; $i++) { 
 					if($data_input['inv_id'][$i]!=""){
 						$insert_detail = array(
-							'job_id' =>$data_input['id'],
-							'invoice_date'=>$data_input['inv_date'][$i],
-							'invoice_number'=>$data_input['inv_number'][$i],
-							'value'=>$data_input['inv_value'][$i],
-							'payment_date'=>$data_input['inv_paydate'][$i],
+							'job_id' =>$data_input['id']??"",
+							'invoice_date'=>$data_input['inv_date'][$i]??"",
+							'invoice_number'=>$data_input['inv_number'][$i]??"",
+							'value'=>$data_input['inv_value'][$i]??"",
+							'payment_date'=>$data_input['inv_paydate'][$i]??"",
 							'status'=>$data_input['inv_paystatus'][$i]??"",
-							'note'=>$data_input['inv_note'][$i],
+							'note'=>$data_input['inv_note'][$i]??"",
 							'is_active'=>1 
 						);
 						$this->db->insert('job_detail_inv', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'job_id' =>$data_input['id'] ,
-							'invoice_date'=>$data_input['inv_date'][$i],
-							'invoice_number'=>$data_input['inv_number'][$i],
-							'value'=>$data_input['inv_value'][$i],
-							'payment_date'=>$data_input['inv_paydate'][$i],
+							'job_id' =>$data_input['id']??"",
+							'invoice_date'=>$data_input['inv_date'][$i]??"",
+							'invoice_number'=>$data_input['inv_number'][$i]??"",
+							'value'=>$data_input['inv_value'][$i]??"",
+							'payment_date'=>$data_input['inv_paydate'][$i]??"",
 							'status'=>$data_input['inv_paystatus'][$i]??"",
-							'note'=>$data_input['inv_note'][$i],
+							'note'=>$data_input['inv_note'][$i]??"",
 							'is_active'=>1 
 						);
 						
@@ -1180,21 +1180,21 @@ class Marketing extends CI_Controller {
 				for ($i=0; $i <count($data_input['disc_id']) ; $i++) { 
 					if($data_input['disc_id'][$i]!=""){
 						$insert_detail = array(
-							'job_id' =>$data_input['id'],
-							'name'=>$data_input['disc_name'][$i],
-							'position'=>$data_input['disc_position'][$i],
-							'note'=>$data_input['disc_note'][$i],
-							'discount'=>$data_input['disc_discount'][$i],
+							'job_id' =>$data_input['id']??"",
+							'name'=>$data_input['disc_name'][$i]??"",
+							'position'=>$data_input['disc_position'][$i]??"",
+							'note'=>$data_input['disc_note'][$i]??"",
+							'discount'=>$data_input['disc_discount'][$i]??"",
 							'is_active'=>1 
 						);
 						$this->db->insert('job_detail_discount', $insert_detail);
 					}else{
 						$insert_detail = array(
-							'job_id' =>$data_input['id'] ,
-							'name'=>$data_input['disc_name'][$i],
-							'position'=>$data_input['disc_position'][$i],
-							'note'=>$data_input['disc_note'][$i],
-							'discount'=>$data_input['disc_discount'][$i],
+							'job_id' =>$data_input['id']??"",
+							'name'=>$data_input['disc_name'][$i]??"",
+							'position'=>$data_input['disc_position'][$i]??"",
+							'note'=>$data_input['disc_note'][$i]??"",
+							'discount'=>$data_input['disc_discount'][$i]??"",
 							'is_active'=>1 
 						);
 						

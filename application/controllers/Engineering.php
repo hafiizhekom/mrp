@@ -287,12 +287,12 @@ class Engineering extends CI_Controller {
 			// echo var_dump($data_input);
 			if(empty($data_input['id'])){
 				$insert_table = array(
-					'material_id' => $data_input['material_id'],
-					'part_code'=>$data_input['part_code'],
-					'product_code'=>$data_input['product_code'],
+					'material_id' => $data_input['material_id']??"",
+					'part_code'=>$data_input['part_code']??"",
+					'product_code'=>$data_input['product_code']??"",
 					'product_category'=>$data_input['product']??"",
 					'warehouse_location'=>$data_input['warehouse']??"",
-					'packing_type'=>$data_input['packing_type'],
+					'packing_type'=>$data_input['packing_type']??"",
 					'pic'=>$data_input['pic']??"",
 					'iqc_check'=>$data_input['iqc_check']??"",
 					'note'=>$data_input['note']??"",
@@ -303,28 +303,28 @@ class Engineering extends CI_Controller {
 					'material_density'=>$data_input['material_density']??"",
 					'weight_factor'=>$data_input['weight_factor']??"",
 					'surface_area'=>$data_input['surface_area']??"",
-					'hs_number'=>$data_input['hs_number'],
-					'point_factor'=>$data_input['paint_factor'],
-					'length'=>$data_input['length'],
-					'width'=>$data_input['width'],
-					'thick'=>$data_input['thick'],
-					'weight'=>$data_input['weight'],
-					'wielding_type'=>$data_input['wielding_type'],
-					'drawing_number'=>$data_input['drawing_number'],
-					'volume_formula'=>$data_input['volume_formula'],
-					'area_formula'=>$data_input['area_formula'],
+					'hs_number'=>$data_input['hs_number']??"",
+					'point_factor'=>$data_input['paint_factor']??"",
+					'length'=>$data_input['length']??"",
+					'width'=>$data_input['width']??"",
+					'thick'=>$data_input['thick']??"",
+					'weight'=>$data_input['weight']??"",
+					'wielding_type'=>$data_input['wielding_type']??"",
+					'drawing_number'=>$data_input['drawing_number']??"",
+					'volume_formula'=>$data_input['volume_formula']??"",
+					'area_formula'=>$data_input['area_formula']??"",
 					'is_active'=>1 
 				);
 
 				$this->db->insert('master_part_material', $insert_table);
 			}else{
 				$insert_table = array(
-					'material_id' => $data_input['material_id'],
-					'part_code'=>$data_input['part_code'],
-					'product_code'=>$data_input['product_code'],
+					'material_id' => $data_input['material_id']??"",
+					'part_code'=>$data_input['part_code']??"",
+					'product_code'=>$data_input['product_code']??"",
 					'product_category'=>$data_input['product']??"",
 					'warehouse_location'=>$data_input['warehouse']??"",
-					'packing_type'=>$data_input['packing_type'],
+					'packing_type'=>$data_input['packing_type']??"",
 					'pic'=>$data_input['pic']??"",
 					'iqc_check'=>$data_input['iqc_check']??"",
 					'note'=>$data_input['note']??"",
@@ -335,16 +335,16 @@ class Engineering extends CI_Controller {
 					'weight_factor'=>$data_input['weight_factor']??"",
 					'material_density'=>$data_input['material_density']??"",
 					'surface_area'=>$data_input['surface_area']??"",
-					'hs_number'=>$data_input['hs_number'],
-					'point_factor'=>$data_input['paint_factor'],
-					'length'=>$data_input['length'],
-					'width'=>$data_input['width'],
-					'thick'=>$data_input['thick'],
-					'weight'=>$data_input['weight'],
-					'wielding_type'=>$data_input['wielding_type'],
-					'drawing_number'=>$data_input['drawing_number'],
-					'volume_formula'=>$data_input['volume_formula'],
-					'area_formula'=>$data_input['area_formula'],
+					'hs_number'=>$data_input['hs_number']??"",
+					'point_factor'=>$data_input['paint_factor']??"",
+					'length'=>$data_input['length']??"",
+					'width'=>$data_input['width']??"",
+					'thick'=>$data_input['thick']??"",
+					'weight'=>$data_input['weight']??"",
+					'wielding_type'=>$data_input['wielding_type']??"",
+					'drawing_number'=>$data_input['drawing_number']??"",
+					'volume_formula'=>$data_input['volume_formula']??"",
+					'area_formula'=>$data_input['area_formula']??"",
 					'is_active'=>1 
 				);
 				$this->db->where('id', $data_input['id']);
@@ -406,11 +406,11 @@ class Engineering extends CI_Controller {
 		// exit();
 		if(empty($data_input['id'])){
 			$insert_table = array(
-				'job_id' => $data_input['job_number'],
+				'job_id' => $data_input['job_number']??"",
 				'status'=>'On Going',
-				'bill_no'=>$data_input['boq_no'],
-				'date'=>$data_input['date'],
-				'note'=>$data_input['note'],
+				'bill_no'=>$data_input['boq_no']??"",
+				'date'=>$data_input['date']??"",
+				'note'=>$data_input['note']??"",
 				'created_by'=>$this->session->userdata('email'),
 				'is_active'=>1 
 			);
@@ -426,11 +426,11 @@ class Engineering extends CI_Controller {
 			for ($i=0; $i <count($data_input['assembly_mark']) ; $i++) { 
 				$insert_assembly = array(
 					'bill_id' => $kode->id,
-					'assembly_mark'=>$data_input['assembly_mark'][$i],
-					'desc'=>$data_input['assembly_desc'][$i],
-					'qty'=>$data_input['assembly_qty'][$i],
-					'total_area'=>$data_input['assembly_totalarea'][$i],
-					'total_weight'=>$data_input['assembly_totalweight'][$i],
+					'assembly_mark'=>$data_input['assembly_mark'][$i]??"",
+					'desc'=>$data_input['assembly_desc'][$i]??"",
+					'qty'=>$data_input['assembly_qty'][$i]??"",
+					'total_area'=>$data_input['assembly_totalarea'][$i]??"",
+					'total_weight'=>$data_input['assembly_totalweight'][$i]??"",
 					'is_active'=>1 
 				);
 				$this->db->insert('bill_quotation_assembly', $insert_assembly);
@@ -440,19 +440,19 @@ class Engineering extends CI_Controller {
 
 				$insert_assembly = array(
 					'bill_id' => $kode->id,
-					'material'=>$data_input['material_id'][$i],
-					'assembly_id'=>$data_input['material_assemblymark'][$i],
-					'qty'=>$data_input['material_qty'][$i],
-					'desc'=>$data_input['material_desc'][$i],
-					'part_mark'=>$data_input['material_part'][$i],
-					'length'=>$data_input['material_length'][$i],
-					'width'=>$data_input['material_width'][$i],
-					'thick'=>$data_input['material_thick'][$i],
-					'pcs_area'=>$data_input['material_areaunit'][$i],
-					'total_area'=>$data_input['material_areatotal'][$i],
-					'pcs_weight'=>$data_input['material_weightunit'][$i],
-					'total_weight'=>$data_input['material_total'][$i],
-					'note'=>$data_input['note'][$i],
+					'material'=>$data_input['material_id'][$i]??"",
+					'assembly_id'=>$data_input['material_assemblymark'][$i]??"",
+					'qty'=>$data_input['material_qty'][$i]??"",
+					'desc'=>$data_input['material_desc'][$i]??"",
+					'part_mark'=>$data_input['material_part'][$i]??"",
+					'length'=>$data_input['material_length'][$i]??"",
+					'width'=>$data_input['material_width'][$i]??"",
+					'thick'=>$data_input['material_thick'][$i]??"",
+					'pcs_area'=>$data_input['material_areaunit'][$i]??"",
+					'total_area'=>$data_input['material_areatotal'][$i]??"",
+					'pcs_weight'=>$data_input['material_weightunit'][$i]??"",
+					'total_weight'=>$data_input['material_total'][$i]??"",
+					'note'=>$data_input['note'][$i]??"",
 					'is_active'=>1 
 				);
 				$this->db->insert('bill_quotation_material', $insert_assembly);
@@ -477,23 +477,23 @@ class Engineering extends CI_Controller {
 			for ($i=0; $i <count($data_input['assembly_mark']) ; $i++) {
 				if($data_input['assembly_id'][$i]==""){
 					$insert_assembly = array(
-						'bill_id' => $data_input['id'],
-						'assembly_mark'=>$data_input['assembly_mark'][$i],
-						'desc'=>$data_input['assembly_desc'][$i],
-						'qty'=>$data_input['assembly_qty'][$i],
-						'total_area'=>$data_input['assembly_totalarea'][$i],
-						'total_weight'=>$data_input['assembly_totalweight'][$i],
+						'bill_id' => $data_input['id']??"",
+						'assembly_mark'=>$data_input['assembly_mark'][$i]??"",
+						'desc'=>$data_input['assembly_desc'][$i]??"",
+						'qty'=>$data_input['assembly_qty'][$i]??"",
+						'total_area'=>$data_input['assembly_totalarea'][$i]??"",
+						'total_weight'=>$data_input['assembly_totalweight'][$i]??"",
 						'is_active'=>1 
 					);
 					$this->db->insert('bill_quotation_assembly', $insert_assembly);
 				}else{
 					$insert_assembly = array(
-						'bill_id' => $data_input['id'],
-						'assembly_mark'=>$data_input['assembly_mark'][$i],
-						'desc'=>$data_input['assembly_desc'][$i],
-						'qty'=>$data_input['assembly_qty'][$i],
-						'total_area'=>$data_input['assembly_totalarea'][$i],
-						'total_weight'=>$data_input['assembly_totalweight'][$i],
+						'bill_id' => $data_input['id']??"",
+						'assembly_mark'=>$data_input['assembly_mark'][$i]??"",
+						'desc'=>$data_input['assembly_desc'][$i]??"",
+						'qty'=>$data_input['assembly_qty'][$i]??"",
+						'total_area'=>$data_input['assembly_totalarea'][$i]??"",
+						'total_weight'=>$data_input['assembly_totalweight'][$i]??"",
 						'is_active'=>1 
 					);
 					$this->db->where('id', $data_input['assembly_id'][$i]);
@@ -507,38 +507,38 @@ class Engineering extends CI_Controller {
 				if($data_input['material_idhidden'][$i]==""){
 					$insert_assembly = array(
 						'bill_id' => $data_input['id'],
-						'material'=>$data_input['material_id'][$i],
-						'assembly_id'=>$data_input['material_assemblymark'][$i],
-						'qty'=>$data_input['material_qty'][$i],
-						'desc'=>$data_input['material_desc'][$i],
-						'part_mark'=>$data_input['material_part'][$i],
-						'length'=>$data_input['material_length'][$i],
-						'width'=>$data_input['material_width'][$i],
-						'thick'=>$data_input['material_thick'][$i],
-						'pcs_area'=>$data_input['material_areaunit'][$i],
-						'total_area'=>$data_input['material_areatotal'][$i],
-						'pcs_weight'=>$data_input['material_weightunit'][$i],
-						'total_weight'=>$data_input['material_total'][$i],
-						'note'=>$data_input['note'][$i],
+						'material'=>$data_input['material_id'][$i]??"",
+						'assembly_id'=>$data_input['material_assemblymark'][$i]??"",
+						'qty'=>$data_input['material_qty'][$i]??"",
+						'desc'=>$data_input['material_desc'][$i]??"",
+						'part_mark'=>$data_input['material_part'][$i]??"",
+						'length'=>$data_input['material_length'][$i]??"",
+						'width'=>$data_input['material_width'][$i]??"",
+						'thick'=>$data_input['material_thick'][$i]??"",
+						'pcs_area'=>$data_input['material_areaunit'][$i]??"",
+						'total_area'=>$data_input['material_areatotal'][$i]??"",
+						'pcs_weight'=>$data_input['material_weightunit'][$i]??"",
+						'total_weight'=>$data_input['material_total'][$i]??"",
+						'note'=>$data_input['note'][$i]??"",
 						'is_active'=>1 
 					);
 					$this->db->insert('bill_quotation_material', $insert_assembly);
 				}else{
 					$insert_assembly = array(
 						'bill_id' => $data_input['id'],
-						'material'=>$data_input['material_id'][$i],
-						'assembly_id'=>$data_input['material_assemblymark'][$i],
-						'qty'=>$data_input['material_qty'][$i],
-						'desc'=>$data_input['material_desc'][$i],
-						'part_mark'=>$data_input['material_part'][$i],
-						'length'=>$data_input['material_length'][$i],
-						'width'=>$data_input['material_width'][$i],
-						'thick'=>$data_input['material_thick'][$i],
-						'pcs_area'=>$data_input['material_areaunit'][$i],
-						'total_area'=>$data_input['material_areatotal'][$i],
-						'pcs_weight'=>$data_input['material_weightunit'][$i],
-						'total_weight'=>$data_input['material_total'][$i],
-						'note'=>$data_input['note'][$i],
+						'material'=>$data_input['material_id'][$i]??"",
+						'assembly_id'=>$data_input['material_assemblymark'][$i]??"",
+						'qty'=>$data_input['material_qty'][$i]??"",
+						'desc'=>$data_input['material_desc'][$i]??"",
+						'part_mark'=>$data_input['material_part'][$i]??"",
+						'length'=>$data_input['material_length'][$i]??"",
+						'width'=>$data_input['material_width'][$i]??"",
+						'thick'=>$data_input['material_thick'][$i]??"",
+						'pcs_area'=>$data_input['material_areaunit'][$i]??"",
+						'total_area'=>$data_input['material_areatotal'][$i]??"",
+						'pcs_weight'=>$data_input['material_weightunit'][$i]??"",
+						'total_weight'=>$data_input['material_total'][$i]??"",
+						'note'=>$data_input['note'][$i]??"",
 						'is_active'=>1 
 					);
 					$this->db->where('id', $data_input['material_idhidden'][$i]);
