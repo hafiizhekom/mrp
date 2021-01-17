@@ -25,61 +25,114 @@
             <h5 class="title">PT. Buana Masa Metalindo</h5>
             <div class="collapse navbar-collapse" id="modules">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>marketing">MARKETING</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>engineering">ENGINEERING</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>ppic">PPIC</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>purchasing">PURCHASING</a>
-                    </li>
-                    <li role="presentation"
-                        class="active">
-                        <a href="<?php echo base_url()?>production">PRODUCTION</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>logistic">LOGISTIC</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>qc">QC</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>maintenance">MAINTENANCE</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>admin">ADMIN</a>
-                    </li>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Marketing"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>marketing">MARKETING</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Engineering"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>engineering">ENGINEERING</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="PPC"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>ppc">PPIC</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Purchasing"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>purchasing">PURCHASING</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Production"){?>
+                            <li role="presentation" class="active">
+                                <a href="<?php echo base_url() ?>production">PRODUCTION</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Logistic"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>logistic">LOGISTIC</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="QC"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>qc">QC</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Maintenance"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>maintenance">MAINTENANCE</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Administrator"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>admin">ADMIN</a>
+                            </li>
+                        <?php }
+                    } ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-xs visible-xs">
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Schedule &amp; Fabrication <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>production/schedule">Schedule</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>ppc/mpk">MPK</a></li>
-                                                            </ul>
-                        </li>
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Barang Siap Kirim <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>production/bsk">BSK List</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>production/bsk/create">Add New BSK</a></li>
-                                                            </ul>
-                        </li>
-                                    </ul>
+                    <?php $header=false;
+                    foreach ($sub_menu as $key => $value) {
+                        if($value->menu=="Schedule & Fabrication"){
+                            $header=true;
+                        }
+                    }
+                    if($header==true){?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Schedule &amp; Fabrication <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Schedule & Fabrication"){?>
+                                    <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                                <?php }
+                            } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php $header=false;
+                    foreach ($sub_menu as $key => $value) {
+                        if($value->menu=="Barang Siap Kirim"){
+                            $header=true;
+                        }
+                    }
+                    if($header==true){?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Barang Siap Kirim <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Barang Siap Kirim"){?>
+                                    <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                                <?php }
+                            } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+                </ul>
             </div>
         </div>
     </div>

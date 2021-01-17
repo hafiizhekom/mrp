@@ -25,152 +25,309 @@
             <h5 class="title">PT. Buana Masa Metalindo</h5>
             <div class="collapse navbar-collapse" id="modules">
                 <ul class="nav nav-tabs">
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>marketing">MARKETING</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>engineering">ENGINEERING</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>ppic">PPIC</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>purchasing">PURCHASING</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>production">PRODUCTION</a>
-                    </li>
-                    <li role="presentation"
-                        class="active">
-                        <a href="<?php echo base_url()?>logistic">LOGISTIC</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>qc">QC</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>maintenance">MAINTENANCE</a>
-                    </li>
-                    <li role="presentation"
-                        class="">
-                        <a href="<?php echo base_url()?>admin">ADMIN</a>
-                    </li>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Marketing"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>marketing">MARKETING</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Engineering"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>engineering">ENGINEERING</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="PPC"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>ppc">PPIC</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Purchasing"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>purchasing">PURCHASING</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Production"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>production">PRODUCTION</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Logistic"){?>
+                            <li role="presentation" class="active">
+                                <a href="<?php echo base_url() ?>logistic">LOGISTIC</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="QC"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>qc">QC</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Maintenance"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>maintenance">MAINTENANCE</a>
+                            </li>
+                        <?php }
+                    } ?>
+                    <?php foreach ($this->session->userdata('menu_access') as $key => $value) {
+                        if($value->module=="Administrator"){?>
+                            <li role="presentation" class="">
+                                <a href="<?php echo base_url() ?>admin">ADMIN</a>
+                            </li>
+                        <?php }
+                    } ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-xs visible-xs">
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Master Consumable <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>logistic/consumable">Master Consumable</a></li>
-                                                            </ul>
-                        </li>
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Inventory <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>logistic/inventory">Stock Consumable</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>logistic/consumable/input">Penerimaan Consumable</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>logistic/consumable/output">Pengambilan Consumable</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>logistic/consumable/history">Transaction Records</a></li>
-                                                            </ul>
-                        </li>
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Project <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>marketing/joborder">Job Orders</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>ppc/dkm">DKM</a></li>
-                                                            </ul>
-                        </li>
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Stock Opname <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>logistic/opname">Stock Opname Lists</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>logistic/opname/create">Add New Stock Opname</a></li>
-                                                            </ul>
-                        </li>
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Request Consumable <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>logistic/request">Request Consumable List</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>logistic/request/create">Add New Request Consumable</a></li>
-                                                            </ul>
-                        </li>
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                               aria-expanded="false">Reports <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>logistic/report/monthly/input">Penerimaan Consumable</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>logistic/report/monthly/output">Pengeluaran Consumable</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>logistic/report/project">Per Project</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>logistic/report/monthly/stock">Stock Opname</a></li>
-                                                            </ul>
-                        </li>
-                                    </ul>
+                    <?php $header=false;
+                    foreach ($sub_menu as $key => $value) {
+                        if($value->menu=="Master Consumable"){
+                            $header=true;
+                        }
+                    }
+                    if($header==true){?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Master Consumable <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Master Consumable"){?>
+                                    <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                                <?php }
+                            } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Inventory"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Inventory <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                                <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Inventory"){?>
+                                    <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                                <?php }
+                            } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Project"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Project <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Project"){?>
+                                    <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                                <?php }
+                            } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Stock Opname"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Stock Opname <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Stock Opname"){?>
+                                    <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                                <?php }
+                            } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Request Consumable"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Request Consumable <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Request Consumable"){?>
+                                    <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                                <?php }
+                            } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Reports"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Reports <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Reports"){?>
+                                    <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                                <?php }
+                            } ?>
+                        </ul>
+                    </li>
+                <?php } ?>
+                </ul>
             </div>
         </div>
     </div>
 </nav>
 <div class="collapse navbar-collapse" style="border: 1px solid #ddd; margin-bottom: 15px;">
     <ul class="nav navbar-nav navbar-xs">
-                    <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+        <?php $header=false;
+        foreach ($sub_menu as $key => $value) {
+            if($value->menu=="Master Consumable"){
+                $header=true;
+            }
+        }
+        if($header==true){?>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                    aria-expanded="false">Master Consumable <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                                            <li><a href="<?php echo base_url() ?>logistic/consumable">Master Consumable</a></li>
-                                    </ul>
-            </li>
-                    <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                   aria-expanded="false">Inventory <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                                            <li><a href="<?php echo base_url() ?>logistic/inventory">Stock Consumable</a></li>
-                                            <li><a href="<?php echo base_url() ?>logistic/consumable/input">Penerimaan Consumable</a></li>
-                                            <li><a href="<?php echo base_url() ?>logistic/consumable/output">Pengambilan Consumable</a></li>
-                                            <li><a href="<?php echo base_url() ?>logistic/consumable/history">Transaction Records</a></li>
-                                    </ul>
-            </li>
-                    <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                   aria-expanded="false">Project <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                                            <li><a href="<?php echo base_url() ?>marketing/joborder">Job Orders</a></li>
-                                            <li><a href="<?php echo base_url() ?>ppc/dkm">DKM</a></li>
-                                    </ul>
-            </li>
-                    <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                   aria-expanded="false">Stock Opname <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                                            <li><a href="<?php echo base_url() ?>logistic/opname">Stock Opname Lists</a></li>
-                                            <li><a href="<?php echo base_url() ?>logistic/opname/create">Add New Stock Opname</a></li>
-                                    </ul>
-            </li>
-                    <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                   aria-expanded="false">Request Consumable <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                                            <li><a href="<?php echo base_url() ?>logistic/request">Request Consumable List</a></li>
-                                            <li><a href="<?php echo base_url() ?>logistic/request/create">Add New Request Consumable</a></li>
-                                    </ul>
-            </li>
-                    <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                   aria-expanded="false">Reports <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                                            <li><a href="<?php echo base_url() ?>logistic/report/monthly/input">Penerimaan Consumable</a></li>
-                                            <li><a href="<?php echo base_url() ?>logistic/report/monthly/output">Pengeluaran Consumable</a></li>
-                                            <li><a href="<?php echo base_url() ?>logistic/report/project">Per Project</a></li>
-                                            <li><a href="<?php echo base_url() ?>logistic/report/monthly/stock">Stock Opname</a></li>
-                                    </ul>
-            </li>
+            <ul class="dropdown-menu">
+                <?php foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Master Consumable"){?>
+                        <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                    <?php }
+                } ?>
             </ul>
+        </li>
+        <?php } ?>
+        <?php $header=false;
+        foreach ($sub_menu as $key => $value) {
+            if($value->menu=="Inventory"){
+                $header=true;
+            }
+        }
+        if($header==true){?>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">Inventory <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <?php foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Inventory"){?>
+                        <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                    <?php }
+                } ?>
+            </ul>
+        </li>
+        <?php } ?>
+        <?php $header=false;
+        foreach ($sub_menu as $key => $value) {
+            if($value->menu=="Project"){
+                $header=true;
+            }
+        }
+        if($header==true){?>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">Project <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <?php foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Project"){?>
+                        <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                    <?php }
+                } ?>
+            </ul>
+        </li>
+    <?php } ?>
+    <?php $header=false;
+        foreach ($sub_menu as $key => $value) {
+            if($value->menu=="Stock Opname"){
+                $header=true;
+            }
+        }
+        if($header==true){?>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">Stock Opname <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <?php foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Stock Opname"){?>
+                        <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                    <?php }
+                } ?>
+            </ul>
+        </li>
+    <?php } ?>
+    <?php $header=false;
+        foreach ($sub_menu as $key => $value) {
+            if($value->menu=="Request Consumable"){
+                $header=true;
+            }
+        }
+        if($header==true){?>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">Request Consumable <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <?php foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Request Consumable"){?>
+                        <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                    <?php }
+                } ?>
+            </ul>
+        </li>
+    <?php } ?>
+    <?php $header=false;
+        foreach ($sub_menu as $key => $value) {
+            if($value->menu=="Reports"){
+                $header=true;
+            }
+        }
+        if($header==true){?>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">Reports <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <?php foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Reports"){?>
+                        <li><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                    <?php }
+                } ?>
+            </ul>
+        </li>
+    <?php } ?>
+    </ul>
 </div>

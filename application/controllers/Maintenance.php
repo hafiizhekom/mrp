@@ -7,22 +7,46 @@ class maintenance extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		if($this->session->userdata('logged_in')!=TRUE)redirect('login');
+		$access_rights=false;
+		foreach ($this->session->userdata('menu_access') as $key => $value){
+			if($value->module=="Maintenance"){
+				$access_rights=true;
+			}
+		}
+		if($access_rights==false){
+			redirect($this->session->userdata('base_link'));
+		}
 		// if($this->sesi_login->log_session() !=TRUE)redirect('Login');
 	}
 	
+	public function submenu($param){
+		$this->db->select('b.sub_menu,c.module,c.menu,b.url');
+		$this->db->from('tr_menu_access as a');
+		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
+		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->where('c.module', $param);
+		$this->db->where('a.is_active', 1);
+		$this->db->where('a.view', 1);
+		$this->db->order_by('a.id', 'asc');
+		return $this->db->get()->result();
+	}
+
 	public function index()
 	{
-		$this->load->view('maintenance/home');
+		
+		$data['sub_menu']=$this->submenu('Maintenance');
+		$this->load->view('maintenance/home',$data);
 	}
 
 	public function equipment($param=null){
+		
 		if($param=="type"){
 			$data=null;
 			$this->db->select('*');
 			$this->db->from('equipment_type');
 			$this->db->where('is_active', 1);
 			$data['table']=$this->db->get()->result();
-
+			$data['sub_menu']=$this->submenu('Maintenance');
 			$this->load->view('maintenance/equipment_type', $data);
 		}else if($param=="group"){
 			$data=null;
@@ -30,7 +54,7 @@ class maintenance extends CI_Controller {
 			$this->db->from('equipment_groups');
 			$this->db->where('is_active', 1);
 			$data['table']=$this->db->get()->result();
-
+			$data['sub_menu']=$this->submenu('Maintenance');
 			$this->load->view('maintenance/equipment_group', $data);
 		}else if($param=="type_add"){
 			$data_input=$this->input->post();
@@ -117,7 +141,7 @@ class maintenance extends CI_Controller {
 			$this->db->from('unit_of_measures');
 			$this->db->where('is_active', 1);
 			$data['unit']=$this->db->get()->result();
-
+			$data['sub_menu']=$this->submenu('Maintenance');
 			$this->load->view('maintenance/equipment_single', $data);
 		}else if($param=="add_single"){
 			$data_input=$this->input->post();
@@ -159,6 +183,8 @@ class maintenance extends CI_Controller {
 			}
 			header("Location: ".base_url()."maintenance/equipment");
 			
+		}else{
+			header("Location: ".base_url()."maintenance");
 		}
 	}
 }

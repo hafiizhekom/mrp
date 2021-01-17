@@ -12,6 +12,15 @@ class Marketing extends CI_Controller {
             'IV' => 1111111111111111
         );
 		if($this->session->userdata('logged_in')!=TRUE)redirect('login');
+		$access_rights=false;
+		foreach ($this->session->userdata('menu_access') as $key => $value){
+			if($value->module=="Marketing"){
+				$access_rights=true;
+			}
+		}
+		if($access_rights==false){
+			redirect($this->session->userdata('base_link'));
+		}
 		// if($this->sesi_login->log_session() !=TRUE)redirect('Login');
 	}
 
@@ -700,6 +709,12 @@ class Marketing extends CI_Controller {
 		}else if($param=="delete"){
 			$data_input=$this->input->post();
 			$arrayName = array('is_active' => 0 );
+			$this->db->where('id', $data_input['id']);
+			$this->db->update('quotation', $arrayName);
+			redirect('marketing/quotation','refresh');
+		}else if($param=="status_update"){
+			$data_input=$this->input->post();
+			$arrayName = array('status'=>$data_input['status'],'is_active' => 1 );
 			$this->db->where('id', $data_input['id']);
 			$this->db->update('quotation', $arrayName);
 			redirect('marketing/quotation','refresh');

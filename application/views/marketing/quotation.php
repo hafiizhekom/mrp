@@ -53,7 +53,7 @@
                                     <td><?php echo $value->due_date; ?></td>
                                     <td><?php echo $value->status; ?></td>
                                     <td><?php echo $value->marketing; ?></td>
-                                    <td style='white-space: nowrap'><center><button class="btn btn-info edit_button" data="<?php echo $value->id; ?>" ><i class="fa fa-edit"></i> Edit</button>&nbsp;<button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button></center></td>
+                                    <td style='white-space: nowrap'><center><button class="btn btn-info edit_button" data="<?php echo $value->id; ?>" ><i class="fa fa-edit"></i> Edit</button>&nbsp;<button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button>&nbsp;<button class="btn btn-success status_button" data-toggle="modal" data-target="#status_modal" data="<?php echo $value->id; ?>" status-data="<?php echo $value->status; ?>"><i class="fa fa-compass"></i> Status</button></center></td>
                                 </tr>
                             <?php $i+=1; } ?>
                         </tbody>
@@ -68,6 +68,40 @@
     <form action="<?php echo base_url() ?>marketing/quotation/delete" method="POST" id="form_delete">
       <input type="hidden" name="id"  />
     </form>
+  <div class="modal fade" id="status_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="<?php echo base_url() ?>marketing/quotation/status_update" method="POST">
+      <div class="modal-body">
+        <div class="container">
+          <input type="hidden" id="status_id" name="id" />
+          <div class="row">
+            <div class="form-group">
+              <div class="col-md-3">
+                Change Status
+              </div>
+              <div class="col-md-9">
+                <div class="col-md-3">
+                  <select class="form-control" name="status">
+                    <option></option>
+                    <option value="on progress">on progress</option>
+                    <option value="finished">finished</option>
+                    <option value="canceled">canceled</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
 <?php $this->load->view('template/footer'); ?>
 <script type="text/javascript">
     var response="<?php echo $_GET['res']??''; ?>";
@@ -100,6 +134,13 @@
         var data1=$(this).attr("data");
         $("input[name='id']").val(data1);
         $("#form_delete").submit();
+     });
+     $(document).on("click",".status_button",function(){
+        var data1=$(this).attr("data");
+        var data2=$(this).attr("status-data");
+        $("#status_id").val(data1);
+        $("select[name='status']").val(data2);
+        // $("#status_modal").toggle();
      });
 </script>
 </body>

@@ -17,6 +17,15 @@ class login extends CI_Controller {
 		$this->db->where('username', $data_input['username']);
 		$this->db->where('password', md5($data_input['password']));
 		$return=$this->db->get()->row();
+
+		$this->db->select('c.module');
+		$this->db->from('tr_menu_access as a');
+		$this->db->join('ms_submenu as b', 'b.id = a.sub_menu_id', 'left');
+		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->where('a.group_id', $return->group_id);
+		$this->db->where('a.is_active', 1);
+		$this->db->group_by('c.module');
+		$menu_access=$this->db->get()->result();
 		// echo var_dump($return);
 		// exit();
 		if($return!=null){
@@ -30,6 +39,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."admin",
+			        'base_link'=>"admin",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("admin");
@@ -40,6 +51,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."engineering",
+			        'base_link'=>"engineering",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("engineering");
@@ -50,6 +63,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."marketing",
+			        'base_link'=>"marketing",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("marketing");
@@ -60,6 +75,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."purchasing",
+			        'base_link'=>"purchasing",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("purchasing");
@@ -70,6 +87,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."ppc",
+			        'base_link'=>"ppc",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("ppc");
@@ -80,6 +99,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."production",
+			        'base_link'=>"production",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("production");
@@ -90,6 +111,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."logistic",
+			        'base_link'=>"logistic",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("logistic");
@@ -100,6 +123,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."qc",
+			        'base_link'=>"qc",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("qc");
@@ -110,6 +135,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."marketing",
+			        'base_link'=>"marketing",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("marketing");
@@ -120,6 +147,8 @@ class login extends CI_Controller {
 			        'logged_in' => TRUE,
 			        'token'=>$this->generateRandomString(),
 			        'link'=>base_url()."maintenance",
+			        'base_link'=>"maintenance",
+			        'menu_access'=>$menu_access,
 				);
 				$this->session->set_userdata($newdata);
 				redirect("maintenance");

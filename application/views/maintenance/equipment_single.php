@@ -371,7 +371,8 @@ tr.mpk-detail > td {
 }
 </style></head>
 <body style="padding-bottom: 30px;">
-<?php $this->load->view('maintenance/header'); ?>
+<?php $data = array('sub_menu' => $sub_menu); ?>
+<?php $this->load->view('maintenance/header',$data); ?>
 
     <div class="container-fluid" style="min-height: 76.6vh;">
         <div class="header">

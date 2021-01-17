@@ -17,6 +17,15 @@ class admin extends CI_Controller {
             'IV' => 1111111111111111
         );
 		if($this->session->userdata('logged_in')!=TRUE)redirect('login');
+		$access_rights=false;
+		foreach ($this->session->userdata('menu_access') as $key => $value){
+			if($value->module=="Administrator"){
+				$access_rights=true;
+			}
+		}
+		if($access_rights==false){
+			redirect($this->session->userdata('base_link'));
+		}
 		// if($this->sesi_login->log_session() !=TRUE)redirect('Login');
 	}
 
@@ -37,12 +46,26 @@ class admin extends CI_Controller {
 	    return $decryptedText;
 	}
 
+	public function submenu($param){
+		$this->db->select('b.sub_menu,c.module,c.menu,b.url');
+		$this->db->from('tr_menu_access as a');
+		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
+		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->where('c.module', $param);
+		$this->db->where('a.is_active', 1);
+		$this->db->where('a.view', 1);
+		$this->db->order_by('a.id', 'asc');
+		return $this->db->get()->result();
+	}
+
 	public function index()
 	{
-		$this->load->view('admin/home');
+		$data['sub_menu']=$this->submenu('Administrator');
+		$this->load->view('admin/home',$data);
 	}
 
 	public function user(){
+		$data['sub_menu']=$this->submenu('Administrator');
 		$this->db->select('a.id,c.name as default_module,a.username,a.employee_id,a.name,a.position,a.email,a.contact,a.is_active,a.sales_person,b.name as group,a.company');
 		$this->db->from('user_account as a');
 		$this->db->join('user_group as b', 'a.group_id=b.id', 'left');
@@ -86,6 +109,8 @@ class admin extends CI_Controller {
 		$this->db->from('ms_menu');
 		$this->db->where('is_active', 1);
 		$data['select2']=$this->db->get()->result();
+
+		$data['sub_menu']=$this->submenu('Administrator');
 
 		$this->load->view('admin/permission', $data);
 	}
@@ -295,6 +320,8 @@ class admin extends CI_Controller {
 		$this->db->where('is_active', 1);
 		$data['group_detail']=$this->db->get()->result();
 
+		$data['sub_menu']=$this->submenu('Administrator');
+
 		$this->load->view('admin/role',$data);
 	}
 
@@ -402,6 +429,7 @@ class admin extends CI_Controller {
 		$this->db->from('ms_document_type');
 		$this->db->where('is_active', 1);
 		$data['document_table']=$this->db->get()->result();
+		$data['sub_menu']=$this->submenu('Administrator');
 		$this->load->view('admin/document_type', $data);
 	}
 
@@ -465,7 +493,7 @@ class admin extends CI_Controller {
 		$this->db->where('is_active', 1);
 		$this->db->order_by('order', 'asc');
 		$data['detail']=$this->db->get()->result();
-
+		$data['sub_menu']=$this->submenu('Administrator');
 		$this->load->view('admin/general',$data);
 	}
 
@@ -560,7 +588,7 @@ class admin extends CI_Controller {
 		$this->db->from('currency');
 		$this->db->where('is_active', 1);
 		$data['currencies']=$this->db->get()->result();
-
+		$data['sub_menu']=$this->submenu('Administrator');
 		$this->load->view('admin/currency', $data);
 	}
 
@@ -692,7 +720,7 @@ class admin extends CI_Controller {
 		$this->db->from('doc_numbering');
 		$this->db->where('is_active', 1);
 		$data['table']=$this->db->get()->result();
-
+		$data['sub_menu']=$this->submenu('Administrator');
 		$this->load->view('admin/numbering', $data);
 	}
 
@@ -745,7 +773,7 @@ class admin extends CI_Controller {
 		$this->db->from('ms_pic');
 		$this->db->where('is_active', 1);
 		$data['table']=$this->db->get()->result();
-
+		$data['sub_menu']=$this->submenu('Administrator');
 		$this->load->view('admin/pic', $data);
 	}
 
@@ -877,7 +905,7 @@ class admin extends CI_Controller {
 		$this->db->from('ms_warehouse');
 		$this->db->where('is_active', 1);
 		$data['table']=$this->db->get()->result();
-
+		$data['sub_menu']=$this->submenu('Administrator');
 		$this->load->view('admin/warehouse', $data);
 	}
 
@@ -936,7 +964,8 @@ class admin extends CI_Controller {
 	}
 
 	public function import(){
-		$this->load->view('admin/import');
+		$data['sub_menu']=$this->submenu('Administrator');
+		$this->load->view('admin/import',$data);
 	}
 
 	public function import_data(){

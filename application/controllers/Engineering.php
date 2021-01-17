@@ -11,6 +11,15 @@ class Engineering extends CI_Controller {
             'IV' => 1111111111111111
         );
 		if($this->session->userdata('logged_in')!=TRUE)redirect('login');
+		$access_rights=false;
+		foreach ($this->session->userdata('menu_access') as $key => $value){
+			if($value->module=="Engineering"){
+				$access_rights=true;
+			}
+		}
+		if($access_rights==false){
+			redirect($this->session->userdata('base_link'));
+		}
 		// if($this->sesi_login->log_session() !=TRUE)redirect('Login');
 	}
 
@@ -40,6 +49,12 @@ class Engineering extends CI_Controller {
 		if($param=="remove"){
 			$data_input=$this->input->post();
 			$update = array('is_active' => 0 );
+			$this->db->where('id', $data_input['id']);
+			$this->db->update('bill_quotation', $update);
+			header("Location: ".base_url()."engineering/boq");
+		}else if($param=="status_update"){
+			$data_input=$this->input->post();
+			$update = array('status'=>$data_input['status'],'is_active' => 1 );
 			$this->db->where('id', $data_input['id']);
 			$this->db->update('bill_quotation', $update);
 			header("Location: ".base_url()."engineering/boq");
