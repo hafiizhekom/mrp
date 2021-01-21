@@ -13,60 +13,111 @@
     <div class="container-fluid">
         <div class="container">
             <div class="row">
+                 <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Schedule & Progress"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
                 <div class="col-md-4">
-        <div class="Menu">
-            <h4 class="Menu-name">
-                Schedule &amp; Progress
-            </h4>
-            <ul class="Menu-content">
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/schedule">Schedule Lists</a></li>
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/schedule/create">Add New Schedule</a></li>
-                            </ul>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="Menu">
-            <h4 class="Menu-name">
-                Material Requirement (DKM)
-            </h4>
-            <ul class="Menu-content">
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/dkm">Material Requirement Lists</a></li>
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/dkm/create">Add New Material Requirement</a></li>
-                            </ul>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="Menu">
-            <h4 class="Menu-name">
-                MPK
-            </h4>
-            <ul class="Menu-content">
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/mpk">MPK List</a></li>
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/mpk/create">Add New MPK</a></li>
-                            </ul>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="Menu">
-            <h4 class="Menu-name">
-                Packing Lists
-            </h4>
-            <ul class="Menu-content">
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/packing">Packing Lists</a></li>
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/packing/create">Add New Packing List</a></li>
-                            </ul>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="Menu">
-            <h4 class="Menu-name">
-                Monitoring Progress
-            </h4>
-            <ul class="Menu-content">
-                                    <li class="Menu-submenu"><a href="<?php echo base_url() ?>ppc/schedule/monitoring">Reports</a></li>
-                            </ul>
-        </div>
-    </div>
+                    <div class="Menu">
+                        <h4 class="Menu-name">
+                            Schedule &amp; Progress
+                        </h4>
+                        <ul class="Menu-content">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Schedule & Progress"){?>
+                                <li class="Menu-submenu"><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                            <?php } } ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Material Requirement (DKM)"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                <div class="col-md-4">
+                    <div class="Menu">
+                        <h4 class="Menu-name">
+                            Material Requirement (DKM)
+                        </h4>
+                        <ul class="Menu-content">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Material Requirement (DKM)"){?>
+                                <li class="Menu-submenu"><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                            <?php } } ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="MPK"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                <div class="col-md-4">
+                    <div class="Menu">
+                        <h4 class="Menu-name">
+                            MPK
+                        </h4>
+                        <ul class="Menu-content">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="MPK"){?>
+                                <li class="Menu-submenu"><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                            <?php } } ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Packing Lists"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                <div class="col-md-4">
+                    <div class="Menu">
+                        <h4 class="Menu-name">
+                            Packing Lists
+                        </h4>
+                        <ul class="Menu-content">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Packing Lists"){?>
+                                <li class="Menu-submenu"><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                            <?php } } ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php  } ?>
+            <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Monitoring Progress"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
+                <div class="col-md-4">
+                    <div class="Menu">
+                        <h4 class="Menu-name">
+                            Monitoring Progress
+                        </h4>
+                        <ul class="Menu-content">
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Monitoring Progress"){?>
+                                <li class="Menu-submenu"><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                            <?php } } ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php } ?>
             </div>
         </div>
     </div>

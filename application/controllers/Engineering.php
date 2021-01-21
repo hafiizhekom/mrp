@@ -40,9 +40,22 @@ class Engineering extends CI_Controller {
 	    return $decryptedText;
 	}
 	
+	public function submenu($param){
+		$this->db->select('b.sub_menu,c.module,c.menu,b.url');
+		$this->db->from('tr_menu_access as a');
+		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
+		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->where('c.module', $param);
+		$this->db->where('a.is_active', 1);
+		$this->db->where('a.view', 1);
+		$this->db->order_by('a.id', 'asc');
+		return $this->db->get()->result();
+	}
+
 	public function index()
 	{
-		$this->load->view('engineering/home');
+		$data['sub_menu']=$this->submenu("Engineering");
+		$this->load->view('engineering/home',$data);
 	}
 
 	public function boq($param=null){

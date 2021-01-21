@@ -43,7 +43,18 @@ class Marketing extends CI_Controller {
 	
 	public function index()
 	{
-		$this->load->view('marketing/home');
+		$this->db->select('b.sub_menu,c.module,c.menu,b.url');
+		$this->db->from('tr_menu_access as a');
+		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
+		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->where('c.module', 'Marketing');
+		$this->db->where('a.is_active', 1);
+		$this->db->where('a.view', 1);
+		$this->db->order_by('a.id', 'asc');
+		$data['sub_menu']=$this->db->get()->result();
+		// echo $this->db->last_query();
+		// exit();
+		$this->load->view('marketing/home',$data);
 	}
 
 	public function customer($param=null){

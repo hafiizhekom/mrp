@@ -13,28 +13,48 @@
     <div class="container-fluid">
         <div class="container">
             <div class="row">
+                <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Bill of Quantity"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
                 <div class="col-md-4">
                     <div class="Menu">
                         <h4 class="Menu-name">
                             Bill of Quantity
                         </h4>
                         <ul class="Menu-content">
-                                <li class="Menu-submenu"><a href="<?php echo base_url(); ?>engineering/boq">Bill of Quantity List</a></li>
-                                <li class="Menu-submenu"><a href="<?php echo base_url(); ?>engineering/boq/create">Add New Bill of Quantity</a></li>
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Bill of Quantity"){?>
+                                <li class="Menu-submenu"><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                            <?php } } ?>
                         </ul>
                     </div>
                 </div>
+            <?php } ?>
+            <?php $header=false;
+                foreach ($sub_menu as $key => $value) {
+                    if($value->menu=="Master Part"){
+                        $header=true;
+                    }
+                }
+                if($header==true){?>
                 <div class="col-md-4">
                     <div class="Menu">
                         <h4 class="Menu-name">
                             Master Part
                         </h4>
                         <ul class="Menu-content">
-                                                <li class="Menu-submenu"><a href="<?php echo base_url() ?>engineering/master">Master Part List</a></li>
-                                                <li class="Menu-submenu"><a href="<?php echo base_url() ?>engineering/master/create">Add New Master Part</a></li>
-                                        </ul>
+                            <?php foreach ($sub_menu as $key => $value) {
+                                if($value->menu=="Master Part"){?>
+                                <li class="Menu-submenu"><a href="<?php echo base_url() ?><?php echo $value->url; ?>"><?php echo $value->sub_menu; ?></a></li>
+                            <?php } } ?>
+                        </ul>
                     </div>
                 </div>
+            <?php } ?>
             </div>
         </div>
     </div>
