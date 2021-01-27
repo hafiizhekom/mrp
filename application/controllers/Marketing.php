@@ -627,6 +627,7 @@ class Marketing extends CI_Controller {
 					'grand_summary'=>$data_input['summary']??"",
 					'rounding_discount'=>$data_input['discount']??"",
 					'construction_fee'=>$data_input['construction']??"",
+					'grand_total'=>$data_input['grand_total']??"",
 					'grand_total_vat'=>$data_input['total_vat']??"",
 					'is_active'=>1 
 				);
@@ -689,10 +690,11 @@ class Marketing extends CI_Controller {
 				$kode=$data_input['id'];
 
 				$insert_detail_calc = array(
-					'grand_summary'=>$data_input['summary'],
-					'rounding_discount'=>$data_input['discount'],
-					'construction_fee'=>$data_input['construction'],
-					'grand_total_vat'=>$data_input['total_vat'],
+					'grand_summary'=>$data_input['summary']??"",
+					'rounding_discount'=>$data_input['discount']??"",
+					'construction_fee'=>$data_input['construction']??"",
+					'grand_total'=>$data_input['grand_total']??"",
+					'grand_total_vat'=>$data_input['total_vat']??"",
 					'is_active'=>1 
 				);
 				$this->db->where('quotation_id', $kode);
@@ -948,7 +950,7 @@ class Marketing extends CI_Controller {
 					'construction_fee'=>$data_input['construction_fee']??"",
 					'terms'=>$data_input['terms']??"",
 					'note'=>$data_input['note']??"",
-					'status'=>'On Going',
+					'status'=>'Waiting for Approval',
 					'fabricator'=>$data_input['fabrication']??"",
 					'material'=>$data_input['material']??"",
 					'sandblasting'=>$data_input['sandblasting']??"",
@@ -981,10 +983,11 @@ class Marketing extends CI_Controller {
 
 
 				$insert_detail_calc = array(
-					'grand_summary'=>$data_input['summary'],
-					'rounding_discount'=>$data_input['discount'],
-					'construction_fee'=>$data_input['construction'],
-					'grand_total_vat'=>$data_input['total_vat'],
+					'grand_summary'=>$data_input['summary']??"",
+					'rounding_discount'=>$data_input['discount']??"",
+					'construction_fee'=>$data_input['construction']??"",
+					'grand_total'=>$data_input['grand_total']??"",
+					'grand_total_vat'=>$data_input['total_vat']??"",
 					'is_active'=>1 
 				);
 				$this->db->where('quotation_id', $kode->id);
@@ -1126,6 +1129,7 @@ class Marketing extends CI_Controller {
 					'grand_summary'=>$data_input['summary']??"",
 					'rounding_discount'=>$data_input['discount']??"",
 					'construction_fee'=>$data_input['construction']??"",
+					'grand_total'=>$data_input['grand_total']??"",
 					'grand_total_vat'=>$data_input['total_vat']??"",
 					'is_active'=>1 
 				);
@@ -1458,6 +1462,12 @@ class Marketing extends CI_Controller {
 			}
 			
 
+		}else if($param=="status_update"){
+			$data_input=$this->input->post();
+			$arrayName = array('status' => $data_input['status']);
+			$this->db->where('id', $data_input['id']);
+			$this->db->update('job_order', $arrayName);
+			redirect('marketing/joborder','refresh');
 		}else if($param=="delete"){
 			$data_input=$this->input->post();
 			$arrayName = array('is_active' => 0);

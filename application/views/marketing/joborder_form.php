@@ -380,14 +380,12 @@ tr.mpk-detail > td {
         <div class="body">
             <div class="row">
                 <div class="col-md-12">
-                                        <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#joborder" role="tab" data-toggle="tab">Job
-                                Order</a></li>
-                        <li role="presentation"><a href="#commercial_sheet" role="tab" data-toggle="tab">Commercial
-                                Sheet</a></li>
-                    </ul>
-                    <form method="post" class="form form-horizontal" details="" action="<?php echo base_url() ?>marketing/joborder/add">
-                      <input type="hidden" name="id" value="<?php echo $header->id??''; ?>"/>
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#joborder" role="tab" data-toggle="tab">Job Order</a></li>
+                    <li role="presentation"><a href="#commercial_sheet" role="tab" data-toggle="tab">Commercial Sheet</a></li>
+                  </ul>
+                  <form method="post" class="form form-horizontal" details="" action="<?php echo base_url() ?>marketing/joborder/add">
+                    <input type="hidden" name="id" value="<?php echo $header->id??''; ?>"/>
     <div class="wrapper">
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="joborder">
@@ -574,6 +572,17 @@ tr.mpk-detail > td {
                                 </td>
                                 <td colspan="2">
                                     Construction Fee
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+
+                                </td>
+                                <td>
+                                    <input type="text" readonly="" class="form-control input-sm " name="grand_total" value="">
+                                </td>
+                                <td colspan="2">
+                                    Grand Total
                                 </td>
                             </tr>
                             <tr>
@@ -858,6 +867,7 @@ tr.mpk-detail > td {
 <script>
   $(document).ready(function(){
     var quotation_id="<?php echo $quotation_header->qn_number??'' ?>";
+    // alert(quotation_id);
     if(quotation_id!=""){
       $("select[name='qn_number']").val(quotation_id);
       $("select[name='qn_number']").selectpicker("refresh");
@@ -949,6 +959,7 @@ tr.mpk-detail > td {
             $("input[name='summary']").val(res.calc.grand_summary);
             $("input[name='construction']").val(res.calc.construction_fee);
             $("input[name='total_vat']").val(res.calc.grand_total_vat);
+            $("input[name='grand_total']").val(res.calc.grand_total);
             $("input[name='discount']").val(res.calc.rounding_discount);
 
           });
@@ -1173,18 +1184,7 @@ function count_all(){
     total_price+=qty*price;
     console.log(total_price);
   }
-  $("input[name='summary']").val("IDR "+addCommas(total_price));
-
-  var construction_fee=0;
-  if($("input[name='construction']").val()!=""){
-    construction_fee=$("input[name='construction']").val();
-    construction_fee=construction_fee.replace("IDR","");
-    construction_fee=parseFloat(construction_fee.trim());
-    construction_fee=construction_fee/100;
-    console.log(construction_fee);
-  }
-  var combined=total_price*construction_fee;
-  $("input[name='construction']").val("IDR "+addCommas(combined));
+  var discount_valueonly=0;
   if($("input[name='discount']").val()!=""){
     var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
     discount_valueonly=discount_valueonly.replace(",","");
@@ -1192,11 +1192,23 @@ function count_all(){
       discount_valueonly="0";
     }
     discount_valueonly=parseFloat(discount_valueonly.trim());
-    var total_vat=(total_price*0.1)+total_price-discount_valueonly+(total_price*construction_fee);
-  }else{
-    var total_vat=(total_price*0.1)+total_price+(total_price*construction_fee);
   }
-  
+  total_price=total_price;
+
+  $("input[name='summary']").val("IDR "+addCommas(total_price));
+
+  var construction_fee=0;
+  if($("input[name='construction_fee']").val()!=""){
+    construction_fee=$("input[name='construction_fee']").val();
+    construction_fee=construction_fee/100;
+    console.log(construction_fee);
+  }
+  var combined=total_price*construction_fee;
+  $("input[name='construction']").val("IDR "+addCommas(combined));
+  var grand_total_var=total_price+(total_price*construction_fee)-discount_valueonly;
+  $("input[name='grand_total']").val("IDR "+addCommas(grand_total_var));
+  var total_vat=(total_price*0.1)+total_price+(total_price*construction_fee)-discount_valueonly;
+
   $("input[name='total_vat']").val("IDR "+addCommas(total_vat));
   // var discount_val=$("input[name='discount']").val();
   var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
@@ -1217,9 +1229,17 @@ $(document).on("focusout","input[name='detail_qty[]']",function(){
   price_row=price_row.replace(/\,/g, '');
   price_row=(parseInt(price_row));
   var qty_row=$(this).val();
-  $(this).parent().siblings("td").siblings('td').children("input[name='detail_totalprice[]']").val(price_row*qty_row);
+  $(this).parent().siblings("td").siblings('td').children("input[name='detail_totalprice[]']").val(addCommas(price_row*qty_row));
 
   count_all();
+});
+$(document).on("focusout","input[name='construction_fee']",function(){
+  if($("input[name='summary']").val()!=""){
+    count_all();
+  }else{
+    // $("input[name='construction']").val($(this).val());  
+  }
+  
 });
 $(document).on("focusout","input[name='construction']",function(){
   $("input[name='construction']").val($(this).val());

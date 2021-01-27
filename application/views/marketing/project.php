@@ -8,7 +8,7 @@
     <?php $this->load->view('template/header_link'); ?>
 </head>
 <body style="padding-bottom: 30px;">
-<?php $this->load->view('admin/header'); ?>
+<?php $this->load->view('marketing/header'); ?>
 
     <div class="container-fluid" style="min-height: 76.6vh;">
         <div class="header">

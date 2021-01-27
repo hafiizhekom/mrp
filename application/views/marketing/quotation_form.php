@@ -673,7 +673,18 @@ tr.mpk-detail > td {
                                     <input type="text" readonly="" class="form-control input-sm " name="construction" value="<?php echo $detail_calc->construction_fee??'' ?>">
                                 </td>
                                 <td colspan="2">
-                                    Counstruction Fee
+                                    Construction Fee
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+
+                                </td>
+                                <td>
+                                    <input type="text" readonly="" class="form-control input-sm " name="grand_total" value="<?php echo $detail_calc->grand_total??'' ?>">
+                                </td>
+                                <td colspan="2">
+                                    Grand Total
                                 </td>
                             </tr>
                             <tr>
@@ -1201,6 +1212,17 @@ function count_all(){
     total_price+=qty*price;
     console.log(total_price);
   }
+  var discount_valueonly=0;
+  if($("input[name='discount']").val()!=""){
+    var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
+    discount_valueonly=discount_valueonly.replace(",","");
+    if(discount_valueonly==""){
+      discount_valueonly="0";
+    }
+    discount_valueonly=parseFloat(discount_valueonly.trim());
+  }
+  total_price=total_price;
+
   $("input[name='summary']").val("IDR "+addCommas(total_price));
 
   var construction_fee=0;
@@ -1211,18 +1233,10 @@ function count_all(){
   }
   var combined=total_price*construction_fee;
   $("input[name='construction']").val("IDR "+addCommas(combined));
-  if($("input[name='discount']").val()!=""){
-    var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
-    discount_valueonly=discount_valueonly.replace(",","");
-    if(discount_valueonly==""){
-      discount_valueonly="0";
-    }
-    discount_valueonly=parseFloat(discount_valueonly.trim());
-    var total_vat=(total_price*0.1)+total_price-discount_valueonly+(total_price*construction_fee);
-  }else{
-    var total_vat=(total_price*0.1)+total_price+(total_price*construction_fee);
-  }
-  
+  var grand_total_var=total_price+(total_price*construction_fee)-discount_valueonly;
+  $("input[name='grand_total']").val("IDR "+addCommas(grand_total_var));
+  var total_vat=(total_price*0.1)+total_price+(total_price*construction_fee)-discount_valueonly;
+
   $("input[name='total_vat']").val("IDR "+addCommas(total_vat));
   // var discount_val=$("input[name='discount']").val();
   var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
@@ -1234,6 +1248,16 @@ function count_all(){
   $("input[name='discount']").val("IDR "+addCommas(discount_valueonly));
 }
 
+// function checkdiscount(){
+//   var discount_valueonly=($("input[name='discount']").val()).replace("IDR","");
+//   discount_valueonly=discount_valueonly.replace(",","");
+//   if(discount_valueonly==""){
+//       discount_valueonly="0";
+//     }
+//   discount_valueonly=parseFloat(discount_valueonly.trim());
+
+// }
+
 $(document).on("focusout","input[name='discount']",function(){
   count_all();
 });
@@ -1243,12 +1267,16 @@ $(document).on("focusout","input[name='detail_qty[]']",function(){
   price_row=price_row.replace(/\,/g, '');
   price_row=(parseInt(price_row));
   var qty_row=$(this).val();
-  $(this).parent().siblings("td").siblings('td').children("input[name='detail_totalprice[]']").val(price_row*qty_row);
-
+  $(this).parent().siblings("td").siblings('td').children("input[name='detail_totalprice[]']").val(addCommas(price_row*qty_row));
   count_all();
 });
 $(document).on("focusout","input[name='contruction_fee']",function(){
-  $("input[name='construction']").val($(this).val());
+  if($("input[name='summary']").val()!=""){
+    count_all();
+  }else{
+    // $("input[name='construction']").val($(this).val());  
+  }
+  
 });
 $(document).on("focusout","input[name='detail_price[]']",function(){
   var price_row=$(this).val();

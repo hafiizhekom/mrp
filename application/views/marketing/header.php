@@ -95,19 +95,19 @@
                     
                 </ul>
                 <ul class="nav navbar-nav navbar-xs visible-xs">
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>marketing/customer">Customer List</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>marketing/customer/create">Add New Customer</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>marketing/sot">Sales Order Types</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>marketing/sow">Scope of Works</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>marketing/kom">Kick Off Meeting Template</a></li>
-                                                            </ul>
-                        </li>
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quotation <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo base_url() ?>marketing/customer">Customer List</a></li>
+                            <li><a href="<?php echo base_url() ?>marketing/customer/create">Add New Customer</a></li>
+                            <li><a href="<?php echo base_url() ?>marketing/sot">Sales Order Types</a></li>
+                            <li><a href="<?php echo base_url() ?>marketing/sow">Scope of Works</a></li>
+                            <li><a href="<?php echo base_url() ?>marketing/kom">Kick Off Meeting Template</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quotation <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
                                                                     <li><a href="<?php echo base_url() ?>marketing/quotation">Quotation List</a></li>
                                                                     <li><a href="<?php echo base_url() ?>marketing/quotation/create">Add New Quotation</a></li>
                                                                     <li><a href="<?php echo base_url() ?>marketing/document">BQ and Documents</a></li>

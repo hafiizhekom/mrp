@@ -93,26 +93,40 @@
                     } ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-xs visible-xs">
-                                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bill of Quotation <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                                                    <li><a href="<?php echo base_url() ?>engineering/boq">Bill of Quotation List</a></li>
-                                                                    <li><a href="<?php echo base_url() ?>engineering/boq/create">Add New Bill of Quotation</a></li>
-                                                            </ul>
-                        </li>
-                                    </ul>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bill of Quantity <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo base_url() ?>engineering/boq">Bill of Quantity List</a></li>
+                            <li><a href="<?php echo base_url() ?>engineering/boq/create">Add New Bill of Quantity</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master Part<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo base_url() ?>engineering/master">Master Part List</a></li>
+                            <li><a href="<?php echo base_url() ?>engineering/master/create">Add New Master Part</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </nav>
 <div class="collapse navbar-collapse" style="border: 1px solid #ddd; margin-bottom: 15px;">
     <ul class="nav navbar-nav navbar-xs">
-                    <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bill of Quotation <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                                            <li><a href="<?php echo base_url() ?>engineering/boq">Bill of Quotation List</a></li>
-                                            <li><a href="<?php echo base_url() ?>engineering/boq/create">Add New Bill of Quotation</a></li>
-                                    </ul>
-            </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bill of Quantity <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="<?php echo base_url() ?>engineering/boq">Bill of Quantity List</a></li>
+                <li><a href="<?php echo base_url() ?>engineering/boq/create">Add New Bill of Quantity</a></li>
             </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Master Part<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="<?php echo base_url() ?>engineering/master">Master Part List</a></li>
+                <li><a href="<?php echo base_url() ?>engineering/master/create">Add New Master Part</a></li>
+            </ul>
+        </li>
+    </ul>
 </div>
