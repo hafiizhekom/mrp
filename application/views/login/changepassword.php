@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MRP     Change Password
+    <title>MRP Change Password
 </title>
     <?php $this->load->view('template/header_link'); ?>
 <style type="text/css">/* line 2, stdin */

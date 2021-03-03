@@ -5,17 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MRP </title>
-    <link href="<?php echo base_url() ?>css/app.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo base_url() ?>plugin/fontawesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>plugin/datatable/datatables.css"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>plugin/selectpicker/css/bootstrap-select.css"/>
+    <?php $this->load->view('template/header_link'); ?>
+
 </head>
 <body style="padding-bottom: 30px;">
 <?php $this->load->view('admin/header'); ?>
 
     <div class="container-fluid" style="min-height: 76.6vh;">
         <div class="header">
-            <h5 style="font-weight: bold;">User Group</h5>
+            <h5 style="font-weight: bold;">Role and Permission</h5>
         </div>
         <div class="body">
             <div class="col-md-3">
@@ -24,7 +22,7 @@
                         <input type="hidden" name="id" value="" />
                     <div class="box">
                         <div class="box-header">
-                            <h5>User Information</h5>
+                            <h5>Role and permission Information</h5>
                         </div>
                         <div class="box-body">
                             <div class="row">
@@ -41,14 +39,6 @@
                                         <label class="control-label col-md-3">Name</label>
                                         <div class="col-md-9">
                                             <input type="text" class="form-control" name="name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3">Level</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control" name="level">
                                         </div>
                                     </div>
                                 </div>
@@ -88,9 +78,8 @@
                     <thead>
                         <tr>
                             <td>#</td>
-                            <td>Name</td>
+                            <td>Role</td>
                             <td>Code</td>
-                            <td>Level</td>
                             <td>Active</td>
                             <td>Documents</td>
                             <td>Remark</td>
@@ -102,7 +91,6 @@
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $value->name; ?></td>
                                 <td><?php echo $value->code; ?></td>
-                                <td><?php echo $value->level; ?></td>
                                 <td>Active</td>
                                 <td><ul><?php foreach ($group_detail as $key2 => $value2) {
                                     if($value->id==$value2->user_group_id){
@@ -125,6 +113,26 @@
 </form>
 <?php $this->load->view('template/footer'); ?>
 <script type="text/javascript">
+    $(document).ready(function(){
+    var response="<?php echo $_GET['res']??''; ?>";
+    if(response=="success"){
+      $.toast({
+            heading: 'Success',
+            text: 'Permission Changes Succesfully',
+            showHideTransition: 'slide',
+            icon: 'success',
+            position : 'top-right'
+        })
+    }else if(response=="failed"){
+      $.toast({
+            heading: 'Error',
+            text: 'Permission Changes Failed',
+            showHideTransition: 'slide',
+            icon: 'error',
+            position : 'top-right'
+        })
+    }
+  })
      $("#table_1").DataTable( {
         "scrollX": true
         });

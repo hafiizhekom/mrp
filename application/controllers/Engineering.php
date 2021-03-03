@@ -45,11 +45,28 @@ class Engineering extends CI_Controller {
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->join('user_account as d', 'd.group_id = a.group_id', 'left');
 		$this->db->where('c.module', $param);
+		$this->db->where('d.id',$this->session->userdata('id') );
 		$this->db->where('a.is_active', 1);
 		$this->db->where('a.view', 1);
 		$this->db->order_by('a.id', 'asc');
 		return $this->db->get()->result();
+	}
+
+	public function submenu_access($param,$url){
+		$this->db->select('a.view,a.create,a.delete,a.approve,a.edit,b.sub_menu,c.module,c.menu,b.url');
+		$this->db->from('tr_menu_access as a');
+		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
+		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->join('user_account as d', 'd.group_id = a.group_id', 'left');
+		$this->db->where('c.module', $param);
+		$this->db->where('d.id',$this->session->userdata('id') );
+		$this->db->where('b.url', $url);
+		$this->db->where('a.is_active', 1);
+		$this->db->order_by('a.id', 'asc');
+		$this->db->limit(1);
+		return $this->db->get()->row();
 	}
 
 	public function index()
@@ -59,6 +76,7 @@ class Engineering extends CI_Controller {
 	}
 
 	public function boq($param=null){
+		$data['sub_menu_access']=$this->submenu_access('Engineering','engineering/boq');
 		if($param=="remove"){
 			$data_input=$this->input->post();
 			$update = array('is_active' => 0 );

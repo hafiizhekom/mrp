@@ -41,17 +41,39 @@ class Marketing extends CI_Controller {
 	    return $decryptedText;
 	}
 	
-	public function index()
-	{
-		$this->db->select('b.sub_menu,c.module,c.menu,b.url');
+
+	public function submenu($param){
+		$this->db->select('a.view,a.create,a.delete,a.approve,a.edit,b.sub_menu,c.module,c.menu,b.url');
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
-		$this->db->where('c.module', 'Marketing');
+		$this->db->join('user_account as d', 'd.group_id = a.group_id', 'left');
+		$this->db->where('c.module', $param);
+		$this->db->where('d.id',$this->session->userdata('id') );
 		$this->db->where('a.is_active', 1);
 		$this->db->where('a.view', 1);
 		$this->db->order_by('a.id', 'asc');
-		$data['sub_menu']=$this->db->get()->result();
+		return $this->db->get()->result();
+	}
+
+	public function submenu_access($param,$url){
+		$this->db->select('a.view,a.create,a.delete,a.approve,a.edit,b.sub_menu,c.module,c.menu,b.url');
+		$this->db->from('tr_menu_access as a');
+		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
+		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->join('user_account as d', 'd.group_id = a.group_id', 'left');
+		$this->db->where('c.module', $param);
+		$this->db->where('d.id',$this->session->userdata('id') );
+		$this->db->where('b.url', $url);
+		$this->db->where('a.is_active', 1);
+		$this->db->order_by('a.id', 'asc');
+		$this->db->limit(1);
+		return $this->db->get()->row();
+	}
+
+	public function index()
+	{
+		$data['sub_menu']=$this->submenu('Marketing');
 		// echo $this->db->last_query();
 		// exit();
 		$this->load->view('marketing/home',$data);
@@ -353,6 +375,9 @@ class Marketing extends CI_Controller {
 	}
 
 	public function quotation($param=null){
+		$data['sub_menu_access']=$this->submenu_access('Marketing','marketing/quotation');
+		// echo json_encode($data['sub_menu_access']);
+		// exit();
 		if($param=="create"){
 			$data_input=$this->input->post();
 			if(empty($data_input['id'])){
@@ -934,6 +959,7 @@ class Marketing extends CI_Controller {
 	}
 
 	public function joborder($param=null){
+		$data['sub_menu_access']=$this->submenu_access('Marketing','marketing/joborder');
 		if($param=="add"){
 			$data_input=$this->input->post();
 			// echo var_dump($data_input);
@@ -1096,7 +1122,7 @@ class Marketing extends CI_Controller {
 					'construction_fee'=>$data_input['construction_fee']??"",
 					'terms'=>$data_input['terms']??"",
 					'note'=>$data_input['note']??"",
-					'status'=>'On Going',
+					'status'=>'Waiting for Approval',
 					'fabricator'=>$data_input['fabrication']??"",
 					'material'=>$data_input['material']??"",
 					'sandblasting'=>$data_input['sandblasting']??"",
@@ -1552,39 +1578,50 @@ class Marketing extends CI_Controller {
 
 	public function document(){
 		$data_input=$this->input->post();
+		$data['sub_menu_access']=$this->submenu_access('Marketing','marketing/document');
 		if(!empty($data_input)){
+			// var_dump($_files['file']);
+			// exit();
 			if(!empty($_FILES['file'])){
-				// echo var_dump($_FILES['file']);
-				$target_dir = "images/";
-				$target_file = $target_dir . basename($_FILES["file"]["name"]);
-				move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
-				if(!empty($data_input['id'])){
-					$insert_update = array(
-						'jo_no' =>$data_input['job_number']??"",
-						'title'=>$data_input['title']??"",
-						'type_name'=>$data_input['type_id']??"",
-						'note'=>$data_input['note']??"",
-						'file_name'=>$_FILES["file"]["name"]??"",
-						'valid_from'=>$data_input['start_date']??"",
-						'valid_until'=>$data_input['end_date']??"",
-						'reminder'=>$data_input['reminder']??"",
-						'is_active'=>1 
-					);
-					$this->db->where('id', $data_input['id']);
-					$this->db->update('marketing_document', $insert_update);
+				// var_dump($_FILES['file']);
+				// exit();
+				if(!empty($_FILES['file']['name'])){
+					$target_dir = "images/";
+					$target_file = $target_dir . basename($_FILES["file"]["name"]);
+					move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+					if(!empty($data_input['id'])){
+						$insert_update = array(
+							'jo_no' =>$data_input['job_number']??"",
+							'title'=>$data_input['title']??"",
+							'type_name'=>$data_input['type_id']??"",
+							'note'=>$data_input['note']??"",
+							'file_name'=>$_FILES["file"]["name"]??"",
+							'valid_from'=>$data_input['start_date']??"",
+							'valid_until'=>$data_input['end_date']??"",
+							'reminder'=>$data_input['reminder']??"",
+							'created_by'=>$this->session->userdata('id'),
+							'is_active'=>1 
+						);
+						$this->db->where('id', $data_input['id']);
+						$this->db->update('marketing_document', $insert_update);
+					}else{
+						$insert_update = array(
+							'jo_no' =>$data_input['job_number']??"",
+							'title'=>$data_input['title']??"",
+							'type_name'=>$data_input['type_id']??"",
+							'note'=>$data_input['note']??"",
+							'file_name'=>$_FILES["file"]["name"]??"",
+							'valid_from'=>$data_input['start_date']??"",
+							'valid_until'=>$data_input['end_date']??"",
+							'reminder'=>$data_input['reminder']??"",
+							'created_by'=>$this->session->userdata('id'),
+							'is_active'=>1 
+						);
+						$this->db->insert('marketing_document', $insert_update);
+					}
+					$data['response']="success";
 				}else{
-					$insert_update = array(
-						'jo_no' =>$data_input['job_number']??"",
-						'title'=>$data_input['title']??"",
-						'type_name'=>$data_input['type_id']??"",
-						'note'=>$data_input['note']??"",
-						'file_name'=>$_FILES["file"]["name"]??"",
-						'valid_from'=>$data_input['start_date']??"",
-						'valid_until'=>$data_input['end_date']??"",
-						'reminder'=>$data_input['reminder']??"",
-						'is_active'=>1 
-					);
-					$this->db->insert('marketing_document', $insert_update);
+					$data['response']="failed";
 				}
 			}
 			if(!empty($data_input['id_delete'])){
@@ -1593,6 +1630,7 @@ class Marketing extends CI_Controller {
 					);
 				$this->db->where('id', $data_input['id_delete']);
 				$this->db->update('marketing_document', $insert_update);
+				$data['response']="success_document";
 			}
 			$this->db->select('a.id,a.job_number,b.delivery_date as po_date,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,b.order_type,b.status,c.name as company_name,b.created_by');
 			$this->db->from('job_order as a');
@@ -1602,10 +1640,11 @@ class Marketing extends CI_Controller {
 			$this->db->where('a.job_number', $data_input['job_number']);
 			$data['header']=$this->db->get()->row();
 
-			$this->db->select('*');
-			$this->db->from('marketing_document');
-			$this->db->where('jo_no', $data_input['job_number']);
-			$this->db->where('is_active', 1);
+			$this->db->select('a.*,b.name as user_created');
+			$this->db->from('marketing_document as a');
+			$this->db->join('user_account as b', 'a.created_by = b.id', 'left');
+			$this->db->where('a.jo_no', $data_input['job_number']);
+			$this->db->where('a.is_active', 1);
 			$data['table']=$this->db->get()->result();
 
 		}

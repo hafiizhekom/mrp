@@ -459,9 +459,9 @@ tr.mpk-detail > td {
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Document Title</label>
+                                    <label class="control-label col-md-2">Document Title *</label>
                                     <div class="col-md-9">
-                                        <input name="title" type="text" class="form-control input-sm">
+                                        <input name="title" type="text" class="form-control input-sm" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -516,7 +516,7 @@ tr.mpk-detail > td {
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Reminder</label>
+                                    <label class="control-label col-md-2">Valid Days</label>
                                     <div class="col-md-4" style="display: inline-flex;">
                                         <input name="reminder" type="text" class="form-control input-sm">
                                         <span style="padding: 3px; margin-left: 5px"> days</span>
@@ -554,7 +554,9 @@ tr.mpk-detail > td {
                 </th><th>
                     Valid Until
                 </th><th>
-                    Reminder
+                    Valid Days 
+                </th><th>
+                    Created By 
                 </th><th>
                     Action
                 </th><!--v-for-end-->
@@ -574,6 +576,7 @@ tr.mpk-detail > td {
                   <td><?php echo $value->valid_from??'' ?></td>
                   <td><?php echo $value->valid_until??'' ?></td>
                   <td><?php echo $value->reminder??'' ?></td>
+                  <td><?php echo $value->user_created??'' ?></td>
                   <td>
                       <div class="dropdown">
                         <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -581,7 +584,8 @@ tr.mpk-detail > td {
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="action" style="min-width: 80px; font-size: 9pt">
-                            <li><a role="button" class="delete" data="<?php echo $value->id ?>">Delete</a></li>
+                            <?php if($sub_menu_access->delete=="1"||$value->user_created==$this->session->userdata('id')){ ?><li><a role="button" class="delete" data="<?php echo $value->id ?>" data-toggle="modal" data-target="#status_modal">Delete</a></li>
+                          <?php } ?>
                             <li><a target="_blank" href="<?php echo base_url()?>images/<?php echo $value->file_name?>">Download</a></li>
                         </ul>
                       </div>
@@ -605,6 +609,25 @@ tr.mpk-detail > td {
       <input type="hidden" name="job_number" id="job_number_send_2"/>
       <input type="hidden" name="id_delete" id="delete_data"/>
     </form>
+    <div class="modal fade" id="status_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        Delete Confirmation
+      </div>
+      <div class="modal-body">
+          <center>
+            Are You Sure?
+          </center>
+          <br>
+          <center>
+            <button class="btn btn-danger" id="remove_button_submit">Remove</button>
+            <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </center>
+        </div>
+    </div>
+  </div>
+</div>
 <?php $this->load->view('template/footer'); ?>
 <script type="text/javascript">
   $(document).on("change","#selectdata",function(){
@@ -615,8 +638,36 @@ tr.mpk-detail > td {
     var data1=$(this).attr("data");
     $("#job_number_send_2").val($("#selectdata").val());
     $("#delete_data").val(data1);
+    // $("#sendafterchange2").submit();
+  })
+  $(document).on("click","#remove_button_submit",function(){
     $("#sendafterchange2").submit();
   })
-
+  var response="<?php echo $response??''; ?>";
+  if(response=="success"){
+    $.toast({
+          heading: 'Success',
+          text: 'File uploaded Successfully',
+          showHideTransition: 'slide',
+          icon: 'success',
+          position : 'top-right'
+      })
+  }else if(response=="failed"){
+    $.toast({
+          heading: 'Error',
+          text: 'File not uploaded',
+          showHideTransition: 'slide',
+          icon: 'error',
+          position : 'top-right'
+      });
+  }else if(response=="success_document"){
+    $.toast({
+          heading: 'Success',
+          text: 'File Deleted Successfully',
+          showHideTransition: 'slide',
+          icon: 'success',
+          position : 'top-right'
+      })
+  }
 </script>
 </body></html>

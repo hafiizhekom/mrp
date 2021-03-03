@@ -51,7 +51,9 @@ class admin extends CI_Controller {
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->join('user_account as d', 'd.group_id = a.group_id', 'left');
 		$this->db->where('c.module', $param);
+		$this->db->where('d.id',$this->session->userdata('id') );
 		$this->db->where('a.is_active', 1);
 		$this->db->where('a.view', 1);
 		$this->db->order_by('a.id', 'asc');
@@ -86,14 +88,14 @@ class admin extends CI_Controller {
 		// echo var_dump($data_input);
 
 		$data['id']=$data_input['id'];
-
+		
 		$this->db->select('*');
 		$this->db->from('tr_menu_access');
 		$this->db->where('is_active', 1);
 		$this->db->where('group_id', $data_input['id']);
 		$data['access']=$this->db->get()->result();
 
-		$this->db->select('a.module,a.menu,b.sub_menu,b.id,b.url,b.create,b.edit,b.delete,b.view');
+		$this->db->select('a.module,a.menu,b.sub_menu,b.id,b.url,b.create,b.edit,b.delete,b.view,b.approve');
 		$this->db->from('ms_menu as a');
 		$this->db->where('a.is_active', 1);
 		$this->db->join('ms_submenu as b', 'a.id=b.menu_id', 'left');
@@ -112,6 +114,7 @@ class admin extends CI_Controller {
 
 		$data['sub_menu']=$this->submenu('Administrator');
 
+		// echo json_encode($data["access"]);
 		$this->load->view('admin/permission', $data);
 	}
 
@@ -125,6 +128,7 @@ class admin extends CI_Controller {
 			'edit'=>0,
 			'view'=>0,
 			'delete'=>0,
+			'approve'=>0
 		 );
 		$this->db->where('group_id', $data_input['id']);
 		$this->db->update('tr_menu_access', $arrayName);
@@ -239,8 +243,35 @@ class admin extends CI_Controller {
 				
 			}
 		}
+		if(!empty($data_input['approve'])){
+			for ($i=0; $i <count($data_input['approve']) ; $i++) { 
+				$this->db->select('id');
+				$this->db->from('tr_menu_access');
+				$this->db->where('group_id', $data_input['id']);
+				$this->db->where('sub_menu_id', $data_input['approve'][$i]);
+				$kunci=$this->db->get()->row();
+				if(empty($kunci->id)){
+					$insertdata = array(
+						'group_id' => $data_input['id'],
+						'sub_menu_id'=>$data_input['approve'][$i],
+						'approve'=>1,
+						'is_active'=>1 
+					);
+					$this->db->insert('tr_menu_access', $insertdata);
+				}else{
+					$insertdata = array(
+						'approve'=>1,
+						'is_active'=>1 
+					);
+					$this->db->where('group_id', $data_input['id']);
+					$this->db->where('sub_menu_id', $data_input['approve'][$i]);
+					$this->db->update('tr_menu_access', $insertdata);
+				}
+				
+			}
+		}
 
-		header("Location: ".base_url()."admin/role");
+		header("Location: ".base_url()."admin/role?res=success");
 	}
 
 	public function user_add(){
@@ -366,7 +397,6 @@ class admin extends CI_Controller {
 			$array_insert = array(
 				'code' => $data_input['code'],
 				'name' => $data_input['name'],
-				'level'=>$data_input['level'],
 				'is_active'=>1
 			);
 			$this->db->insert('user_group', $array_insert);
@@ -389,7 +419,6 @@ class admin extends CI_Controller {
 			$array_insert = array(
 				'code' => $data_input['code'],
 				'name' => $data_input['name'],
-				'level'=>$data_input['level'],
 				'is_active'=>1
 			);
 			$this->db->where('id', $data_input['id']);

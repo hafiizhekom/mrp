@@ -22,7 +22,7 @@ class login extends CI_Controller {
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'b.id = a.sub_menu_id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
-		$this->db->where('a.group_id', $return->group_id);
+		$this->db->where('a.group_id', $return->group_id??"");
 		$this->db->where('a.is_active', 1);
 		$this->db->group_by('c.module');
 		$menu_access=$this->db->get()->result();

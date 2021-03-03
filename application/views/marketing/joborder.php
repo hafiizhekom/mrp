@@ -51,7 +51,17 @@
                                     <td><?php echo $value->status; ?></td>
                                     <td><?php echo $value->progress; ?></td>
                                     <td><?php echo $value->marketing; ?></td>
-                                    <td style='white-space: nowrap'><center><button class="btn btn-info edit_button" data="<?php echo $value->id; ?>" ><i class="fa fa-edit"></i> Edit</button>&nbsp;<button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button>&nbsp;<button class="btn btn-success status_button" data-toggle="modal" data-target="#status_modal" data="<?php echo $value->id; ?>" status-data="<?php echo $value->status; ?>"><i class="fa fa-compass"></i> Status</button></center></td>
+                                    <td style='white-space: nowrap'>
+                                      <center>
+                                        <?php if($sub_menu_access->edit=="1") {?>
+                                        <button class="btn btn-info edit_button" data="<?php echo $value->id; ?>" ><i class="fa fa-edit"></i> Edit</button>
+                                        &nbsp;<?php } ?>
+                                        <?php if($sub_menu_access->delete=="1") {?>
+                                        <button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button>&nbsp;
+                                        <?php } ?>
+                                        <?php if($sub_menu_access->approve=="1"){ ?><button class="btn btn-success status_button" data-toggle="modal" data-target="#status_modal" data="<?php echo $value->id; ?>" status-data="<?php echo $value->status; ?>"><i class="fa fa-compass"></i> Status</button><?php } ?>
+                                      </center>
+                                    </td>
                                 </tr>
                             <?php $i+=1; } ?>
                         </tbody>

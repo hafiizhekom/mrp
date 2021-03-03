@@ -29,7 +29,9 @@ class ppc extends CI_Controller {
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->join('user_account as d', 'd.group_id = a.group_id', 'left');
 		$this->db->where('c.module', $param);
+		$this->db->where('d.id',$this->session->userdata('id') );
 		$this->db->where('a.is_active', 1);
 		$this->db->where('a.view', 1);
 		$this->db->order_by('a.id', 'asc');
@@ -420,7 +422,15 @@ class ppc extends CI_Controller {
 	}
 
 	public function packing(){
-		$data=null;
+		// $data=null;
+		$this->db->select('*');
+		$this->db->from('packing_list');
+		$table=$this->db->get()->result();
+
+		$data = array(
+			'table' => $table,
+		 );
+
 		$this->load->view('ppic/packing', $data);
 	}
 

@@ -375,7 +375,7 @@ tr.mpk-detail > td {
 
     <div class="container-fluid">
         <div class="header">
-            <h5 style="font-weight: bold">USER GROUP Test Permission</h5>
+            <h5 style="font-weight: bold">Permission</h5>
         </div>
         <div class="body">
             <div class="col-md-12">
@@ -413,6 +413,9 @@ tr.mpk-detail > td {
                 Allow Access
                 <input type="checkbox" name="allow_all">
             </th>
+            <th style="text-align: center;">
+                Approval
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -423,24 +426,39 @@ tr.mpk-detail > td {
           <td class="menu"><?php echo $value->menu??''; ?></td>
           <td class="sub_menu"><?php echo $value->sub_menu??''; ?></td>
           <td style="width: 210px;">
+
             <?php if($value->create=="1"){?>
-              <span>
-                  <input type="checkbox" value="<?php echo $value->id??'' ?>" name="create[]"> Create
-              </span>
+                <span>
+                  <input type="checkbox" <?php foreach ($access as $key3 => $value3) {
+                if($value3->sub_menu_id==$value->id && $value3->create=="1"){?> checked="checked" <?php } } ?> value="<?php echo $value->id??'' ?>" name="create[]"> Create
+                </span>
             <?php } ?>
             <?php if($value->view=="1"){?>
               <span>
-                  <input type="checkbox" value="<?php echo $value->id??'' ?>" name="view[]"> View
+                  <input type="checkbox" <?php foreach ($access as $key3 => $value3) {
+                if($value3->sub_menu_id==$value->id && $value3->view=="1"){?> checked="checked" <?php } } ?> value="<?php echo $value->id??'' ?>" name="view[]"> View
               </span>
             <?php } ?>
             <?php if($value->edit=="1"){?>
               <span>
-                  <input type="checkbox" value="<?php echo $value->id??'' ?>" name="edit[]"> Edit
+                  <input type="checkbox" <?php foreach ($access as $key3 => $value3) {
+                if($value3->sub_menu_id==$value->id && $value3->edit=="1"){?> checked="checked" <?php } } ?> value="<?php echo $value->id??'' ?>" name="edit[]"> Edit
               </span>
             <?php } ?>
             <?php if($value->delete=="1"){?>
+              
               <span>
-                  <input type="checkbox" value="<?php echo $value->id??'' ?>" name="delete[]"> Delete
+                  <input type="checkbox" <?php foreach ($access as $key3 => $value3) {
+                if($value3->sub_menu_id==$value->id && $value3->delete=="1"){?> checked="checked" <?php } } ?> value="<?php echo $value->id??'' ?>" name="delete[]"> Delete
+              </span>
+            <?php } ?>
+            
+          </td>
+          <td>
+            <?php if($value->approve=="1"){?>
+              <span>
+                  <input type="checkbox" <?php foreach ($access as $key3 => $value3) {
+                if($value3->sub_menu_id==$value->id && $value3->approve=="1"){?> checked="checked" <?php } } ?> value="<?php echo $value->id??'' ?>" name="approve[]"> Approval
               </span>
             <?php } ?>
           </td>
@@ -457,6 +475,8 @@ tr.mpk-detail > td {
     </div>
 <?php $this->load->view('template/footer'); ?>
 <script type="text/javascript">
+  
+   
   $(document).on("change","input[name='allow_all']",function(){
     if($(this).is(":checked")){
       $("input[type='checkbox']").attr("checked",true);

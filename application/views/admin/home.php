@@ -30,7 +30,7 @@
             <ul class="Menu-content">
                 <?php foreach ($sub_menu as $key => $value) {
                     if($value->sub_menu=="User Group"){ ?>
-                        <li class="Menu-submenu"><a href="<?php echo base_url() ?>admin/role">User Group</a></li>
+                        <li class="Menu-submenu"><a href="<?php echo base_url() ?>admin/role">Role and Permission</a></li>
                 <?php } } ?>
                 <?php foreach ($sub_menu as $key => $value) {
                     if($value->sub_menu=="User Account"){ ?>

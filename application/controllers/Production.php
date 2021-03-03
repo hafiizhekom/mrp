@@ -18,17 +18,24 @@ class production extends CI_Controller {
 		// if($this->sesi_login->log_session() !=TRUE)redirect('Login');
 	}
 	
-	public function index()
-	{
+	public function submenu($param){
 		$this->db->select('b.sub_menu,c.module,c.menu,b.url');
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
-		$this->db->where('c.module', 'Production');
+		$this->db->join('user_account as d', 'd.group_id = a.group_id', 'left');
+		$this->db->where('c.module', $param);
+		$this->db->where('d.id',$this->session->userdata('id') );
 		$this->db->where('a.is_active', 1);
 		$this->db->where('a.view', 1);
 		$this->db->order_by('a.id', 'asc');
-		$data['sub_menu']=$this->db->get()->result();
+		return $this->db->get()->result();
+	}
+
+	public function index()
+	{
+		
+		$data['sub_menu']=$this->submenu('Production');
 		$this->load->view('production/home',$data);
 	}
 }
