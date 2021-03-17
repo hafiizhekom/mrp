@@ -57,7 +57,7 @@ class Marketing extends CI_Controller {
 	}
 
 	public function submenu_access($param,$url){
-		$this->db->select('a.view,a.create,a.delete,a.approve,a.edit,b.sub_menu,c.module,c.menu,b.url');
+		$this->db->select('a.view,a.create,a.delete,a.approve,a.edit,b.sub_menu,c.module,c.menu,b.url,a.commercial_sheet');
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
@@ -1319,7 +1319,8 @@ class Marketing extends CI_Controller {
 				$arrayName = array('is_active' =>0 , );
 				$this->db->where('job_id', $data_input['id']);
 				$this->db->update('job_detail_inv', $arrayName);
-
+				// var_dump($data_input);
+				// exit();
 				for ($i=0; $i <count($data_input['inv_id']) ; $i++) { 
 					if($data_input['inv_id'][$i]!=""){
 						$insert_detail = array(
@@ -1332,7 +1333,9 @@ class Marketing extends CI_Controller {
 							'note'=>$data_input['inv_note'][$i]??"",
 							'is_active'=>1 
 						);
-						$this->db->insert('job_detail_inv', $insert_detail);
+						$this->db->where('id', $data_input['inv_id'][$i]);
+						$this->db->update('job_detail_inv', $insert_detail);
+						
 					}else{
 						$insert_detail = array(
 							'job_id' =>$data_input['id']??"",
@@ -1345,8 +1348,7 @@ class Marketing extends CI_Controller {
 							'is_active'=>1 
 						);
 						
-						$this->db->where('id', $data_input['inv_id'][$i]);
-						$this->db->update('job_detail_inv', $insert_detail);
+						$this->db->insert('job_detail_inv', $insert_detail);
 					}
 					
 				}
@@ -1354,7 +1356,8 @@ class Marketing extends CI_Controller {
 				$arrayName = array('is_active' =>0 , );
 				$this->db->where('job_id', $data_input['id']);
 				$this->db->update('job_detail_discount', $arrayName);
-
+				// var_dump($data_input);
+				// exit();
 				for ($i=0; $i <count($data_input['disc_id']) ; $i++) { 
 					if($data_input['disc_id'][$i]!=""){
 						$insert_detail = array(
@@ -1365,7 +1368,9 @@ class Marketing extends CI_Controller {
 							'discount'=>$data_input['disc_discount'][$i]??"",
 							'is_active'=>1 
 						);
-						$this->db->insert('job_detail_discount', $insert_detail);
+						$this->db->where('id', $data_input['disc_id'][$i]);
+						$this->db->update('job_detail_discount', $insert_detail);
+						
 					}else{
 						$insert_detail = array(
 							'job_id' =>$data_input['id']??"",
@@ -1375,9 +1380,8 @@ class Marketing extends CI_Controller {
 							'discount'=>$data_input['disc_discount'][$i]??"",
 							'is_active'=>1 
 						);
+						$this->db->insert('job_detail_discount', $insert_detail);
 						
-						$this->db->where('id', $data_input['disc_id'][$i]);
-						$this->db->update('job_detail_discount', $insert_detail);
 					}
 					
 				}
@@ -1385,6 +1389,7 @@ class Marketing extends CI_Controller {
 			}
 			
 		}else if($param=="create"){
+			$data['sub_menu_access']=$this->submenu_access('Marketing','marketing/joborder/create');
 			$data_input=$this->input->post();
 			if(empty($data_input['id'])){
 				$this->db->select('*');
@@ -1503,7 +1508,8 @@ class Marketing extends CI_Controller {
 				$this->db->where('job_id', $data_input['id']);
 				$this->db->order_by('id', 'desc');
 				$data['detail_inv']=$this->db->get()->result();
-
+				// var_dump($data['detail_inv']);
+				// exit();
 				$this->db->select('*');
 				$this->db->from('job_detail_discount');
 				$this->db->where('is_active', 1);

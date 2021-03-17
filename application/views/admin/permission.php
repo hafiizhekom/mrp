@@ -452,6 +452,13 @@ tr.mpk-detail > td {
                 if($value3->sub_menu_id==$value->id && $value3->delete=="1"){?> checked="checked" <?php } } ?> value="<?php echo $value->id??'' ?>" name="delete[]"> Delete
               </span>
             <?php } ?>
+            <?php if($value->commercial_sheet=="1"){?>
+              
+              <span>
+                  <input type="checkbox" <?php foreach ($access as $key3 => $value3) {
+                if($value3->sub_menu_id==$value->id && $value3->commercial_sheet=="1"){?> checked="checked" <?php } } ?> value="<?php echo $value->id??'' ?>" name="commercial_sheet[]"> Commercial Sheet
+              </span>
+            <?php } ?>
             
           </td>
           <td>

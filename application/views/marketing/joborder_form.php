@@ -382,7 +382,7 @@ tr.mpk-detail > td {
                 <div class="col-md-12">
                   <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#joborder" role="tab" data-toggle="tab">Job Order</a></li>
-                    <li role="presentation"><a href="#commercial_sheet" role="tab" data-toggle="tab">Commercial Sheet</a></li>
+                    <li id="commercial_tab" role="presentation"><a href="#commercial_sheet" role="tab" data-toggle="tab">Commercial Sheet</a></li>
                   </ul>
                   <form method="post" class="form form-horizontal" details="" action="<?php echo base_url() ?>marketing/joborder/add">
                     <input type="hidden" name="id" value="<?php echo $header->id??''; ?>"/>
@@ -693,7 +693,7 @@ tr.mpk-detail > td {
         <div class="div-thead">
             <div class="div-tr" slot="head">
                 <div class="div-th">No.</div>
-                <div class="div-th" style="color: red">Name</div>
+                <div class="div-th">Name</div>
                 <div class="div-th">Position</div>
                 <div class="div-th">Discount</div>
                 <div class="div-th">Note</div>
@@ -814,7 +814,7 @@ tr.mpk-detail > td {
                       <input type="hidden" value="<?php echo $value->id??'' ?>" name="inv_id[]">
                   </div>
                   <div class="div-td">
-                      <input  placeholder="Select Date" type="date" value="<?php echo $value->inv_date??'' ?>" name="inv_date[]">
+                      <input  placeholder="Select Date" type="date" value="<?php echo $value->invoice_date??'' ?>" name="inv_date[]">
                   </div>
                   <div class="div-td">
                       <input type="text" class="form-control input-sm" name="inv_number[]" value="<?php echo $value->invoice_number??'' ?>">
@@ -823,7 +823,7 @@ tr.mpk-detail > td {
                       <input type="text" class="form-control input-sm" name="inv_value[]" value="<?php echo $value->value??'' ?>">
                   </div>
                   <div class="div-td" style="display: flex">
-                      <input type="checkbox" style="margin-right: 10px" value="1" name="inv_paystatus[]" />
+                      <input type="checkbox" style="margin-right: 10px" value="1" name="inv_paystatus[]" <?php if($value->status == "1"){ echo "checked";} ?> />
                       <input  placeholder="Select Date" type="date" value="<?php echo $value->payment_date??'' ?>" name="inv_paydate[]">
                   </div>
                   <div class="div-td">
@@ -865,6 +865,12 @@ tr.mpk-detail > td {
 <?php $this->load->view('template/footer'); ?>
 <script>
   $(document).ready(function(){
+    var commercial_sheet="<?php echo $sub_menu_access->commercial_sheet??'' ?>";
+    // alert(commercial_sheet);
+    if(commercial_sheet!="1"){
+      $("#commercial_sheet").css("visibility","hidden");
+      $("#commercial_tab").css("visibility","hidden");
+    }
     var quotation_id="<?php echo $quotation_header->qn_number??'' ?>";
     // alert(quotation_id);
     if(quotation_id!=""){

@@ -94,8 +94,8 @@ class admin extends CI_Controller {
 		$this->db->where('is_active', 1);
 		$this->db->where('group_id', $data_input['id']);
 		$data['access']=$this->db->get()->result();
-
-		$this->db->select('a.module,a.menu,b.sub_menu,b.id,b.url,b.create,b.edit,b.delete,b.view,b.approve');
+		
+		$this->db->select('a.module,a.menu,b.sub_menu,b.id,b.url,b.create,b.edit,b.delete,b.view,b.approve,b.commercial_sheet');
 		$this->db->from('ms_menu as a');
 		$this->db->where('a.is_active', 1);
 		$this->db->join('ms_submenu as b', 'a.id=b.menu_id', 'left');
@@ -182,6 +182,34 @@ class admin extends CI_Controller {
 					);
 					$this->db->where('group_id', $data_input['id']);
 					$this->db->where('sub_menu_id', $data_input['delete'][$i]);
+					$this->db->update('tr_menu_access', $insertdata);
+				}
+				
+			}
+		}
+
+		if(!empty($data_input['commercial_sheet'])){
+			for ($i=0; $i <count($data_input['commercial_sheet']) ; $i++) { 
+				$this->db->select('id');
+				$this->db->from('tr_menu_access');
+				$this->db->where('group_id', $data_input['id']);
+				$this->db->where('sub_menu_id', $data_input['commercial_sheet'][$i]);
+				$kunci=$this->db->get()->row();
+				if(empty($kunci->id)){
+					$insertdata = array(
+						'group_id' => $data_input['id'],
+						'sub_menu_id'=>$data_input['commercial_sheet'][$i],
+						'commercial_sheet'=>1,
+						'is_active'=>1 
+					);
+					$this->db->insert('tr_menu_access', $insertdata);
+				}else{
+					$insertdata = array(
+						'commercial_sheet'=>1,
+						'is_active'=>1 
+					);
+					$this->db->where('group_id', $data_input['id']);
+					$this->db->where('sub_menu_id', $data_input['commercial_sheet'][$i]);
 					$this->db->update('tr_menu_access', $insertdata);
 				}
 				
