@@ -265,7 +265,7 @@ class Engineering extends CI_Controller {
 			$this->db->join('quotation as c', 'b.quotation_id = c.id', 'left');
 			$this->db->join('customer as d', 'c.customer_id = d.id', 'left');
 			$this->db->join('project as e', 'c.project_id = e.id', 'left');
-			$this->db->join('user_account as g', 'a.modified_by=g.email', 'left');
+			$this->db->join('user_account as g', 'a.modified_by=g.id', 'left');
 			$this->db->where('a.is_active', 1);
 			$data['table']=$this->db->get()->result();
 
@@ -457,7 +457,8 @@ class Engineering extends CI_Controller {
 				'bill_no'=>$data_input['boq_no']??"",
 				'date'=>$data_input['date']??"",
 				'note'=>$data_input['note']??"",
-				'created_by'=>$this->session->userdata('email'),
+				'created_by'=>$this->session->userdata('id'),
+				'modified_by'=>$this->session->userdata('id'),
 				'is_active'=>1 
 			);
 			$this->db->insert('bill_quotation', $insert_table);
@@ -510,7 +511,7 @@ class Engineering extends CI_Controller {
 				'bill_no'=>$data_input['boq_no'],
 				'date'=>$data_input['date'],
 				'note'=>$data_input['note'],
-				'modified_by'=>$this->session->userdata('email'),
+				'modified_by'=>$this->session->userdata('id'),
 				'is_active'=>1 
 			);
 			$this->db->where('id', $data_input['id']);

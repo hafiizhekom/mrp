@@ -436,7 +436,7 @@ tr.mpk-detail > td {
                                 <table style="width: 100%;color:dimgray;font-size:12px;">
                                     <tbody><tr>
                                         <th>Created By</th>
-                                        <td><?php echo $header->created_by??'' ?></td>
+                                        <td><?php echo $header->marketing??'' ?></td>
                                     </tr>
                                 </tbody></table>
 
@@ -459,7 +459,7 @@ tr.mpk-detail > td {
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Document Title *</label>
+                                    <label class="control-label col-md-2" style="color:red">Document Title *</label>
                                     <div class="col-md-9">
                                         <input name="title" type="text" class="form-control input-sm" required>
                                     </div>
@@ -470,23 +470,32 @@ tr.mpk-detail > td {
                                         <select name="type_id" class="form-control input-sm">
                                             <option value="Drawing">
                                                 Drawing
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="Bill of Quantity">
+                                            </option>
+                                            <option value="Bill of Quantity">
                                                 Bill of Quantity
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="Schedule">
+                                            </option>
+                                            <option value="Schedule">
                                                 Schedule
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="MPK">
+                                            </option>
+                                            <option value="MPK">
                                                 MPK
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="Inspection Test and Plan">
+                                            </option>
+                                            <option value="Inspection Test and Plan">
                                                 Inspection Test and Plan
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="Quotation">
+                                            </option>
+                                            <option value="Quotation">
                                                 Quotation
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="Packing List">
+                                            </option>
+                                            <option value="Packing List">
                                                 Packing List
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="Delivery Order">
+                                            </option>
+                                            <option value="Delivery Order">
                                                 Delivery Order
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="BSK">
+                                            </option>
+                                            <option value="BSK">
                                                 BSK
-                                            </option><!--v-if--><!--fragment-end--><!--fragment-start--><option value="Commercial Sheet">
+                                            </option>
+                                            <option value="Commercial Sheet">
                                                 Commercial Sheet
                                             </option><!--v-if--><!--fragment-end--><!--v-for-end-->
                                             <!--v-if-->
@@ -506,20 +515,15 @@ tr.mpk-detail > td {
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Valid Date</label>
-                                    <div class="col-md-4">
-                                      <input type="date" name="start_date"/>
-                                    </div>
-                                    -
-                                    <div class="col-md-4">
-                                      <input type="date" name="end_date"/>
+                                    <label class="control-label col-md-2">Submit Date</label>
+                                    <div class="col-md-8">
+                                      <input type="date" name="start_date" value="<?php echo date('Y-m-d'); ?>" readonly/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-2">Valid Days</label>
-                                    <div class="col-md-4" style="display: inline-flex;">
-                                        <input name="reminder" type="text" class="form-control input-sm">
-                                        <span style="padding: 3px; margin-left: 5px"> days</span>
+                                    <label class="control-label col-md-2">Validity</label>
+                                    <div class="col-md-1" style="display: inline-flex;">
+                                        <input name="reminder" type="checkbox" value="1" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -550,11 +554,7 @@ tr.mpk-detail > td {
                 </th><th>
                     Type
                 </th><th>
-                    Valid From
-                </th><th>
-                    Valid Until
-                </th><th>
-                    Valid Days 
+                    Validity
                 </th><th>
                     Created By 
                 </th><th>
@@ -573,9 +573,7 @@ tr.mpk-detail > td {
                   <td><?php echo $value->note??'' ?></td>
                   <td><?php echo $value->file_name??'' ?></td>
                   <td><?php echo $value->type_name??'' ?></td>
-                  <td><?php echo $value->valid_from??'' ?></td>
-                  <td><?php echo $value->valid_until??'' ?></td>
-                  <td><?php echo $value->reminder??'' ?></td>
+                  <td><center><?php if($value->reminder??''=="1"){ echo "yes";}else{echo "no";} ?></center></td>
                   <td><?php echo $value->user_created??'' ?></td>
                   <td>
                       <div class="dropdown">

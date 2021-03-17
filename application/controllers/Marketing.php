@@ -636,6 +636,7 @@ class Marketing extends CI_Controller {
 					'ndt'=>$data_input['ndt']??"",
 					'certificate'=>$data_input['certificate']??"",
 					'delivery'=>$data_input['delivery']??"",
+					'created_by'=>$this->session->userdata('id'),
 					'is_active'=>1 
 				);
 				$this->db->insert('quotation', $insert_table);
@@ -705,6 +706,7 @@ class Marketing extends CI_Controller {
 					'ndt'=>$data_input['ndt']??"",
 					'certificate'=>$data_input['certificate']??"",
 					'delivery'=>$data_input['delivery']??"",
+					'created_by'=>$this->session->userdata('id'),
 					'is_active'=>1 
 				);
 				$this->db->where('id', $data_input['id']);
@@ -756,11 +758,129 @@ class Marketing extends CI_Controller {
 			$this->db->where('id', $data_input['id']);
 			$this->db->update('quotation', $arrayName);
 			redirect('marketing/quotation','refresh');
+		}else if($param=="print"){
+			$data_input=$this->input->post();
+			$this->db->select('*');
+			$this->db->from('quotation');
+			$this->db->where('id', $data_input['id']);
+			$this->db->where('is_active', 1);
+			$data['header']=$this->db->get()->row();
+
+			$this->db->select('*');
+			$this->db->from('quotation_detail');
+			$this->db->where('quotation_id', $data_input['id']);
+			$this->db->where('is_active', 1);
+			$data['detail']=$this->db->get()->result();
+
+
+			$this->db->select('*');
+			$this->db->from('quotation_calc');
+			$this->db->where('quotation_id', $data_input['id']);
+			$this->db->where('is_active', 1);
+			$data['detail_calc']=$this->db->get()->row();
+
+			$this->db->from('customer');
+			$this->db->where('is_active', 1);
+			$data['customer']=$this->db->get()->result();
+
+			$this->db->select('*');
+			$this->db->from('currency');
+			$this->db->where('is_active', 1);
+			$data['currency']=$this->db->get()->result();
+
+			$this->db->select('*');
+			$this->db->from('unit_of_measures');
+			$this->db->where('is_active', 1);
+			$data['measures']=$this->db->get()->result();
+
+
+			$this->db->select('*');
+			$this->db->from('doc_numbering');
+			$this->db->where('is_active', 1);
+			$this->db->where('document', 'Quotation');
+			$data['quotation_no']=$this->db->get()->row();
+
+			$this->db->select('count(*) as angka');
+			$this->db->from('quotation');
+			$angka=$this->db->get()->row();
+
+			if(strpos($data['quotation_no']->pattern, "XXXX")>=0){
+				$nomor=$angka->angka+1;
+				if($nomor<=9){
+					$nomor="000".$nomor;
+				}else if($nomor<=99){
+					$nomor="00".$nomor;
+				}else if($nomor<=999){
+					$nomor="0".$nomor;
+				}
+				$data['quotation_no']->pattern=str_replace("XXXX", $nomor, $data['quotation_no']->pattern);
+			}if(strpos($data['quotation_no']->pattern, "XXX")>=0){
+				$nomor=$angka->angka+1;
+				if($nomor<=9){
+					$nomor="00".$nomor;
+				}else if($nomor<=99){
+					$nomor="0".$nomor;
+				}
+				$data['quotation_no']->pattern=str_replace("XXX", $nomor, $data['quotation_no']->pattern);
+			}if(strpos($data['quotation_no']->pattern, "XX")>=0){
+				$nomor=$angka->angka+1;
+				if($nomor<=9){
+					$nomor="0".$nomor;
+				}else if($nomor<=99){
+					$nomor=$nomor;
+				}
+				$data['quotation_no']->pattern=str_replace("XX", $nomor, $data['quotation_no']->pattern);
+			}if(strpos($data['quotation_no']->pattern, "X")>=0){
+				$nomor=$angka->angka+1;
+				if($nomor<=9){
+					$nomor=$nomor;
+				}
+				$data['quotation_no']->pattern=str_replace("X", $nomor, $data['quotation_no']->pattern);
+			}
+			if(strpos($data['quotation_no']->pattern, "FF")){
+				$data['quotation_no']->pattern=str_replace("FF",date('m'), $data['quotation_no']->pattern);
+			}
+			if(strpos($data['quotation_no']->pattern, "YYYY")){
+				$data['quotation_no']->pattern=str_replace("YYYY",date('Y'), $data['quotation_no']->pattern);
+			}
+			if(strpos($data['quotation_no']->pattern, "YY")){
+				$data['quotation_no']->pattern=str_replace("YY",date('y'), $data['quotation_no']->pattern);
+			}
+			if(strpos($data['quotation_no']->pattern, "ff")){
+				if(date('m')=="01"){
+					$roman="I";
+				}else if(date('m')=="02"){
+					$roman="II";
+				}else if(date('m')=="03"){
+					$roman="III";
+				}else if(date('m')=="04"){
+					$roman="IV";
+				}else if(date('m')=="05"){
+					$roman="V";
+				}else if(date('m')=="06"){
+					$roman="VI";
+				}else if(date('m')=="07"){
+					$roman="VII";
+				}else if(date('m')=="08"){
+					$roman="VIII";
+				}else if(date('m')=="09"){
+					$roman="IX";
+				}else if(date('m')=="10"){
+					$roman="X";
+				}else if(date('m')=="11"){
+					$roman="XI";
+				}else if(date('m')=="12"){
+					$roman="XII";
+				}
+				$data['quotation_no']->pattern=str_replace("ff",$roman, $data['quotation_no']->pattern);
+			}
+			$this->load->view('marketing/quotation_print', $data);
 		}else{
-			$this->db->select('a.*,b.name as customer_name,c.name as project_name,DATE_ADD(a.delivery_date, INTERVAL a.quotation_valid DAY) as due_date');
+			$this->db->select('a.*,b.name as customer_name,c.name as project_name,DATE_ADD(a.delivery_date, INTERVAL a.quotation_valid DAY) as due_date,g.name as marketing');
 			$this->db->from('quotation as a');
 			$this->db->join('customer as b', 'a.customer_id = b.id', 'left');
 			$this->db->join('project as c', 'a.project_id = c.id', 'left');
+			$this->db->join('user_account as g', 'a.created_by = g.id', 'left');
 			$this->db->where('a.is_active', 1);
 			$data['table']=$this->db->get()->result();
 			// echo $this->db->last_query();
@@ -988,6 +1108,7 @@ class Marketing extends CI_Controller {
 					'NDT'=>$data_input['ndt']??"",
 					'certificate'=>$data_input['certificate']??"",
 					'delivery'=>$data_input['delivery']??"",
+					'created_by'=>$this->session->userdata('id'),
 					'is_active'=>1, 
 				);
 				$this->db->insert('job_order', $insert_header);
@@ -1134,6 +1255,7 @@ class Marketing extends CI_Controller {
 					'NDT'=>$data_input['ndt']??"",
 					'certificate'=>$data_input['certificate']??"",
 					'delivery'=>$data_input['delivery']??"",
+					'created_by'=>$this->session->userdata('id'),
 					'is_active'=>1, 
 				);
 				$this->db->where('id', $data_input['id']);
@@ -1501,18 +1623,17 @@ class Marketing extends CI_Controller {
 			$this->db->update('job_order', $arrayName);
 			redirect('marketing/joborder','refresh');
 		}else{
-			$this->db->select('a.*,c.name as customer_name,b.qn_number,d.name as project_name,b.order_type,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,e.name as marketing,calc.grand_total_vat');
+			$this->db->select('a.*,c.name as customer_name,b.qn_number,d.name as project_name,b.order_type,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,calc.grand_total_vat,g.name as marketing');
 			$this->db->from('job_order as a');
 			$this->db->where('a.is_active', 1);
 			$this->db->join('quotation as b', 'a.quotation_id = b.qn_number', 'left');
 			$this->db->join('customer as c', 'c.id = b.customer_id', 'left');
 			$this->db->join('project as d', 'd.id = b.project_id', 'left');
-			$this->db->join('project_contact as e', 'e.id =b.pic_id ', 'left');
 			$this->db->join('quotation_calc as calc', 'b.id = calc.quotation_id', 'left');
+			$this->db->join('user_account as g', 'a.created_by = g.id', 'left');
 			$data['table']=$this->db->get()->result();
-
 			foreach ($data['table'] as $key => $value) {
-				$grand_total_vat=floatval(trim(str_replace("IDR","",$value->grand_total_vat)));
+				$grand_total_vat=floatval(trim(str_replace(",","",(str_replace("IDR","",$value->grand_total_vat)))));
 				$this->db->select('*');
 				$this->db->from('job_detail_inv');
 				$this->db->where('is_active', 1);
@@ -1539,6 +1660,48 @@ class Marketing extends CI_Controller {
 		$data_input=$this->input->post();
 		$this->db->select('b.*,c.name as customer_name,d.name as project_name');
 		$this->db->from('quotation as b');
+		$this->db->join('customer as c', 'b.customer_id = c.id', 'left');
+		$this->db->join('project as d', 'b.project_id = d.id', 'left');
+		$this->db->where('b.qn_number', $data_input['qn_number']);
+		$res=$this->db->get()->row();
+
+		$this->db->select('b.*');
+		$this->db->from('quotation as a');
+		$this->db->join('quotation_detail as b', 'a.id=b.quotation_id', 'left');
+		$this->db->where('a.qn_number', $data_input['qn_number']);
+		$this->db->where('b.is_active', 1);
+		$detail_data=$this->db->get()->result();
+
+		$this->db->select('b.*');
+		$this->db->from('quotation as a');
+		$this->db->join('quotation_calc as b', 'a.id=b.quotation_id', 'left');
+		$this->db->where('a.qn_number', $data_input['qn_number']);
+		$this->db->where('b.is_active', 1);
+		$detail_calc=$this->db->get()->row();
+
+		$this->db->select('*');
+		$this->db->from('unit_of_measures');
+		// $this->db->where('a.qn_number', $data_input['qn_number']);
+		$this->db->where('is_active', 1);
+		$measures=$this->db->get()->result();
+
+		$array = array(
+			'res' => $res,
+			'detail'=>$detail_data, 
+			'unit'=>$measures,
+			'calc'=>$detail_calc
+		);
+
+		$response=json_encode($array);
+		$phpEncryptedText = $this->userPHPEncrypt($this->session->userdata('token'), $response);
+		echo $phpEncryptedText;
+	}
+
+	public function job_select2(){
+		$data_input=$this->input->post();
+		$this->db->select('a.*,c.name as customer_name,d.name as project_name');
+		$this->db->from('job_order as a');
+		$this->db->join('quotation as b', 'a.quotation_id = b.qn_number', 'left');
 		$this->db->join('customer as c', 'b.customer_id = c.id', 'left');
 		$this->db->join('project as d', 'b.project_id = d.id', 'left');
 		$this->db->where('b.qn_number', $data_input['qn_number']);
@@ -1632,14 +1795,16 @@ class Marketing extends CI_Controller {
 				$this->db->update('marketing_document', $insert_update);
 				$data['response']="success_document";
 			}
-			$this->db->select('a.id,a.job_number,b.delivery_date as po_date,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,b.order_type,b.status,c.name as company_name,b.created_by');
+			$this->db->select('a.id,a.job_number,b.delivery_date as po_date,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,b.order_type,b.status,c.name as company_name,b.created_by,g.name as marketing');
 			$this->db->from('job_order as a');
 			$this->db->join('quotation as b', 'a.quotation_id=b.id', 'left');
 			$this->db->join('customer as c', 'b.customer_id=c.id', 'left');
+			$this->db->join('user_account as g', 'b.created_by = g.id', 'left');
 			$this->db->where('a.is_active', 1);
 			$this->db->where('a.job_number', $data_input['job_number']);
 			$data['header']=$this->db->get()->row();
-
+			// echo $this->db->last_query();
+			// exit();
 			$this->db->select('a.*,b.name as user_created');
 			$this->db->from('marketing_document as a');
 			$this->db->join('user_account as b', 'a.created_by = b.id', 'left');

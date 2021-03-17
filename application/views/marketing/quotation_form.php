@@ -519,8 +519,8 @@ tr.mpk-detail > td {
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Construction Fee</label>
-                            <div class="col-md-2" style="display: inherit">
-                                <input type="text" class="form-control input-sm" name="contruction_fee" value="<?php echo $header->construction_fee??'' ?>"> %
+                            <div class="col-md-4" style="display: inherit">
+                                <input type="text" class="form-control input-sm" name="contruction_fee" value="<?php echo $header->construction_fee??'' ?>">
                             </div>
                         </div>
                         <div class="form-group">
@@ -1228,14 +1228,14 @@ function count_all(){
   var construction_fee=0;
   if($("input[name='contruction_fee']").val()!=""){
     construction_fee=$("input[name='contruction_fee']").val();
-    construction_fee=construction_fee/100;
+    construction_fee=parseFloat(construction_fee.trim());
     console.log(construction_fee);
   }
-  var combined=total_price*construction_fee;
+  var combined=total_price+construction_fee;
   $("input[name='construction']").val("IDR "+addCommas(combined));
-  var grand_total_var=total_price+(total_price*construction_fee)-discount_valueonly;
+  var grand_total_var=total_price+(total_price+construction_fee)-discount_valueonly;
   $("input[name='grand_total']").val("IDR "+addCommas(grand_total_var));
-  var total_vat=(total_price*0.1)+total_price+(total_price*construction_fee)-discount_valueonly;
+  var total_vat=grand_total_var+(grand_total_var*0.1);
 
   $("input[name='total_vat']").val("IDR "+addCommas(total_vat));
   // var discount_val=$("input[name='discount']").val();
