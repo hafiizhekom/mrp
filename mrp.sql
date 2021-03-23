@@ -3,15 +3,15 @@
 
  Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 100413
+ Source Server Version : 100414
  Source Host           : localhost:3306
  Source Schema         : mrp
 
  Target Server Type    : MySQL
- Target Server Version : 100413
+ Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 03/03/2021 18:05:04
+ Date: 23/03/2021 13:14:07
 */
 
 SET NAMES utf8mb4;
@@ -22,8 +22,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_consumable`;
 CREATE TABLE `bill_consumable`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
@@ -40,9 +40,9 @@ CREATE TABLE `bill_consumable`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_consumable_detail`;
 CREATE TABLE `bill_consumable_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bill_consumable_id` int(11) NULL DEFAULT NULL,
-  `consumable_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bill_consumable_id` int NULL DEFAULT NULL,
+  `consumable_id` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -58,14 +58,14 @@ CREATE TABLE `bill_consumable_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_quotation`;
 CREATE TABLE `bill_quotation`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `job_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pic_handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `bill_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
   `inquiry_reff` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` date NULL DEFAULT NULL,
   `delivery_date` date NULL DEFAULT NULL,
   `delivery_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -83,48 +83,48 @@ CREATE TABLE `bill_quotation`  (
 -- ----------------------------
 -- Records of bill_quotation
 -- ----------------------------
-INSERT INTO `bill_quotation` VALUES (1, 'BMM-20-0001', NULL, NULL, 'BQ-20-0001', '2020-12-07', NULL, NULL, NULL, NULL, NULL, NULL, '', 'On Going', '2020-12-05 20:26:08', '2020-12-20 18:36:01', b'1', NULL, 'admin@mail.co');
-INSERT INTO `bill_quotation` VALUES (2, 'BMM-20-002', NULL, NULL, 'BQ-20-0002', '2020-12-20', NULL, NULL, NULL, NULL, NULL, NULL, '', 'canceled', '2020-12-20 17:20:32', '2021-01-17 19:00:38', b'1', 'admin@mail.co', NULL);
+INSERT INTO `bill_quotation` VALUES (1, 'BMM-20-0001', NULL, NULL, 'BQ-20-0001', '2020-12-07', NULL, NULL, NULL, NULL, NULL, NULL, '', 'On Going', '2020-12-05 20:26:08', '2021-03-14 02:08:07', b'1', '1', '1');
+INSERT INTO `bill_quotation` VALUES (2, 'BMM-20-002', NULL, NULL, 'BQ-20-0002', '2020-12-20', NULL, NULL, NULL, NULL, NULL, NULL, '', 'canceled', '2020-12-20 17:20:32', '2021-03-14 02:08:07', b'1', '1', '1');
 
 -- ----------------------------
 -- Table structure for bill_quotation_assembly
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_quotation_assembly`;
 CREATE TABLE `bill_quotation_assembly`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bill_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bill_id` int NULL DEFAULT NULL,
   `assembly_mark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `qty` int(11) NULL DEFAULT NULL,
+  `qty` int NULL DEFAULT NULL,
   `total_area` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `total_weight` float NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of bill_quotation_assembly
 -- ----------------------------
-INSERT INTO `bill_quotation_assembly` VALUES (0, 3, 'sa', '', 1, '0.006285999999999999', 1.52582, '2020-12-04 08:12:40', '2020-12-20 17:22:46', b'1');
 INSERT INTO `bill_quotation_assembly` VALUES (1, 1, 'sa', '', 1, '0.006285999999999999', 1.52582, '2020-12-04 08:10:21', '2020-12-06 00:42:28', b'0');
 INSERT INTO `bill_quotation_assembly` VALUES (4, 1, 'sa', 'blabla', 4, '0.005028799999999999', 1.22066, '2020-12-05 20:26:08', '2020-12-06 01:23:51', b'1');
 INSERT INTO `bill_quotation_assembly` VALUES (5, 2, 'sa', '', 0, '0.0012571999999999998', 0.0329577, '2020-12-20 17:20:32', NULL, b'1');
 INSERT INTO `bill_quotation_assembly` VALUES (6, 2, 'sb', '', 0, '0.0025143999999999995', 0.0659154, '2020-12-20 17:20:32', NULL, b'1');
+INSERT INTO `bill_quotation_assembly` VALUES (7, 3, 'sa', '', 1, '0.006285999999999999', 1.52582, '2020-12-04 08:12:40', '2020-12-20 17:22:46', b'1');
 
 -- ----------------------------
 -- Table structure for bill_quotation_material
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_quotation_material`;
 CREATE TABLE `bill_quotation_material`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bill_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bill_id` int NULL DEFAULT NULL,
   `assembly_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `part_mark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `qty` int(11) NULL DEFAULT NULL,
+  `qty` int NULL DEFAULT NULL,
   `length` double NULL DEFAULT NULL,
   `width` double NULL DEFAULT NULL,
   `thick` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -153,11 +153,11 @@ INSERT INTO `bill_quotation_material` VALUES (5, 2, 'sb', 'RBS008', 'As dia.8 (S
 -- ----------------------------
 DROP TABLE IF EXISTS `bsk`;
 CREATE TABLE `bsk`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `quotation_id` int(11) NULL DEFAULT NULL,
-  `bsk_no` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `quotation_id` int NULL DEFAULT NULL,
+  `bsk_no` int NULL DEFAULT NULL,
   `bsk_date` datetime(0) NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `foreman` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qc_dept` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE `bsk`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `currency`;
 CREATE TABLE `currency`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -198,7 +198,7 @@ INSERT INTO `currency` VALUES (3, '¥en', 'Yen Japan', '2020-11-29 01:06:08', '2
 -- ----------------------------
 DROP TABLE IF EXISTS `currency_rate`;
 CREATE TABLE `currency_rate`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `year` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `jan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -228,7 +228,7 @@ CREATE TABLE `currency_rate`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -265,8 +265,8 @@ INSERT INTO `customer` VALUES (3, 'GAN', 'nyan', '', '', '', '', '', '', '', '',
 -- ----------------------------
 DROP TABLE IF EXISTS `customer_contact`;
 CREATE TABLE `customer_contact`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -294,7 +294,7 @@ INSERT INTO `customer_contact` VALUES (7, 3, 'miu', '', '', '', '', '2020-12-20 
 -- ----------------------------
 DROP TABLE IF EXISTS `daily_consumable`;
 CREATE TABLE `daily_consumable`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT NULL,
@@ -312,9 +312,9 @@ CREATE TABLE `daily_consumable`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `daily_consumable_detail`;
 CREATE TABLE `daily_consumable_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `daily_consumable_id` int(11) NULL DEFAULT NULL,
-  `consumable_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `daily_consumable_id` int NULL DEFAULT NULL,
+  `consumable_id` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -330,11 +330,11 @@ CREATE TABLE `daily_consumable_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `dkm`;
 CREATE TABLE `dkm`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `bill_quotation_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `dkm_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -353,8 +353,8 @@ INSERT INTO `dkm` VALUES (1, 'BQ-20-0002', '0001/JO_NO/PPIC/12/2020', '2020-12-0
 -- ----------------------------
 DROP TABLE IF EXISTS `dkm_detail`;
 CREATE TABLE `dkm_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_dkm` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_dkm` int NULL DEFAULT NULL,
   `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pcs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -388,11 +388,11 @@ INSERT INTO `dkm_detail` VALUES (12, 1, 'SB50', 'AS Kotak 50 x 50', '2', 'BTG', 
 -- ----------------------------
 DROP TABLE IF EXISTS `doc_numbering`;
 CREATE TABLE `doc_numbering`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `document` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `periodic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pattern` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `last_number` int(11) NULL DEFAULT NULL,
+  `last_number` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -416,14 +416,14 @@ INSERT INTO `doc_numbering` VALUES (8, 'MPK', 'monthly', 'XXXX-JO_NO-PRG-PPIC-FF
 -- ----------------------------
 DROP TABLE IF EXISTS `equipment`;
 CREATE TABLE `equipment`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `size` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `brand` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `minimum_stock` int(11) NULL DEFAULT NULL,
+  `minimum_stock` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -440,8 +440,8 @@ INSERT INTO `equipment` VALUES (1, 'test', '1', 'BTG', 'a', 'BKG', 'MKG', 10, '2
 -- ----------------------------
 DROP TABLE IF EXISTS `equipment_detail`;
 CREATE TABLE `equipment_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `equipment_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `equipment_id` int NULL DEFAULT NULL,
   `inventory_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date_received` datetime(0) NULL DEFAULT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -464,7 +464,7 @@ INSERT INTO `equipment_detail` VALUES (2, 1, 'BM02', '2020-12-02 00:00:00', NULL
 -- ----------------------------
 DROP TABLE IF EXISTS `equipment_groups`;
 CREATE TABLE `equipment_groups`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -484,7 +484,7 @@ INSERT INTO `equipment_groups` VALUES (1, 'martin', 'MKG', 'desc', '2020-12-01 2
 -- ----------------------------
 DROP TABLE IF EXISTS `equipment_type`;
 CREATE TABLE `equipment_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -504,7 +504,7 @@ INSERT INTO `equipment_type` VALUES (1, 'test', 'BKG', 'nyanko', '2020-12-01 21:
 -- ----------------------------
 DROP TABLE IF EXISTS `general_setting`;
 CREATE TABLE `general_setting`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -530,9 +530,9 @@ INSERT INTO `general_setting` VALUES (1, 'PT. Buana Masa Metalindo', 'Jl. Raya N
 -- ----------------------------
 DROP TABLE IF EXISTS `general_setting_detail`;
 CREATE TABLE `general_setting_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `general_id` int(11) NULL DEFAULT NULL,
-  `order` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `general_id` int NULL DEFAULT NULL,
+  `order` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `job` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -557,15 +557,15 @@ INSERT INTO `general_setting_detail` VALUES (5, 1, 5, '', 'WAREHOUSE MANAGER', '
 -- ----------------------------
 DROP TABLE IF EXISTS `inspection_testplan`;
 CREATE TABLE `inspection_testplan`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
-  `vendor_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
+  `vendor_id` int NULL DEFAULT NULL,
   `contractor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `inspection_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `doc_rev` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `ins_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -588,8 +588,8 @@ CREATE TABLE `inspection_testplan`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `inspection_testplan_detail`;
 CREATE TABLE `inspection_testplan_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inspection_textplan_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inspection_textplan_id` int NULL DEFAULT NULL,
   `process` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `sub_process` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `applicable` bit(1) NULL DEFAULT NULL,
@@ -611,8 +611,8 @@ CREATE TABLE `inspection_testplan_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `job_detail_discount`;
 CREATE TABLE `job_detail_discount`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `position` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `discount` float NULL DEFAULT NULL,
@@ -621,19 +621,20 @@ CREATE TABLE `job_detail_discount`  (
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_detail_discount
 -- ----------------------------
+INSERT INTO `job_detail_discount` VALUES (1, 1, 'sadasdasd', 'asdas', 100, 'asdas', '2021-03-18 00:31:38', '2021-03-18 00:33:43', b'1');
 
 -- ----------------------------
 -- Table structure for job_detail_inv
 -- ----------------------------
 DROP TABLE IF EXISTS `job_detail_inv`;
 CREATE TABLE `job_detail_inv`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `invoice_date` date NULL DEFAULT NULL,
   `invoice_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -644,22 +645,78 @@ CREATE TABLE `job_detail_inv`  (
   `modified_date` datetime(0) NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 67 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_detail_inv
 -- ----------------------------
-INSERT INTO `job_detail_inv` VALUES (7, 1, '2020-12-09', '', '100', '2020-12-09', '', '', NULL, NULL, b'1');
-INSERT INTO `job_detail_inv` VALUES (8, 1, '2020-12-09', '', '200', '2020-12-09', '', '', NULL, NULL, b'1');
-INSERT INTO `job_detail_inv` VALUES (9, 1, '2020-12-09', '', '200', '2020-12-09', '', '', NULL, NULL, b'1');
-INSERT INTO `job_detail_inv` VALUES (10, 1, '2020-12-09', '', '100', '2020-12-09', '', '', NULL, NULL, b'1');
+INSERT INTO `job_detail_inv` VALUES (7, 1, '2020-12-09', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (8, 1, '2020-12-09', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (9, 1, '2020-12-09', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (10, 1, '2020-12-09', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (11, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (12, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (13, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (14, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (15, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (16, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (17, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (18, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (19, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (20, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (21, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (22, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (23, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (24, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (25, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (26, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (27, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (28, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (29, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (30, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (31, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (32, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (33, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (34, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (35, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (36, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (37, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (38, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (39, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (40, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (41, 1, '0000-00-00', '', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (42, 1, '0000-00-00', '', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (43, 1, '2021-03-18', 'asda', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (44, 1, '2021-03-18', 'asdas', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (45, 1, '2021-03-18', 'asdasd', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (46, 1, '2021-03-18', 'xzccccc', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (47, 1, '2021-03-18', 'xzccccc', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (48, 1, '2021-03-18', 'asdasd', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (49, 1, '2021-03-18', 'asdas', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (50, 1, '2021-03-18', 'asda', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (51, 1, '2021-03-18', 'asda', '100', '2020-12-09', '', '', NULL, NULL, b'1');
+INSERT INTO `job_detail_inv` VALUES (52, 1, '2021-03-18', 'asdas', '200', '2020-12-09', '1', '', NULL, NULL, b'1');
+INSERT INTO `job_detail_inv` VALUES (53, 1, '2021-03-18', 'asdasd', '200', '2020-12-09', '1', '', NULL, NULL, b'1');
+INSERT INTO `job_detail_inv` VALUES (54, 1, '2021-03-18', 'xzccccc', '100', '2020-12-09', '1', '', NULL, NULL, b'1');
+INSERT INTO `job_detail_inv` VALUES (55, 1, '2021-03-18', 'xzccccc', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (56, 1, '2021-03-18', 'asdasd', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (57, 1, '2021-03-18', 'asdas', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (58, 1, '2021-03-18', 'asda', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (59, 1, '2021-03-18', 'xzccccc', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (60, 1, '2021-03-18', 'asdasd', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (61, 1, '2021-03-18', 'asdas', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (62, 1, '2021-03-18', 'asda', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (63, 1, '2021-03-18', 'xzccccc', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (64, 1, '2021-03-18', 'asdasd', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (65, 1, '2021-03-18', 'asdas', '200', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (66, 1, '2021-03-18', 'asda', '100', '2020-12-09', '', '', NULL, NULL, b'0');
 
 -- ----------------------------
 -- Table structure for job_order
 -- ----------------------------
 DROP TABLE IF EXISTS `job_order`;
 CREATE TABLE `job_order`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `quotation_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `job_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_internal` bit(1) NULL DEFAULT NULL,
@@ -687,22 +744,23 @@ CREATE TABLE `job_order`  (
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
   `progress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_order
 -- ----------------------------
-INSERT INTO `job_order` VALUES (1, '0001/BMM/XII/2020', 'BMM-20-0001', b'0', '2020-12-03', '2020-12-10', '1', 'IDR', '10', 10, 's', '1', 'Waiting for Approval', '', '', '', '', '', '', '', '', '', '', '', '2020-12-03 18:31:31', '2021-01-28 02:03:13', b'1', NULL);
-INSERT INTO `job_order` VALUES (2, '0003/BMM/XII/2020', 'BMM-20-002', b'0', '2020-12-20', NULL, '', '', '10', 0, 'terms', '', 'Waiting for Approval', '', '', '', '', '', '', '', '', '', '', '', '2020-12-20 17:16:18', '2021-01-28 02:03:03', b'1', NULL);
+INSERT INTO `job_order` VALUES (1, '0001/BMM/XII/2020', 'BMM-20-0001', b'0', '2020-12-03', '2020-12-10', '', 'IDR', '10', 4000, 's', '1', 'Waiting for Approval', '', '', '', '', '', '', '', '', '', '', '', '2020-12-03 18:31:31', '2021-03-14 03:08:56', b'1', NULL, '1');
+INSERT INTO `job_order` VALUES (2, '0003/BMM/XII/2020', 'BMM-20-002', b'0', '2020-12-20', NULL, '', '', '10', 0, 'terms', '', 'Waiting for Approval', '', '', '', '', '', '', '', '', '', '', '', '2020-12-20 17:16:18', '2021-03-14 02:38:27', b'1', NULL, '1');
 
 -- ----------------------------
 -- Table structure for kickoff_meeting
 -- ----------------------------
 DROP TABLE IF EXISTS `kickoff_meeting`;
 CREATE TABLE `kickoff_meeting`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -718,8 +776,8 @@ CREATE TABLE `kickoff_meeting`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `kickoff_meeting_detail`;
 CREATE TABLE `kickoff_meeting_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `kickoff_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kickoff_id` int NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `applicable` bit(1) NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -741,8 +799,8 @@ CREATE TABLE `kickoff_meeting_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `kickoff_meeting_template`;
 CREATE TABLE `kickoff_meeting_template`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NULL DEFAULT NULL,
   `parent_item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `order` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -763,7 +821,7 @@ CREATE TABLE `kickoff_meeting_template`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `marketing_document`;
 CREATE TABLE `marketing_document`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `jo_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -777,27 +835,27 @@ CREATE TABLE `marketing_document`  (
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of marketing_document
 -- ----------------------------
-INSERT INTO `marketing_document` VALUES (1, '', 'test', 'aa', 'pexels-photo-924633.jpeg', 'Drawing', '2021-01-08', '2021-01-12', '3', b'1', '1', '2021-02-28 12:38:52', '2021-02-28 12:38:52');
-INSERT INTO `marketing_document` VALUES (2, '', 'test', 'sadasdsadasdas', 'img_forest.jpg', 'Drawing', '2021-01-08', '2021-01-14', '4', b'1', '1', '2021-02-28 12:38:52', '2021-02-28 12:38:52');
-INSERT INTO `marketing_document` VALUES (3, '', 'test', 'sadasdsadasdas', 'img_forest.jpg', 'Drawing', '2021-01-08', '2021-01-14', '4', b'1', '1', '2021-02-28 12:38:52', '2021-02-28 12:38:52');
-INSERT INTO `marketing_document` VALUES (4, 'BMM-20-0001', 'test lagi', 'sss', 'photo-1503023345310-bd7c1de61c7d.jpg', 'Drawing', '2021-01-08', '2021-01-21', '2', b'1', '1', '2021-02-28 12:38:52', '2021-02-28 12:38:52');
-INSERT INTO `marketing_document` VALUES (5, 'BMM-20-0001', 'coba lagih ah', 'sdas', 'img_forest.jpg', 'Bill of Quantity', '2021-01-08', '2021-01-12', '2', b'0', '1', '2021-02-28 12:49:26', '2021-02-28 12:49:26');
-INSERT INTO `marketing_document` VALUES (6, 'BMM-20-0001', 'coba lagih ah', 'sdas', 'img_forest.jpg', 'Bill of Quantity', '2021-01-08', '2021-01-12', '2', b'0', '1', '2021-02-28 12:38:52', '2021-02-28 12:38:52');
-INSERT INTO `marketing_document` VALUES (7, 'BMM-20-0001', 'coba lagih ah', 'sdas', 'img_forest.jpg', 'Bill of Quantity', '2021-01-08', '2021-01-12', '2', b'0', '1', '2021-02-28 12:38:52', '2021-02-28 12:38:52');
-INSERT INTO `marketing_document` VALUES (8, 'BMM-20-0001', '', '', '', 'Drawing', '', '', '', b'0', '1', '2021-02-28 12:38:52', '2021-02-28 12:38:52');
-INSERT INTO `marketing_document` VALUES (9, 'BMM-20-0001', 'a', '', '', 'Drawing', '', '', '', b'0', '1', '2021-02-28 12:38:52', '2021-02-28 12:38:52');
+INSERT INTO `marketing_document` VALUES (1, '', 'test', 'aa', 'pexels-photo-924633.jpeg', 'Drawing', '2021-01-08', '2021-01-12', '1', b'1', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
+INSERT INTO `marketing_document` VALUES (2, '', 'test', 'sadasdsadasdas', 'img_forest.jpg', 'Drawing', '2021-01-08', '2021-01-14', '1', b'1', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
+INSERT INTO `marketing_document` VALUES (3, '', 'test', 'sadasdsadasdas', 'img_forest.jpg', 'Drawing', '2021-01-08', '2021-01-14', '1', b'1', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
+INSERT INTO `marketing_document` VALUES (4, 'BMM-20-0001', 'test lagi', 'sss', 'photo-1503023345310-bd7c1de61c7d.jpg', 'Drawing', '2021-01-08', '2021-01-21', '1', b'1', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
+INSERT INTO `marketing_document` VALUES (5, 'BMM-20-0001', 'coba lagih ah', 'sdas', 'img_forest.jpg', 'Bill of Quantity', '2021-01-08', '2021-01-12', '1', b'0', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
+INSERT INTO `marketing_document` VALUES (6, 'BMM-20-0001', 'coba lagih ah', 'sdas', 'img_forest.jpg', 'Bill of Quantity', '2021-01-08', '2021-01-12', '1', b'0', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
+INSERT INTO `marketing_document` VALUES (7, 'BMM-20-0001', 'coba lagih ah', 'sdas', 'img_forest.jpg', 'Bill of Quantity', '2021-01-08', '2021-01-12', '1', b'0', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
+INSERT INTO `marketing_document` VALUES (8, 'BMM-20-0001', '', '', '', 'Drawing', '', '', '1', b'0', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
+INSERT INTO `marketing_document` VALUES (9, 'BMM-20-0001', 'a', '', '', 'Drawing', '', '', '1', b'0', '1', '2021-03-14 02:23:00', '2021-03-14 02:23:00');
 
 -- ----------------------------
 -- Table structure for master_material
 -- ----------------------------
 DROP TABLE IF EXISTS `master_material`;
 CREATE TABLE `master_material`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `material_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `part_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -1405,7 +1463,7 @@ INSERT INTO `master_material` VALUES (557, 'PLS642', 'A36', 'PLATE 50 thk', 'STE
 -- ----------------------------
 DROP TABLE IF EXISTS `master_part_material`;
 CREATE TABLE `master_part_material`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `material_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `part_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -1436,8 +1494,8 @@ CREATE TABLE `master_part_material`  (
   `drawing_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `volume_formula` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `area_formula` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `minimum_order_qty` int(11) NULL DEFAULT NULL,
-  `minimum_stock` int(11) NULL DEFAULT NULL,
+  `minimum_order_qty` int NULL DEFAULT NULL,
+  `minimum_stock` int NULL DEFAULT NULL,
   `process_cost_supplier_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -1994,11 +2052,11 @@ INSERT INTO `master_part_material` VALUES (540, 'ra', 'sa', NULL, 'sa', 'BKG', N
 -- ----------------------------
 DROP TABLE IF EXISTS `mpk`;
 CREATE TABLE `mpk`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bill_quotation_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bill_quotation_id` int NULL DEFAULT NULL,
   `mpk_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `checked_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `approved_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2017,7 +2075,7 @@ CREATE TABLE `mpk`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_consumable`;
 CREATE TABLE `ms_consumable`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qualification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2043,7 +2101,7 @@ INSERT INTO `ms_consumable` VALUES (3, 'GM', '01', '01w', 'size', '100', '1000',
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_destination`;
 CREATE TABLE `ms_destination`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `destination` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2063,7 +2121,7 @@ INSERT INTO `ms_destination` VALUES (2, 'JKT TMR', 'Jakarta timur', '2020-11-29 
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_document_type`;
 CREATE TABLE `ms_document_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2093,7 +2151,7 @@ INSERT INTO `ms_document_type` VALUES (12, 'ganti', NULL, '2020-11-28 15:10:36',
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_menu`;
 CREATE TABLE `ms_menu`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `module` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `menu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -2146,7 +2204,7 @@ INSERT INTO `ms_menu` VALUES (37, 'PPC', 'MPK', b'1');
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_pic`;
 CREATE TABLE `ms_pic`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2166,7 +2224,7 @@ INSERT INTO `ms_pic` VALUES (2, 'CK', 'Cheon sa', '2020-11-29 02:58:53', '2020-1
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_product`;
 CREATE TABLE `ms_product`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2187,8 +2245,8 @@ INSERT INTO `ms_product` VALUES (3, 'BKG', 'barang Kilo Gram', '2020-12-03 20:36
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_submenu`;
 CREATE TABLE `ms_submenu`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `menu_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `menu_id` int NULL DEFAULT NULL,
   `sub_menu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -2197,107 +2255,108 @@ CREATE TABLE `ms_submenu`  (
   `delete` bit(1) NULL DEFAULT NULL,
   `view` bit(1) NULL DEFAULT NULL,
   `approve` bit(1) NULL DEFAULT NULL,
+  `commercial_sheet` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ms_submenu
 -- ----------------------------
-INSERT INTO `ms_submenu` VALUES (1, 1, 'User Group', 'admin/role', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (2, 1, 'User Account', 'admin/user', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (3, 2, 'General Setting', 'admin/general', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (4, 2, 'Product', 'admin/product', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (5, 2, 'Document Type', 'admin/document', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (6, 2, 'Destination', 'admin/destination', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (7, 2, 'Warehouse Location', 'admin/warehouse', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (8, 2, 'PIC', 'admin/pic', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (9, 2, 'Unit of Measurements', 'admin/uom', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (10, 2, 'Currency', 'admin/currency', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (11, 2, 'Part Types', 'admin/part', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (12, 3, 'Import Data', 'admin/import', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (13, 2, 'Document Numbering', 'admin/numbering', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (14, 4, 'Customer List', 'marketing/customer', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (15, 4, 'Add New Customer', 'marketing/customer/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (16, 4, 'Sales Order Types', 'marketing/sot', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (17, 4, 'Scope of Works', 'marketing/sow', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (18, 4, 'Kick Off Meeting Template', 'marketing/kom', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (19, 5, 'Quotation List', 'marketing/quotation', b'1', b'0', b'1', b'1', b'1', b'1');
-INSERT INTO `ms_submenu` VALUES (20, 5, 'Add New Quotation', 'marketing/quotation/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (21, 5, 'BQ and Documents', 'marketing/document', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (22, 6, 'Project List', 'marketing/project', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (23, 6, 'Add New Project', 'marketing/project/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (24, 7, 'Job Order List', 'marketing/joborder', b'1', NULL, b'1', b'1', b'1', b'1');
-INSERT INTO `ms_submenu` VALUES (25, 7, 'Add New Job Order', 'marketing/joborder/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (26, 7, 'Job Order Documents', 'marketing/document', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (27, 8, 'Kickoff Meeting Lists', 'marketing/kom', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (28, 8, 'Add Kickoff Meeting', 'marketing/kom/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (29, 9, 'Delivery Order List', 'marketing/delivery', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (30, 9, 'Add New Delivery Order', 'marketing/delivery/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (31, 10, 'Add Yearly Target', 'marketing/joborder/report/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (32, 10, 'Yearly Report', 'marketing/joborder/report', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (33, 11, 'Vendor List', 'purchasing/vendor', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (34, 11, 'Add New Vendor', 'purchasing/vendor/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (35, 12, 'Material List', 'purchasing/material', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (36, 13, 'Purchase Request List', 'purchasing/request', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (37, 13, 'Add New Purchase Request', 'purchasing/request/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (39, 15, 'Job Order', 'marketing/joborder', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (40, 15, 'DKM', 'marketing/joborder', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (41, 14, 'Purchase Order List', 'puchasing/orders', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (42, 14, 'Add New Purchase Order', 'purchasing/orders/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (43, 16, 'Master Part List', NULL, b'0', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (44, 16, 'Add New Master Part', NULL, b'0', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (45, 17, 'SPB List', 'purchasing/spb', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (46, 17, 'Add New SPB', 'purchasing/spb/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (47, 18, 'Monthly Report', 'purchasing/report/monthly', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (48, 18, 'Per Project', 'purchasing/report/project', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (49, 19, 'Bill of Quantity List', 'engineering/boq', b'1', NULL, b'1', b'1', b'1', b'1');
-INSERT INTO `ms_submenu` VALUES (50, 19, 'Add New Bill of Quantity', 'engineering/boq/create', b'1', b'1', NULL, NULL, b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (51, 20, 'Master Part List', 'engineering/master', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (52, 20, 'Add New Master Part', 'engineering/master/create', b'1', b'1', NULL, NULL, b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (53, 21, 'Equipment Lists', 'maintenance/equipment', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (54, 21, 'Add New Equipment', 'maintenance/equipment/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (55, 21, 'Equpment Types', 'maintenance/equipment/type', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (56, 21, 'Equipment Group', 'maintenance/equipment/group', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (57, 22, 'Transaction Lists', 'maintenance/transaction', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (58, 22, 'Add New Transaction', 'maintenance/transaction/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (59, 23, 'Reports', 'maintenance/reports', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (60, 24, 'Schedule List', 'ppc/schedule', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (61, 24, 'Add New Schedule', 'ppc/schedule/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (62, 25, 'Material Requirement List', 'ppc/dkm', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (63, 25, 'Add New Material Requirement', 'ppc/dkm/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (64, 37, 'MPK List', 'ppc/mpk', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (65, 37, 'Add New MPK', 'ppc/mpk/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (66, 26, 'Packing Lists', 'ppc/packing', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (67, 26, 'Add New Packing Lists', 'ppc/packing/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (68, 27, 'Reports', 'ppc/schedule/monitoring', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (69, 28, 'Master Consumable', 'logistic/consumable', b'1', b'0', b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (70, 29, 'Job Orders', 'marketing/joborder', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (71, 29, 'DKM', 'ppc/dkm', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (72, 30, 'Penerimaan Consumable', 'logistic/consumable/input', b'1', b'1', NULL, NULL, b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (73, 30, 'Pengambilan Consumable', 'logistic/consumable/output', b'1', b'1', NULL, NULL, b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (74, 30, 'Stock Consumable', 'logistic/inventory', b'1', NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (75, 30, 'Transaction Records', 'logistic/consumable/history', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (76, 31, 'Stock Opname Lists', 'logistic/opname', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (77, 31, 'Add New Stock Opname', 'logistic/opname/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (78, 32, 'Penerimaan Consumable', 'logistic/report/monthly/input', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (79, 32, 'Pengeluaran Consumable', 'logistic/report/monthly/output', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (80, 32, 'Per Project', 'logistic/report/project', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (81, 32, 'Stock Opname', 'logistic/report/monthly/stock', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (82, 33, 'Request Consumable List', 'logistic/request', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (83, 33, 'Add New Request Consumable', 'logistic/request/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (84, 34, 'Inspection & Test Plan Lists', 'qc/inspection', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (85, 34, 'Add New Inspection & Test Plan', 'qc/inspection/create', b'1', b'1', NULL, NULL, NULL, NULL);
-INSERT INTO `ms_submenu` VALUES (86, 35, 'Schedule', 'production/schedule', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (87, 35, 'MPK', 'ppc/mpk', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (88, 36, 'BSK List', 'production/bsk', b'1', NULL, b'1', b'1', b'1', NULL);
-INSERT INTO `ms_submenu` VALUES (89, 36, 'Add New BSK', 'production/bsk/create', b'1', b'1', NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (1, 1, 'User Group', 'admin/role', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (2, 1, 'User Account', 'admin/user', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (3, 2, 'General Setting', 'admin/general', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (4, 2, 'Product', 'admin/product', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (5, 2, 'Document Type', 'admin/document', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (6, 2, 'Destination', 'admin/destination', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (7, 2, 'Warehouse Location', 'admin/warehouse', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (8, 2, 'PIC', 'admin/pic', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (9, 2, 'Unit of Measurements', 'admin/uom', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (10, 2, 'Currency', 'admin/currency', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (11, 2, 'Part Types', 'admin/part', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (12, 3, 'Import Data', 'admin/import', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (13, 2, 'Document Numbering', 'admin/numbering', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (14, 4, 'Customer List', 'marketing/customer', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (15, 4, 'Add New Customer', 'marketing/customer/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (16, 4, 'Sales Order Types', 'marketing/sot', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (17, 4, 'Scope of Works', 'marketing/sow', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (18, 4, 'Kick Off Meeting Template', 'marketing/kom', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (19, 5, 'Quotation List', 'marketing/quotation', b'1', b'0', b'1', b'1', b'1', b'1', NULL);
+INSERT INTO `ms_submenu` VALUES (20, 5, 'Add New Quotation', 'marketing/quotation/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (21, 5, 'BQ and Documents', 'marketing/document', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (22, 6, 'Project List', 'marketing/project', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (23, 6, 'Add New Project', 'marketing/project/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (24, 7, 'Job Order List', 'marketing/joborder', b'1', NULL, b'1', b'1', b'1', b'1', b'0');
+INSERT INTO `ms_submenu` VALUES (25, 7, 'Add New Job Order', 'marketing/joborder/create', b'1', b'1', NULL, NULL, NULL, NULL, b'1');
+INSERT INTO `ms_submenu` VALUES (26, 7, 'Job Order Documents', 'marketing/document', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (27, 8, 'Kickoff Meeting Lists', 'marketing/kom', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (28, 8, 'Add Kickoff Meeting', 'marketing/kom/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (29, 9, 'Delivery Order List', 'marketing/delivery', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (30, 9, 'Add New Delivery Order', 'marketing/delivery/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (31, 10, 'Add Yearly Target', 'marketing/joborder/report/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (32, 10, 'Yearly Report', 'marketing/joborder/report', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (33, 11, 'Vendor List', 'purchasing/vendor', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (34, 11, 'Add New Vendor', 'purchasing/vendor/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (35, 12, 'Material List', 'purchasing/material', b'1', b'1', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (36, 13, 'Purchase Request List', 'purchasing/request', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (37, 13, 'Add New Purchase Request', 'purchasing/request/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (39, 15, 'Job Order', 'marketing/joborder', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (40, 15, 'DKM', 'marketing/joborder', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (41, 14, 'Purchase Order List', 'puchasing/orders', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (42, 14, 'Add New Purchase Order', 'purchasing/orders/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (43, 16, 'Master Part List', NULL, b'0', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (44, 16, 'Add New Master Part', NULL, b'0', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (45, 17, 'SPB List', 'purchasing/spb', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (46, 17, 'Add New SPB', 'purchasing/spb/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (47, 18, 'Monthly Report', 'purchasing/report/monthly', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (48, 18, 'Per Project', 'purchasing/report/project', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (49, 19, 'Bill of Quantity List', 'engineering/boq', b'1', NULL, b'1', b'1', b'1', b'1', NULL);
+INSERT INTO `ms_submenu` VALUES (50, 19, 'Add New Bill of Quantity', 'engineering/boq/create', b'1', b'1', NULL, NULL, b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (51, 20, 'Master Part List', 'engineering/master', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (52, 20, 'Add New Master Part', 'engineering/master/create', b'1', b'1', NULL, NULL, b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (53, 21, 'Equipment Lists', 'maintenance/equipment', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (54, 21, 'Add New Equipment', 'maintenance/equipment/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (55, 21, 'Equpment Types', 'maintenance/equipment/type', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (56, 21, 'Equipment Group', 'maintenance/equipment/group', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (57, 22, 'Transaction Lists', 'maintenance/transaction', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (58, 22, 'Add New Transaction', 'maintenance/transaction/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (59, 23, 'Reports', 'maintenance/reports', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (60, 24, 'Schedule List', 'ppc/schedule', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (61, 24, 'Add New Schedule', 'ppc/schedule/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (62, 25, 'Material Requirement List', 'ppc/dkm', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (63, 25, 'Add New Material Requirement', 'ppc/dkm/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (64, 37, 'MPK List', 'ppc/mpk', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (65, 37, 'Add New MPK', 'ppc/mpk/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (66, 26, 'Packing Lists', 'ppc/packing', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (67, 26, 'Add New Packing Lists', 'ppc/packing/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (68, 27, 'Reports', 'ppc/schedule/monitoring', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (69, 28, 'Master Consumable', 'logistic/consumable', b'1', b'0', b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (70, 29, 'Job Orders', 'marketing/joborder', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (71, 29, 'DKM', 'ppc/dkm', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (72, 30, 'Penerimaan Consumable', 'logistic/consumable/input', b'1', b'1', NULL, NULL, b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (73, 30, 'Pengambilan Consumable', 'logistic/consumable/output', b'1', b'1', NULL, NULL, b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (74, 30, 'Stock Consumable', 'logistic/inventory', b'1', NULL, NULL, NULL, b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (75, 30, 'Transaction Records', 'logistic/consumable/history', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (76, 31, 'Stock Opname Lists', 'logistic/opname', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (77, 31, 'Add New Stock Opname', 'logistic/opname/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (78, 32, 'Penerimaan Consumable', 'logistic/report/monthly/input', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (79, 32, 'Pengeluaran Consumable', 'logistic/report/monthly/output', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (80, 32, 'Per Project', 'logistic/report/project', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (81, 32, 'Stock Opname', 'logistic/report/monthly/stock', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (82, 33, 'Request Consumable List', 'logistic/request', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (83, 33, 'Add New Request Consumable', 'logistic/request/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (84, 34, 'Inspection & Test Plan Lists', 'qc/inspection', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (85, 34, 'Add New Inspection & Test Plan', 'qc/inspection/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (86, 35, 'Schedule', 'production/schedule', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (87, 35, 'MPK', 'ppc/mpk', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (88, 36, 'BSK List', 'production/bsk', b'1', NULL, b'1', b'1', b'1', NULL, NULL);
+INSERT INTO `ms_submenu` VALUES (89, 36, 'Add New BSK', 'production/bsk/create', b'1', b'1', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ms_vendor
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_vendor`;
 CREATE TABLE `ms_vendor`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `ppn` bit(1) NULL DEFAULT NULL,
   `outsource` bit(1) NULL DEFAULT NULL,
   `vendor_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2334,7 +2393,7 @@ INSERT INTO `ms_vendor` VALUES (1, b'1', b'1', 'CODE', 'name', 'asdasdnk', 'knas
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_warehouse`;
 CREATE TABLE `ms_warehouse`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2359,19 +2418,19 @@ INSERT INTO `ms_warehouse` VALUES (2, 'WRH1', 'Gudang Kedep', 'Kedep, Gunung Put
 -- ----------------------------
 DROP TABLE IF EXISTS `packing_list`;
 CREATE TABLE `packing_list`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
-  `vendor_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
+  `vendor_id` int NULL DEFAULT NULL,
   `packing_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `bsk` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `fabricator` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `loading_part` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `packing_list_no` int(11) NULL DEFAULT NULL,
+  `packing_list_no` int NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `total_no_of_package` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `metric_ton` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
@@ -2388,7 +2447,7 @@ CREATE TABLE `packing_list`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `parent_item`;
 CREATE TABLE `parent_item`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `parent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `id_group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -2406,7 +2465,7 @@ CREATE TABLE `parent_item`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `part_type`;
 CREATE TABLE `part_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2431,8 +2490,8 @@ INSERT INTO `part_type` VALUES (6, 'GM01', 'test', 'ss', '2020-12-03 00:22:34', 
 -- ----------------------------
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2458,8 +2517,8 @@ INSERT INTO `project` VALUES (3, 3, 'nyamuk', '', '                             
 -- ----------------------------
 DROP TABLE IF EXISTS `project_contact`;
 CREATE TABLE `project_contact`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `project_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `project_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2486,15 +2545,15 @@ INSERT INTO `project_contact` VALUES (7, 0, 'bannn', '', '', '', '2020-12-20 17:
 -- ----------------------------
 DROP TABLE IF EXISTS `purchase_order`;
 CREATE TABLE `purchase_order`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `purchase_request_id` int(11) NULL DEFAULT NULL,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `purchase_request_id` int NULL DEFAULT NULL,
+  `job_id` int NULL DEFAULT NULL,
   `purchase_order_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `deliver_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `deliver_date` datetime(0) NULL DEFAULT NULL,
-  `sup_id` int(11) NULL DEFAULT NULL,
+  `sup_id` int NULL DEFAULT NULL,
   `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `payment_term` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `percent_vat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2515,7 +2574,7 @@ CREATE TABLE `purchase_order`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `purchase_request`;
 CREATE TABLE `purchase_request`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `delivery_date` datetime(0) NULL DEFAULT NULL,
@@ -2537,8 +2596,8 @@ CREATE TABLE `purchase_request`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `purchase_request_detail`;
 CREATE TABLE `purchase_request_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `purchase_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `purchase_id` int NULL DEFAULT NULL,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2559,17 +2618,17 @@ CREATE TABLE `purchase_request_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `quotation`;
 CREATE TABLE `quotation`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NULL DEFAULT NULL,
-  `project_id` int(11) NULL DEFAULT NULL,
-  `pic_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NULL DEFAULT NULL,
+  `project_id` int NULL DEFAULT NULL,
+  `pic_id` int NULL DEFAULT NULL,
   `pic_handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pic_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `order_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qn_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qn_date` date NULL DEFAULT NULL,
   `inquiry_reff` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` date NULL DEFAULT NULL,
   `delivery_date` date NULL DEFAULT NULL,
   `delivery_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2606,17 +2665,17 @@ CREATE TABLE `quotation`  (
 -- ----------------------------
 -- Records of quotation
 -- ----------------------------
-INSERT INTO `quotation` VALUES (1, 1, 1, 1, NULL, NULL, 'Repair', '0001/BMM/XII/2020', '2020-12-03', '', 0, '0000-00-00', '2020-12-03', '1', 'IDR', NULL, '10', '10', 's', '1', '10', NULL, '1', '1', '1', 'on progress', '', '', '', '', '', '', '', '', '', '', '', NULL, '2020-12-03 06:04:54', '2021-02-27 11:22:40', b'1');
-INSERT INTO `quotation` VALUES (2, 3, 3, 7, NULL, NULL, 'Repair', '0002/BMM/XII/2020', '2020-12-20', '', 0, '0000-00-00', '2020-12-21', '', 'IDR', NULL, '10', '10', 'terms', '', '', NULL, '', '', '', 'on progress', NULL, '', '', '', '', '', '', '', '', '', '', NULL, '2020-12-20 17:01:07', NULL, b'1');
-INSERT INTO `quotation` VALUES (3, 3, 3, 7, NULL, NULL, 'Repair', '0003/BMM/XII/2020', '2020-12-20', '', 0, '0000-00-00', '2021-02-26', '', '', NULL, '10', '', 'terms', '', '4', NULL, '', '', '', 'on progress', '', '', '', '', '', '', '', '', '', '', '', NULL, '2020-12-20 17:07:45', '2021-02-27 11:23:07', b'1');
+INSERT INTO `quotation` VALUES (1, 1, 1, 1, NULL, NULL, 'Repair', '0001/BMM/XII/2020', '2020-12-03', '', 0, '0000-00-00', '2020-12-03', '1', 'IDR', NULL, '10', '100', 's', '1', '10', NULL, '1', '1', '1', 'on progress', '', '', '', '', '', '', '', '', '', '', '', '1', '2020-12-03 06:04:54', '2021-03-14 02:59:23', b'1');
+INSERT INTO `quotation` VALUES (2, 3, 3, 7, NULL, NULL, 'Repair', '0002/BMM/XII/2020', '2020-12-20', '', 0, '0000-00-00', '2020-12-21', '', 'IDR', NULL, '10', '10', 'terms', '', '', NULL, '', '', '', 'on progress', NULL, '', '', '', '', '', '', '', '', '', '', '1', '2020-12-20 17:01:07', '2021-03-14 02:11:25', b'1');
+INSERT INTO `quotation` VALUES (3, 3, 3, 7, NULL, NULL, 'Repair', '0003/BMM/XII/2020', '2020-12-20', '', 0, '0000-00-00', '2021-02-26', '', '', NULL, '10', '', 'terms', '', '4', NULL, '', '', '', 'on progress', '', '', '', '', '', '', '', '', '', '', '', '1', '2020-12-20 17:07:45', '2021-03-14 02:11:25', b'1');
 
 -- ----------------------------
 -- Table structure for quotation_calc
 -- ----------------------------
 DROP TABLE IF EXISTS `quotation_calc`;
 CREATE TABLE `quotation_calc`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `quotation_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `quotation_id` int NULL DEFAULT NULL,
   `total` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `grand_summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `rounding_discount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2632,7 +2691,7 @@ CREATE TABLE `quotation_calc`  (
 -- ----------------------------
 -- Records of quotation_calc
 -- ----------------------------
-INSERT INTO `quotation_calc` VALUES (1, 1, NULL, 'IDR 21000', '2000', 'IDR 2100', '', 'IDR 23200', '2020-12-03 06:04:54', '2021-02-27 11:21:34', b'1');
+INSERT INTO `quotation_calc` VALUES (1, 1, NULL, 'IDR 80,000', 'IDR 2,000', 'IDR 84,000', 'IDR 162,000', 'IDR 178,200', '2020-12-03 06:04:54', '2021-03-14 03:15:48', b'1');
 INSERT INTO `quotation_calc` VALUES (2, 2, NULL, 'IDR 10,000', 'IDR 0', 'IDR 1,000', NULL, 'IDR 12,000', '2020-12-20 17:01:07', NULL, b'1');
 INSERT INTO `quotation_calc` VALUES (3, 3, NULL, 'IDR 10,000', 'IDR 0', 'IDR 0', '', 'IDR 11,000', '2020-12-20 17:07:45', '2021-02-27 11:23:07', b'1');
 
@@ -2641,8 +2700,8 @@ INSERT INTO `quotation_calc` VALUES (3, 3, NULL, 'IDR 10,000', 'IDR 0', 'IDR 0',
 -- ----------------------------
 DROP TABLE IF EXISTS `quotation_detail`;
 CREATE TABLE `quotation_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `quotation_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `quotation_id` int NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `completed_qty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2656,7 +2715,7 @@ CREATE TABLE `quotation_detail`  (
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of quotation_detail
@@ -2674,15 +2733,35 @@ INSERT INTO `quotation_detail` VALUES (10, 3, '', '2', NULL, 'BTG', '5,000', NUL
 INSERT INTO `quotation_detail` VALUES (11, 3, '', '2', NULL, 'BTG', '5,000', NULL, '10,000', NULL, NULL, '2020-12-20 17:16:18', '2021-02-27 11:23:07', b'0');
 INSERT INTO `quotation_detail` VALUES (12, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-02-27 11:21:34', '2021-02-27 11:22:06', b'0');
 INSERT INTO `quotation_detail` VALUES (13, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-02-27 11:22:06', '2021-02-27 11:22:40', b'0');
-INSERT INTO `quotation_detail` VALUES (14, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-02-27 11:22:40', NULL, b'1');
+INSERT INTO `quotation_detail` VALUES (14, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-02-27 11:22:40', '2021-03-14 02:08:25', b'0');
 INSERT INTO `quotation_detail` VALUES (15, 3, '', '2', NULL, 'BTG', '5,000', NULL, '10,000', NULL, NULL, '2021-02-27 11:23:07', NULL, b'1');
+INSERT INTO `quotation_detail` VALUES (16, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 02:08:25', '2021-03-14 02:59:23', b'0');
+INSERT INTO `quotation_detail` VALUES (17, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 02:59:23', '2021-03-14 03:02:41', b'0');
+INSERT INTO `quotation_detail` VALUES (18, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:02:41', '2021-03-14 03:03:06', b'0');
+INSERT INTO `quotation_detail` VALUES (19, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:03:06', '2021-03-14 03:03:19', b'0');
+INSERT INTO `quotation_detail` VALUES (20, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:03:19', '2021-03-14 03:03:29', b'0');
+INSERT INTO `quotation_detail` VALUES (21, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:03:29', '2021-03-14 03:05:45', b'0');
+INSERT INTO `quotation_detail` VALUES (22, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:05:45', '2021-03-14 03:06:11', b'0');
+INSERT INTO `quotation_detail` VALUES (23, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:06:11', '2021-03-14 03:08:56', b'0');
+INSERT INTO `quotation_detail` VALUES (24, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:08:56', '2021-03-14 03:15:48', b'0');
+INSERT INTO `quotation_detail` VALUES (25, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:15:48', '2021-03-18 00:15:19', b'0');
+INSERT INTO `quotation_detail` VALUES (26, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:15:19', '2021-03-18 00:19:28', b'0');
+INSERT INTO `quotation_detail` VALUES (27, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:19:28', '2021-03-18 00:21:00', b'0');
+INSERT INTO `quotation_detail` VALUES (28, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:21:00', '2021-03-18 00:21:36', b'0');
+INSERT INTO `quotation_detail` VALUES (29, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:21:36', '2021-03-18 00:26:55', b'0');
+INSERT INTO `quotation_detail` VALUES (30, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:26:55', '2021-03-18 00:28:49', b'0');
+INSERT INTO `quotation_detail` VALUES (31, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:28:49', '2021-03-18 00:29:06', b'0');
+INSERT INTO `quotation_detail` VALUES (32, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:29:06', '2021-03-18 00:31:38', b'0');
+INSERT INTO `quotation_detail` VALUES (33, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:31:38', '2021-03-18 00:31:49', b'0');
+INSERT INTO `quotation_detail` VALUES (34, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:31:49', '2021-03-18 00:33:43', b'0');
+INSERT INTO `quotation_detail` VALUES (35, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:33:43', NULL, b'1');
 
 -- ----------------------------
 -- Table structure for request_consumable
 -- ----------------------------
 DROP TABLE IF EXISTS `request_consumable`;
 CREATE TABLE `request_consumable`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `form_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
@@ -2703,9 +2782,9 @@ CREATE TABLE `request_consumable`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `request_consumable_detail`;
 CREATE TABLE `request_consumable_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `request_consumable_id` int(11) NULL DEFAULT NULL,
-  `consumable_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `request_consumable_id` int NULL DEFAULT NULL,
+  `consumable_id` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -2721,7 +2800,7 @@ CREATE TABLE `request_consumable_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sales_order_type`;
 CREATE TABLE `sales_order_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `po_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2741,8 +2820,8 @@ INSERT INTO `sales_order_type` VALUES (2, 's2', 's', '2020-11-29 23:16:46', NULL
 -- ----------------------------
 DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE `schedule`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `period_start` datetime(0) NULL DEFAULT NULL,
   `period_end` datetime(0) NULL DEFAULT NULL,
@@ -2764,8 +2843,8 @@ CREATE TABLE `schedule`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `schedule_detail`;
 CREATE TABLE `schedule_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `schedule_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `schedule_id` int NULL DEFAULT NULL,
   `process` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `sub_process` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `department` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2790,7 +2869,7 @@ CREATE TABLE `schedule_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `scopeofwork`;
 CREATE TABLE `scopeofwork`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `kickoff_meeting` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2811,7 +2890,7 @@ INSERT INTO `scopeofwork` VALUES (1, 'MOM', 'test2', 'test', '1', '2020-11-30 01
 -- ----------------------------
 DROP TABLE IF EXISTS `spb`;
 CREATE TABLE `spb`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `spb_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `receiver` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2831,12 +2910,12 @@ CREATE TABLE `spb`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `spb_detail`;
 CREATE TABLE `spb_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `spb_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `spb_id` int NULL DEFAULT NULL,
   `po` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `item_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `qty_po` int(11) NULL DEFAULT NULL,
-  `qty_spb` int(11) NULL DEFAULT NULL,
+  `qty_po` int NULL DEFAULT NULL,
+  `qty_spb` int NULL DEFAULT NULL,
   `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `eta` datetime(0) NULL DEFAULT NULL,
   `actual_date` datetime(0) NULL DEFAULT NULL,
@@ -2855,14 +2934,15 @@ CREATE TABLE `spb_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `tr_menu_access`;
 CREATE TABLE `tr_menu_access`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NULL DEFAULT NULL,
-  `sub_menu_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NULL DEFAULT NULL,
+  `sub_menu_id` int NULL DEFAULT NULL,
   `create` bit(1) NULL DEFAULT NULL,
   `edit` bit(1) NULL DEFAULT NULL,
   `delete` bit(1) NULL DEFAULT NULL,
   `view` bit(1) NULL DEFAULT NULL,
   `approve` bit(1) NULL DEFAULT NULL,
+  `commercial_sheet` bit(1) NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
   `created_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -2871,189 +2951,189 @@ CREATE TABLE `tr_menu_access`  (
 -- ----------------------------
 -- Records of tr_menu_access
 -- ----------------------------
-INSERT INTO `tr_menu_access` VALUES (1, 2, 1, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (2, 2, 2, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (3, 2, 3, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (4, 2, 4, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (5, 2, 5, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (6, 2, 6, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (7, 2, 7, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (8, 2, 8, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (9, 2, 9, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (10, 2, 10, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (11, 2, 11, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (12, 2, 12, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (13, 2, 13, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (14, 2, 14, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (15, 2, 16, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (16, 2, 17, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (17, 2, 18, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (18, 2, 19, b'0', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (19, 2, 21, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (20, 2, 22, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (21, 2, 24, b'0', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (22, 2, 26, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (23, 2, 27, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (24, 2, 29, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (25, 2, 32, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (26, 2, 33, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (27, 2, 35, b'1', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (28, 2, 36, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (29, 2, 39, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (30, 2, 40, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (31, 2, 41, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (32, 2, 45, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (33, 2, 47, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (34, 2, 48, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (35, 2, 49, b'0', b'1', b'1', b'1', b'1', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (36, 2, 51, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (37, 2, 53, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (38, 2, 55, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (39, 2, 56, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (40, 2, 57, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (41, 2, 59, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (42, 2, 60, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (43, 2, 62, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (44, 2, 64, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (45, 2, 66, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (46, 2, 68, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (47, 2, 69, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (48, 2, 70, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (49, 2, 71, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (50, 2, 74, b'0', b'0', b'0', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (51, 2, 75, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (52, 2, 76, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (53, 2, 80, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (54, 2, 81, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (55, 2, 82, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (56, 2, 84, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (57, 2, 86, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (58, 2, 87, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (59, 2, 88, b'0', b'1', b'1', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (60, 2, 15, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (61, 2, 20, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (62, 2, 23, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (63, 2, 25, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (64, 2, 28, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (65, 2, 30, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (66, 2, 31, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (67, 2, 34, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (68, 2, 37, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (69, 2, 42, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (70, 2, 46, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (71, 2, 50, b'1', b'0', b'0', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (72, 2, 52, b'1', b'0', b'0', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (73, 2, 54, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (74, 2, 58, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (75, 2, 61, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (76, 2, 63, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (77, 2, 65, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (78, 2, 67, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (79, 2, 72, b'1', b'0', b'0', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (80, 2, 73, b'1', b'0', b'0', b'1', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (81, 2, 77, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (82, 2, 78, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (83, 2, 79, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (84, 2, 83, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (85, 2, 85, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (86, 2, 89, b'1', b'0', b'0', b'0', b'0', b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (87, 4, 1, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (88, 4, 2, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (89, 4, 3, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (90, 4, 4, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (91, 4, 5, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (92, 4, 6, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (93, 4, 7, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (94, 4, 8, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (95, 4, 9, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (96, 4, 10, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (97, 4, 11, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (98, 4, 12, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (99, 4, 13, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (100, 4, 14, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (101, 4, 16, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (102, 4, 17, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (103, 4, 18, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (104, 4, 19, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (105, 4, 21, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (106, 4, 22, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (107, 4, 24, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (108, 4, 26, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (109, 4, 27, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (110, 4, 29, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (111, 4, 32, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (112, 4, 33, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (113, 4, 35, b'1', b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (114, 4, 36, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (115, 4, 39, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (116, 4, 40, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (117, 4, 41, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (118, 4, 45, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (119, 4, 47, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (120, 4, 48, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (121, 4, 49, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (122, 4, 50, b'1', NULL, NULL, b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (123, 4, 51, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (124, 4, 52, b'1', NULL, NULL, b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (125, 4, 53, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (126, 4, 55, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (127, 4, 56, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (128, 4, 57, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (129, 4, 59, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (130, 4, 60, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (131, 4, 62, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (132, 4, 64, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (133, 4, 66, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (134, 4, 68, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (135, 4, 69, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (136, 4, 70, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (137, 4, 71, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (138, 4, 72, b'1', NULL, NULL, b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (139, 4, 73, b'1', NULL, NULL, b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (140, 4, 74, NULL, NULL, NULL, b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (141, 4, 75, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (142, 4, 76, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (143, 4, 80, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (144, 4, 81, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (145, 4, 82, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (146, 4, 84, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (147, 4, 86, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (148, 4, 87, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (149, 4, 88, NULL, b'1', b'1', b'1', NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (150, 4, 15, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (151, 4, 20, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (152, 4, 23, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (153, 4, 25, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (154, 4, 28, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (155, 4, 30, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (156, 4, 31, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (157, 4, 34, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (158, 4, 37, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (159, 4, 42, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (160, 4, 46, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (161, 4, 54, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (162, 4, 58, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (163, 4, 61, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (164, 4, 63, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (165, 4, 65, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (166, 4, 67, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (167, 4, 77, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (168, 4, 78, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (169, 4, 79, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (170, 4, 83, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (171, 4, 85, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
-INSERT INTO `tr_menu_access` VALUES (172, 4, 89, b'1', NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (1, 2, 1, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (2, 2, 2, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (3, 2, 3, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (4, 2, 4, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (5, 2, 5, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (6, 2, 6, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (7, 2, 7, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (8, 2, 8, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (9, 2, 9, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (10, 2, 10, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (11, 2, 11, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (12, 2, 12, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (13, 2, 13, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (14, 2, 14, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (15, 2, 16, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (16, 2, 17, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (17, 2, 18, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (18, 2, 19, b'0', b'1', b'1', b'1', b'1', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (19, 2, 21, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (20, 2, 22, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (21, 2, 24, b'0', b'1', b'1', b'1', b'1', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (22, 2, 26, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (23, 2, 27, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (24, 2, 29, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (25, 2, 32, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (26, 2, 33, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (27, 2, 35, b'1', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (28, 2, 36, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (29, 2, 39, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (30, 2, 40, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (31, 2, 41, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (32, 2, 45, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (33, 2, 47, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (34, 2, 48, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (35, 2, 49, b'0', b'1', b'1', b'1', b'1', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (36, 2, 51, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (37, 2, 53, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (38, 2, 55, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (39, 2, 56, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (40, 2, 57, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (41, 2, 59, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (42, 2, 60, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (43, 2, 62, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (44, 2, 64, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (45, 2, 66, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (46, 2, 68, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (47, 2, 69, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (48, 2, 70, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (49, 2, 71, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (50, 2, 74, b'0', b'0', b'0', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (51, 2, 75, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (52, 2, 76, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (53, 2, 80, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (54, 2, 81, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (55, 2, 82, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (56, 2, 84, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (57, 2, 86, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (58, 2, 87, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (59, 2, 88, b'0', b'1', b'1', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (60, 2, 15, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (61, 2, 20, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (62, 2, 23, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (63, 2, 25, b'1', b'0', b'0', b'0', b'0', b'1', b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (64, 2, 28, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (65, 2, 30, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (66, 2, 31, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (67, 2, 34, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (68, 2, 37, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (69, 2, 42, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (70, 2, 46, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (71, 2, 50, b'1', b'0', b'0', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (72, 2, 52, b'1', b'0', b'0', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (73, 2, 54, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (74, 2, 58, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (75, 2, 61, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (76, 2, 63, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (77, 2, 65, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (78, 2, 67, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (79, 2, 72, b'1', b'0', b'0', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (80, 2, 73, b'1', b'0', b'0', b'1', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (81, 2, 77, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (82, 2, 78, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (83, 2, 79, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (84, 2, 83, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (85, 2, 85, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (86, 2, 89, b'1', b'0', b'0', b'0', b'0', NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (87, 4, 1, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (88, 4, 2, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (89, 4, 3, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (90, 4, 4, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (91, 4, 5, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (92, 4, 6, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (93, 4, 7, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (94, 4, 8, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (95, 4, 9, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (96, 4, 10, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (97, 4, 11, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (98, 4, 12, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (99, 4, 13, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (100, 4, 14, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (101, 4, 16, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (102, 4, 17, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (103, 4, 18, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (104, 4, 19, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (105, 4, 21, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (106, 4, 22, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (107, 4, 24, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (108, 4, 26, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (109, 4, 27, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (110, 4, 29, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (111, 4, 32, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (112, 4, 33, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (113, 4, 35, b'1', b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (114, 4, 36, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (115, 4, 39, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (116, 4, 40, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (117, 4, 41, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (118, 4, 45, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (119, 4, 47, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (120, 4, 48, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (121, 4, 49, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (122, 4, 50, b'1', NULL, NULL, b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (123, 4, 51, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (124, 4, 52, b'1', NULL, NULL, b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (125, 4, 53, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (126, 4, 55, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (127, 4, 56, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (128, 4, 57, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (129, 4, 59, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (130, 4, 60, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (131, 4, 62, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (132, 4, 64, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (133, 4, 66, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (134, 4, 68, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (135, 4, 69, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (136, 4, 70, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (137, 4, 71, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (138, 4, 72, b'1', NULL, NULL, b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (139, 4, 73, b'1', NULL, NULL, b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (140, 4, 74, NULL, NULL, NULL, b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (141, 4, 75, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (142, 4, 76, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (143, 4, 80, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (144, 4, 81, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (145, 4, 82, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (146, 4, 84, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (147, 4, 86, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (148, 4, 87, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (149, 4, 88, NULL, b'1', b'1', b'1', NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (150, 4, 15, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (151, 4, 20, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (152, 4, 23, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (153, 4, 25, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (154, 4, 28, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (155, 4, 30, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (156, 4, 31, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (157, 4, 34, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (158, 4, 37, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (159, 4, 42, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (160, 4, 46, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (161, 4, 54, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (162, 4, 58, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (163, 4, 61, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (164, 4, 63, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (165, 4, 65, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (166, 4, 67, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (167, 4, 77, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (168, 4, 78, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (169, 4, 79, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (170, 4, 83, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (171, 4, 85, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
+INSERT INTO `tr_menu_access` VALUES (172, 4, 89, b'1', NULL, NULL, NULL, NULL, NULL, b'1', NULL);
 
 -- ----------------------------
 -- Table structure for transaction
 -- ----------------------------
 DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `applied_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -3071,9 +3151,9 @@ CREATE TABLE `transaction`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `transaction_detail`;
 CREATE TABLE `transaction_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `transaction_id` int(11) NULL DEFAULT NULL,
-  `equipment_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `transaction_id` int NULL DEFAULT NULL,
+  `equipment_id` int NULL DEFAULT NULL,
   `brand` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `size` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `inv_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3095,7 +3175,7 @@ CREATE TABLE `transaction_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `unit_of_measures`;
 CREATE TABLE `unit_of_measures`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -3120,7 +3200,7 @@ INSERT INTO `unit_of_measures` VALUES (7, 'M', 'Meter', '2020-11-29 01:41:28', '
 -- ----------------------------
 DROP TABLE IF EXISTS `user_account`;
 CREATE TABLE `user_account`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `username` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3171,7 +3251,7 @@ INSERT INTO `user_account` VALUES (28, '', 'Eka', 'eka', '', 'eka@buanamasa.com'
 -- ----------------------------
 DROP TABLE IF EXISTS `user_group`;
 CREATE TABLE `user_group`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `level` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3202,8 +3282,8 @@ INSERT INTO `user_group` VALUES (12, 'MNT', 'Maintenance', '1', b'1', '2020-11-2
 -- ----------------------------
 DROP TABLE IF EXISTS `user_group_detail`;
 CREATE TABLE `user_group_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_group_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_group_id` int NULL DEFAULT NULL,
   `document_access` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL,
@@ -3237,8 +3317,8 @@ INSERT INTO `user_group_detail` VALUES (33, 4, 'Inspection Test and Plan', '2020
 -- ----------------------------
 DROP TABLE IF EXISTS `vendor_cs`;
 CREATE TABLE `vendor_cs`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vendor_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `vendor_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3261,7 +3341,7 @@ INSERT INTO `vendor_cs` VALUES (2, 1, 'gandhi', '98124912', '7481274', '19741291
 -- ----------------------------
 DROP TABLE IF EXISTS `yearly_report`;
 CREATE TABLE `yearly_report`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `year` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `jan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
