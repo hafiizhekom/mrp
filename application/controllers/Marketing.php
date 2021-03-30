@@ -1873,9 +1873,20 @@ class Marketing extends CI_Controller {
 	}
 
 	public function delivery($param=null){
-		if($param=="print"){
-			$this->load->view('marketing/delivery_print');
+		$data['sub_menu_access']=$this->submenu_access('Marketing','marketing/delivery');
+		if($param=="create"){
+			$this->load->view('marketing/delivery_form', $data);
+		}else if($param=="print"){
+			$this->load->view('marketing/delivery_print',$data);
+		}else{
+			$this->db->select('a.*,b.username as username, b.name as create_person');
+			$this->db->from('delivery as a');
+			$this->db->join('user_account as b', 'a.created_by = b.id', 'left');
+			$this->db->where('a.is_active', 1);
+			$data['table']=$this->db->get()->result();
+			$this->load->view('marketing/delivery', $data);
 		}
+		
 	}
 }
 ?>
