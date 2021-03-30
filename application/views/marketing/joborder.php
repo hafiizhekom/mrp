@@ -53,6 +53,7 @@
                                     <td><?php echo $value->marketing; ?></td>
                                     <td style='white-space: nowrap'>
                                       <center>
+                                        <button class="btn btn-warning print_button" data="<?php echo $value->id; ?>" ><i class="fa fa-print"></i> Print</button>&nbsp;
                                         <?php if($sub_menu_access->edit=="1") {?>
                                         <button class="btn btn-info edit_button" data="<?php echo $value->id; ?>" ><i class="fa fa-edit"></i> Edit</button>
                                         &nbsp;<?php } ?>
@@ -74,6 +75,9 @@
       <input type="hidden" name="id"  />
     </form>
     <form action="<?php echo base_url() ?>marketing/joborder/delete" method="POST" id="form_delete">
+      <input type="hidden" name="id"  />
+    </form>
+    <form action="<?php echo base_url() ?>marketing/joborder/print" target = '_blank' method="POST" id="form_print">
       <input type="hidden" name="id"  />
     </form>
     <div class="modal fade" id="status_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -134,6 +138,11 @@
      $("#table_1").DataTable( {
         "scrollX": true
         });
+      $(document).on('click',".print_button",function(){
+        var data1=$(this).attr("data");
+        $("input[name='id']").val(data1);
+        $("#form_print").submit();
+     });
      $(document).on('click',".edit_button",function(){
             var data1=$(this).attr("data");
             $("input[name='id']").val(data1);

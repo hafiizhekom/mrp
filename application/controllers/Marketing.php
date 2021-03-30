@@ -764,7 +764,14 @@ class Marketing extends CI_Controller {
 			$this->db->from('quotation');
 			$this->db->where('id', $data_input['id']);
 			$this->db->where('is_active', 1);
-			$data['header']=$this->db->get()->row();
+			$quotationHeader = $this->db->get()->row();
+			$data['header']=$quotationHeader;
+
+			$this->db->select('*');
+			$this->db->from('project');
+			$this->db->where('id', $quotationHeader->id);
+			$this->db->where('is_active', 1);
+			$data['header']->project=$this->db->get()->row();
 
 			$this->db->select('*');
 			$this->db->from('quotation_detail');
@@ -868,12 +875,13 @@ class Marketing extends CI_Controller {
 				}else if(date('m')=="10"){
 					$roman="X";
 				}else if(date('m')=="11"){
-					$roman="XI";
+					$roman="XI"; 
 				}else if(date('m')=="12"){
 					$roman="XII";
 				}
 				$data['quotation_no']->pattern=str_replace("ff",$roman, $data['quotation_no']->pattern);
 			}
+			// echo json_encode($data);
 			$this->load->view('marketing/quotation_print', $data);
 		}else{
 			$this->db->select('a.*,b.name as customer_name,c.name as project_name,DATE_ADD(a.delivery_date, INTERVAL a.quotation_valid DAY) as due_date,g.name as marketing');
@@ -1628,6 +1636,41 @@ class Marketing extends CI_Controller {
 			$this->db->where('id', $data_input['id']);
 			$this->db->update('job_order', $arrayName);
 			redirect('marketing/joborder','refresh');
+		}else if($param=="print"){
+			$data_input=$this->input->post();
+
+			$this->db->select('a.*,c.name as customer_name,b.qn_number,d.name as project_name,b.order_type,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,calc.grand_total_vat,g.name as marketing');
+			$this->db->from('job_order as a');
+			$this->db->where('a.is_active', 1);
+			$this->db->where('a.id', $data_input['id']);
+			$this->db->join('quotation as b', 'a.quotation_id = b.qn_number', 'left');
+			$this->db->join('customer as c', 'c.id = b.customer_id', 'left');
+			$this->db->join('project as d', 'd.id = b.project_id', 'left');
+			$this->db->join('quotation_calc as calc', 'b.id = calc.quotation_id', 'left');
+			$this->db->join('user_account as g', 'a.created_by = g.id', 'left');
+			$data['job']=$this->db->get()->row();
+
+			$this->db->select("*");
+			$this->db->from('job_order');
+			$this->db->where('id', $data_input['id']);
+			$data['job']=$this->db->get()->row();
+
+			$this->db->select('*');
+			$this->db->from('quotation');
+			$this->db->where('qn_number', $data['job']->quotation_id);
+			$data['quotation'] = $this->db->get()->row();
+
+			$this->db->select('*');
+			$this->db->from('customer');
+			$this->db->where('id', $data['quotation']->customer_id);
+			$data['customer'] = $this->db->get()->row();
+
+			$this->db->select('*');
+			$this->db->from('project');
+			$this->db->where('id', $data['quotation']->project_id);
+			$data['project'] = $this->db->get()->row();
+
+			$this->load->view('marketing/joborder_print', $data);
 		}else{
 			$this->db->select('a.*,c.name as customer_name,b.qn_number,d.name as project_name,b.order_type,DATE_ADD(b.delivery_date, INTERVAL b.quotation_valid DAY) as due_date,calc.grand_total_vat,g.name as marketing');
 			$this->db->from('job_order as a');
@@ -1827,6 +1870,12 @@ class Marketing extends CI_Controller {
 		$data['choice']=$this->db->get()->result();
 
 		$this->load->view('marketing/document_form', $data);
+	}
+
+	public function delivery($param=null){
+		if($param=="print"){
+			$this->load->view('marketing/delivery_print');
+		}
 	}
 }
 ?>
