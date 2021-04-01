@@ -61,6 +61,7 @@
                                         <button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button>&nbsp;
                                         <?php } ?>
                                         <?php if($sub_menu_access->approve=="1"){ ?><button class="btn btn-success status_button" data-toggle="modal" data-target="#status_modal" data="<?php echo $value->id; ?>" status-data="<?php echo $value->status; ?>"><i class="fa fa-compass"></i> Status</button><?php } ?>
+                                        <button class="btn btn-primary log_button" data-toggle="modal" data-target="#log_modal" data="<?php echo $value->job_number; ?>"><i class="fas fa-scroll"></i> Log</button>
                                       </center>
                                     </td>
                                 </tr>
@@ -80,7 +81,7 @@
     <form action="<?php echo base_url() ?>marketing/joborder/print" target = '_blank' method="POST" id="form_print">
       <input type="hidden" name="id"  />
     </form>
-    <div class="modal fade" id="status_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="status_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <form action="<?php echo base_url() ?>marketing/joborder/status_update" method="POST">
@@ -112,6 +113,26 @@
         <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
     </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="log_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Log Activity</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="tempatlog">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
 </div>
@@ -160,6 +181,65 @@
         $("select[name='status']").val(data2);
         // $("#status_modal").toggle();
      });
+     $(document).on("click",".log_button",function(){
+       var data1=$(this).attr("data");
+        $.ajax({
+            url: '<?php echo base_url() ?>marketing/job_log',
+            type: 'POST',
+            data: {data1: data1},
+        })
+        .done(function(res) {
+            // console.log(res);
+            var plainText = "";
+            var date=new Date();
+            var salt = "salted";
+            var iv = '1111111111111111';
+            var iterations = 999;
+            var passphrase = "<?php echo $this->session->userdata('token'); ?>";
+            function getKey(passphrase, salt){
+                var key = CryptoJS.PBKDF2(passphrase, salt, {
+                    hasher: CryptoJS.algo.SHA256,
+                    keySize: 64 / 8,
+                    iterations: iterations
+                });
+                return key;
+            }
+            function userJSEncrypt(passphrase, plainText){
+                var key = getKey(passphrase, salt);
+                var encrypted = CryptoJS.AES.encrypt(plainText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+            }
+            function userJSDecrypt(passphrase, encryptedText){
+                var key = getKey(passphrase, salt);
+                var decrypted = CryptoJS.AES.decrypt(encryptedText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return decrypted.toString(CryptoJS.enc.Utf8);
+            }
+            res=userJSDecrypt(passphrase, res);
+            res=JSON.parse(res);
+            // console.log(res);
+            var text="";
+              text+="<table class='table-bordered table-striped table'><thead><tr><td>User</td><td>Activity</td><td>Date and Time</td></thead><tbody>";
+            for (var i = 0; i < res.data.length; i++) {
+              text+="<tr>";
+              text+="<td>";
+              text+=res.data[i].username;
+              text+="</td>";
+              text+="<td>";
+              text+=res.data[i].desc;
+              text+="</td>";
+              text+="<td>";
+              text+=res.data[i].date;
+              text+="</td>";
+              text+"</tr>";
+            }
+            text+="</tbody></table>";
+            $("#tempatlog").html(text);
+        });
+      });
 </script>
 </body>
 </html>

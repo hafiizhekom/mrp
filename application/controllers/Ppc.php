@@ -25,7 +25,7 @@ class ppc extends CI_Controller {
 	}
 	
 	public function submenu($param){
-		$this->db->select('b.sub_menu,c.module,c.menu,b.url');
+		$this->db->select('a.view,a.create,a.delete,a.approve,a.edit,b.sub_menu,c.module,c.menu,b.url');
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
@@ -36,6 +36,21 @@ class ppc extends CI_Controller {
 		$this->db->where('a.view', 1);
 		$this->db->order_by('a.id', 'asc');
 		return $this->db->get()->result();
+	}
+
+	public function submenu_access($param,$url){
+		$this->db->select('a.view,a.create,a.delete,a.approve,a.edit,b.sub_menu,c.module,c.menu,b.url,a.commercial_sheet');
+		$this->db->from('tr_menu_access as a');
+		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
+		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
+		$this->db->join('user_account as d', 'd.group_id = a.group_id', 'left');
+		$this->db->where('c.module', $param);
+		$this->db->where('d.id',$this->session->userdata('id') );
+		$this->db->where('b.url', $url);
+		$this->db->where('a.is_active', 1);
+		$this->db->order_by('a.id', 'asc');
+		$this->db->limit(1);
+		return $this->db->get()->row();
 	}
 
 
@@ -434,6 +449,18 @@ class ppc extends CI_Controller {
 		$this->load->view('ppic/packing', $data);
 	}
 
+	public function schedule($param=null){
+		$data['sub_menu']=$this->submenu("PPC");
+		$data['sub_menu_access']=$this->submenu_access('PPC','ppc/schedule');
+		if($param=="monitoring"){
+			$this->load->view('ppic/monitoring', $data);
+		}else if($param=="create"){
+			$this->load->view('ppic/schedule_form', $data);
+		}else{
+			$this->load->view('ppic/schedule', $data);
+		}
+	}
+
 	public function mpk($param=null){
 		if($param=="create"){
 
@@ -536,11 +563,50 @@ class ppc extends CI_Controller {
 			$this->load->view('ppic/mpk_form',$data);
 		}else if($param=="add"){
 			$data_input=$this->input->post();
-
+			var_dump($data_input);
+			exit();
 			redirect('ppc/mpk','refresh');
-
 		}else{
 			$this->load->view('ppic/mpk');
 		}
 	}
+
+	public function mpk_select(){
+		$data_input=$this->input->post();
+
+		$this->db->select('b.assembly_mark,b.desc,b.qty,b.total_area as area,b.total_weight as weight');
+		$this->db->from('bill_quotation as a');
+		$this->db->join('bill_quotation_assembly as b', 'a.id = bill_id', 'left');
+		$this->db->where('b.is_active', 1);
+		$this->db->where('a.bill_no', $data_input['boq_no']);
+		$assembly_list=$this->db->get()->result();
+
+		$this->db->select('d.name as customer_name,e.name as project_name,a.job_id as job_order,c.qn_number as quotation');
+		$this->db->from('bill_quotation as a');
+		$this->db->join('job_order as b', 'a.job_id = b.job_number', 'left');
+		$this->db->join('quotation as c', 'b.quotation_id=c.qn_number', 'left');
+		$this->db->join('customer as d', 'c.customer_id = d.id', 'left');
+		$this->db->join('project as e', 'c.project_id = e.id', 'left');
+		$this->db->where('a.bill_no', $data_input['boq_no']);
+		$header=$this->db->get()->row();
+
+		$mpk_no=$data_input['mpk'];
+		$jo_no=explode("-", $header->job_order);
+		$jo_no=$jo_no[1]."-".$jo_no[2];
+		$mpk_no=str_replace("JO_NO", $jo_no, $mpk_no);
+
+
+		$response = array(
+			'assembly_list' => $assembly_list,
+			'header'=>$header,
+			'mpk_no'=>$mpk_no,
+			'status'=>'success' 
+		);
+		$response=json_encode($response);
+		$phpEncryptedText = $this->userPHPEncrypt($this->session->userdata('token'), $response);
+		echo $phpEncryptedText;
+	}
+
+
+	
 }

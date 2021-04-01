@@ -1237,6 +1237,14 @@ class Marketing extends CI_Controller {
 					}
 					
 				}
+				$logjoborder = array(
+					'desc' =>'job order created',
+					'user'=>$this->session->userdata('id'),
+					'jo_no'=>$data_input['job_number']??"",
+					'is_active'=>1 
+				);
+				$this->db->insert('job_order_log', $logjoborder);
+
 				header("Location: ".base_url()."marketing/joborder?res=success");
 			}else{
 				$insert_header = array(
@@ -1393,6 +1401,14 @@ class Marketing extends CI_Controller {
 					}
 					
 				}
+				$logjoborder = array(
+					'desc' =>'job order updated',
+					'user'=>$this->session->userdata('id'),
+					'jo_no'=>$data_input['job_number']??"",
+					'is_active'=>1 
+				);
+				$this->db->insert('job_order_log', $logjoborder);
+
 				header("Location: ".base_url()."marketing/joborder?res=success");
 			}
 			
@@ -1703,6 +1719,23 @@ class Marketing extends CI_Controller {
 
 			$this->load->view('marketing/joborder', $data);
 		}
+	}
+
+	public function job_log(){
+		$data_input=$this->input->post();
+		$this->db->select('a.*,b.name as username');
+		$this->db->from('job_order_log as a');
+		$this->db->join('user_account as b', 'a.user = b.id', 'left');
+		$this->db->where('a.is_active', 1);
+		$this->db->where('a.jo_no', $data_input['data1']);
+		$res=$this->db->get()->result();
+		$response = array(
+			'data' => $res,
+			'status'=>'success' 
+		);
+		$response=json_encode($response);
+		$phpEncryptedText = $this->userPHPEncrypt($this->session->userdata('token'), $response);
+		echo $phpEncryptedText;
 	}
 
 	public function job_select1(){

@@ -19,7 +19,7 @@ class production extends CI_Controller {
 	}
 	
 	public function submenu($param){
-		$this->db->select('b.sub_menu,c.module,c.menu,b.url');
+		$this->db->select('a.view,a.create,a.delete,a.approve,a.edit,b.sub_menu,c.module,c.menu,b.url');
 		$this->db->from('tr_menu_access as a');
 		$this->db->join('ms_submenu as b', 'a.sub_menu_id=b.id', 'left');
 		$this->db->join('ms_menu as c', 'c.id=b.menu_id', 'left');
@@ -32,10 +32,20 @@ class production extends CI_Controller {
 		return $this->db->get()->result();
 	}
 
+
 	public function index()
 	{
 		
 		$data['sub_menu']=$this->submenu('Production');
 		$this->load->view('production/home',$data);
+	}
+
+	public function bsk($param=null){
+		$data['sub_menu']=$this->submenu('Production');
+		if($param=="create"){
+			$this->load->view('Production/bsk_form', $data);
+		}else{
+			$this->load->view('Production/bsk', $data);
+		}
 	}
 }

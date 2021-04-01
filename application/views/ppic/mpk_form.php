@@ -438,7 +438,7 @@ tr.mpk-detail > td {
                         <div class="form-group">
                             <label class="label-control col-md-3" style="color: red">Date</label>
                             <div class="col-md-7">
-                                <input type="date" name="date" />
+                                <input type="date" name="date" value="<?php echo date('Y-m-d'); ?>" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -473,7 +473,7 @@ tr.mpk-detail > td {
                                     <th rowspan="2" style="text-align: center">Description</th>
                                     <th colspan="3" style="text-align: center">Total</th>
                                     <th rowspan="2" style="text-align: center; width: 65px">Load</th>
-                                    <!--v-for-start--><th colspan="2" style="width: 50px;">
+                                    <th colspan="2" style="width: 50px;">
                                         Material
                                     </th><th colspan="2" style="width: 50px;">
                                         Marking
@@ -551,52 +551,52 @@ tr.mpk-detail > td {
                                 <!--</template>-->
                                 <!--</tr>-->
                                 </thead>
-                                <tbody>
-                                <!--v-for-start--><!--fragment-start--><tr class="mpk-detail">
-    <td style="text-align: center;">1
-        <input type="hidden" value="">
-    </td>
-    <td></td>
-    <td></td>
-    <td>0</td>
-    <td>0</td>
-    <td>0</td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="material_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="marking_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="cutting_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="rolling_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="bending_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="drilling_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="machining_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="setting_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="welding_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="assembly_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="sandblasting_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="galvanize_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="painting_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="packing_actual[]"></td>
-    <td>0%</td>
-    <td><input type="text" class="form-control" style="min-width: 40px;" name="delivery_actual[]"></td>
-    <td>0%</td>    
-    <td>0%</td>
-    <td>
-        <input type="text" class="form-control" name="remark[]">
-    </td>
-</tr><!--v-component--><!--fragment-end--><!--v-for-end-->
+                                <tbody class="mpk-detail-body">
+                                    <tr class="mpk-detail">
+                                      <td style="text-align: center;">1
+                                          <input type="hidden" id='assembly_id' value="">
+                                      </td>
+                                      <td></td>
+                                      <td></td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      <td>0</td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="material_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="marking_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="cutting_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="rolling_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="bending_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="drilling_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="machining_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="setting_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="welding_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="assembly_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="sandblasting_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="galvanize_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="painting_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="packing_actual[]"></td>
+                                      <td>0%</td>
+                                      <td><input type="text" class="form-control" style="min-width: 40px;" name="delivery_actual[]"></td>
+                                      <td>0%</td>    
+                                      <td>0%</td>
+                                      <td>
+                                          <input type="text" class="form-control" name="remark[]">
+                                      </td>
+                                  </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -605,22 +605,36 @@ tr.mpk-detail > td {
                                     <th>0</th>
                                     <th>0</th>
                                     <th>0%</th>
-                                    <!--v-for-start--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--fragment-start--><th>0</th>
-                                        <th>0%</th><!--fragment-end--><!--v-for-end-->
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
+                                    <th>0</th>
+                                    <th>0%</th>
                                     <th>0%</th>
                                     <th></th>
                                 </tr>
@@ -642,4 +656,68 @@ tr.mpk-detail > td {
         </div>
     </div>
 <?php $this->load->view('template/footer'); ?>
-</body></html>
+</body>
+<script>
+  var mpk=$("input[name='mpk_no']").val();
+     
+$(document).on("change","select[name='boq_no']",function(){
+  // console.log($(this).val());
+  var data1=$(this).val();
+  $.ajax({
+            url: '<?php echo base_url() ?>ppc/mpk_select',
+            type: 'POST',
+            data: {
+              boq_no: data1,
+              mpk:mpk
+            },
+        })
+        .done(function(res) {
+            // console.log(res);
+            var plainText = "";
+            var date=new Date();
+            var salt = "salted";
+            var iv = '1111111111111111';
+            var iterations = 999;
+            var passphrase = "<?php echo $this->session->userdata('token'); ?>";
+            function getKey(passphrase, salt){
+                var key = CryptoJS.PBKDF2(passphrase, salt, {
+                    hasher: CryptoJS.algo.SHA256,
+                    keySize: 64 / 8,
+                    iterations: iterations
+                });
+                return key;
+            }
+            function userJSEncrypt(passphrase, plainText){
+                var key = getKey(passphrase, salt);
+                var encrypted = CryptoJS.AES.encrypt(plainText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+            }
+            function userJSDecrypt(passphrase, encryptedText){
+                var key = getKey(passphrase, salt);
+                var decrypted = CryptoJS.AES.decrypt(encryptedText, key, {
+                    iv: CryptoJS.enc.Utf8.parse(iv)
+                });
+                return decrypted.toString(CryptoJS.enc.Utf8);
+            }
+            res=userJSDecrypt(passphrase, res);
+            res=JSON.parse(res);
+            console.log(res);
+            $("input[name='mpk_no']").val(res.mpk_no);
+            $("input[name='customer']").val(res.header.customer_name);
+            $("input[name='project']").val(res.header.project_name);
+            $("input[name='joborder']").val(res.header.job_order);
+            $("input[name='quotation']").val(res.header.quotation);
+            $(".mpk-detail-body").html("");
+            for (var i = 0; i < res.assembly_list.length; i++) {
+              var text="";
+              text+="<tr class='mpk-detail'> <td style='text-align: center;'>"+parseInt(i+1)+" <input type='hidden' id='assembly_id' value=''/> </td><td>"+res.assembly_list[i].assembly_mark+"</td>"+res.assembly_list[i].desc+"<td></td><td>"+res.assembly_list[i].qty+"</td><td>"+res.assembly_list[i].area+"</td><td>"+res.assembly_list[i].weight+"</td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='material_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='marking_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='cutting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='rolling_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='bending_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='drilling_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='machining_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='setting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='welding_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='assembly_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='sandblasting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='galvanize_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='painting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='packing_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='delivery_actual[]'></td><td>0%</td><td>0%</td><td> <input type='text' class='form-control' name='remark[]'> </td></tr>";
+              // res.assembly_list[i]
+              $(".mpk-detail-body").append(text);
+            }
+
+        });
+})
+</script>
+</html>
