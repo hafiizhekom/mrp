@@ -30,13 +30,14 @@ class qc extends CI_Controller {
 		$this->db->where('a.is_active', 1);
 		$this->db->where('a.view', 1);
 		$this->db->order_by('a.id', 'asc');
-		$this->db->get()->result();
+		return $this->db->get()->result();
 	}
 
 	public function index()
 	{
 		$data['sub_menu']=$this->sub_menu('QC');
 		// echo json_encode($data);
+		// exit();
 		$this->load->view('qc/home',$data);
 	}
 }

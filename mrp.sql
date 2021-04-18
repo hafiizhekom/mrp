@@ -3,15 +3,15 @@
 
  Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 100413
+ Source Server Version : 100414
  Source Host           : localhost:3306
  Source Schema         : mrp
 
  Target Server Type    : MySQL
- Target Server Version : 100413
+ Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 01/04/2021 17:41:30
+ Date: 18/04/2021 09:23:42
 */
 
 SET NAMES utf8mb4;
@@ -22,8 +22,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_consumable`;
 CREATE TABLE `bill_consumable`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
@@ -40,9 +40,9 @@ CREATE TABLE `bill_consumable`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_consumable_detail`;
 CREATE TABLE `bill_consumable_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bill_consumable_id` int(11) NULL DEFAULT NULL,
-  `consumable_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bill_consumable_id` int NULL DEFAULT NULL,
+  `consumable_id` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -58,14 +58,14 @@ CREATE TABLE `bill_consumable_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_quotation`;
 CREATE TABLE `bill_quotation`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `job_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pic_handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `bill_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
   `inquiry_reff` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` date NULL DEFAULT NULL,
   `delivery_date` date NULL DEFAULT NULL,
   `delivery_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -91,11 +91,11 @@ INSERT INTO `bill_quotation` VALUES (2, 'BMM-20-002', NULL, NULL, 'BQ-20-0002', 
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_quotation_assembly`;
 CREATE TABLE `bill_quotation_assembly`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bill_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bill_id` int NULL DEFAULT NULL,
   `assembly_mark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `qty` int(11) NULL DEFAULT NULL,
+  `qty` int NULL DEFAULT NULL,
   `total_area` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `total_weight` float NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -118,13 +118,13 @@ INSERT INTO `bill_quotation_assembly` VALUES (7, 3, 'sa', '', 1, '0.006285999999
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_quotation_material`;
 CREATE TABLE `bill_quotation_material`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bill_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bill_id` int NULL DEFAULT NULL,
   `assembly_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `part_mark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `qty` int(11) NULL DEFAULT NULL,
+  `qty` int NULL DEFAULT NULL,
   `length` double NULL DEFAULT NULL,
   `width` double NULL DEFAULT NULL,
   `thick` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -153,11 +153,11 @@ INSERT INTO `bill_quotation_material` VALUES (5, 2, 'sb', 'RBS008', 'As dia.8 (S
 -- ----------------------------
 DROP TABLE IF EXISTS `bsk`;
 CREATE TABLE `bsk`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `quotation_id` int(11) NULL DEFAULT NULL,
-  `bsk_no` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `quotation_id` int NULL DEFAULT NULL,
+  `bsk_no` int NULL DEFAULT NULL,
   `bsk_date` datetime(0) NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `foreman` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qc_dept` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE `bsk`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `currency`;
 CREATE TABLE `currency`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -198,7 +198,7 @@ INSERT INTO `currency` VALUES (3, '¥en', 'Yen Japan', '2020-11-29 01:06:08', '2
 -- ----------------------------
 DROP TABLE IF EXISTS `currency_rate`;
 CREATE TABLE `currency_rate`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `year` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `jan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -228,7 +228,7 @@ CREATE TABLE `currency_rate`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -265,8 +265,8 @@ INSERT INTO `customer` VALUES (3, 'GAN', 'nyan', '', '', '', '', '', '', '', '',
 -- ----------------------------
 DROP TABLE IF EXISTS `customer_contact`;
 CREATE TABLE `customer_contact`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -294,7 +294,7 @@ INSERT INTO `customer_contact` VALUES (7, 3, 'miu', '', '', '', '', '2020-12-20 
 -- ----------------------------
 DROP TABLE IF EXISTS `daily_consumable`;
 CREATE TABLE `daily_consumable`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT NULL,
@@ -312,9 +312,9 @@ CREATE TABLE `daily_consumable`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `daily_consumable_detail`;
 CREATE TABLE `daily_consumable_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `daily_consumable_id` int(11) NULL DEFAULT NULL,
-  `consumable_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `daily_consumable_id` int NULL DEFAULT NULL,
+  `consumable_id` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -330,14 +330,14 @@ CREATE TABLE `daily_consumable_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `delivery`;
 CREATE TABLE `delivery`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `packing_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `jo_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `customer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `project` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
-  `delivery_no` int(11) NULL DEFAULT NULL,
+  `delivery_no` int NULL DEFAULT NULL,
   `no_po` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `no_vehicle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `up` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -347,7 +347,7 @@ CREATE TABLE `delivery`  (
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `created_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of delivery
@@ -358,11 +358,11 @@ CREATE TABLE `delivery`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `dkm`;
 CREATE TABLE `dkm`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `bill_quotation_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `dkm_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` date NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -381,8 +381,8 @@ INSERT INTO `dkm` VALUES (1, 'BQ-20-0002', '0001/JO_NO/PPIC/12/2020', '2020-12-0
 -- ----------------------------
 DROP TABLE IF EXISTS `dkm_detail`;
 CREATE TABLE `dkm_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_dkm` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_dkm` int NULL DEFAULT NULL,
   `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pcs` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -416,11 +416,11 @@ INSERT INTO `dkm_detail` VALUES (12, 1, 'SB50', 'AS Kotak 50 x 50', '2', 'BTG', 
 -- ----------------------------
 DROP TABLE IF EXISTS `doc_numbering`;
 CREATE TABLE `doc_numbering`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `document` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `periodic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pattern` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `last_number` int(11) NULL DEFAULT NULL,
+  `last_number` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -444,14 +444,14 @@ INSERT INTO `doc_numbering` VALUES (8, 'MPK', 'monthly', 'XXXX-JO_NO-PRG-PPIC-FF
 -- ----------------------------
 DROP TABLE IF EXISTS `equipment`;
 CREATE TABLE `equipment`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `size` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `brand` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `minimum_stock` int(11) NULL DEFAULT NULL,
+  `minimum_stock` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -468,8 +468,8 @@ INSERT INTO `equipment` VALUES (1, 'test', '1', 'BTG', 'a', 'BKG', 'MKG', 10, '2
 -- ----------------------------
 DROP TABLE IF EXISTS `equipment_detail`;
 CREATE TABLE `equipment_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `equipment_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `equipment_id` int NULL DEFAULT NULL,
   `inventory_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date_received` datetime(0) NULL DEFAULT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -492,7 +492,7 @@ INSERT INTO `equipment_detail` VALUES (2, 1, 'BM02', '2020-12-02 00:00:00', NULL
 -- ----------------------------
 DROP TABLE IF EXISTS `equipment_groups`;
 CREATE TABLE `equipment_groups`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -512,7 +512,7 @@ INSERT INTO `equipment_groups` VALUES (1, 'martin', 'MKG', 'desc', '2020-12-01 2
 -- ----------------------------
 DROP TABLE IF EXISTS `equipment_type`;
 CREATE TABLE `equipment_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -532,7 +532,7 @@ INSERT INTO `equipment_type` VALUES (1, 'test', 'BKG', 'nyanko', '2020-12-01 21:
 -- ----------------------------
 DROP TABLE IF EXISTS `general_setting`;
 CREATE TABLE `general_setting`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -558,9 +558,9 @@ INSERT INTO `general_setting` VALUES (1, 'PT. Buana Masa Metalindo', 'Jl. Raya N
 -- ----------------------------
 DROP TABLE IF EXISTS `general_setting_detail`;
 CREATE TABLE `general_setting_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `general_id` int(11) NULL DEFAULT NULL,
-  `order` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `general_id` int NULL DEFAULT NULL,
+  `order` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `job` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -585,15 +585,15 @@ INSERT INTO `general_setting_detail` VALUES (5, 1, 5, '', 'WAREHOUSE MANAGER', '
 -- ----------------------------
 DROP TABLE IF EXISTS `inspection_testplan`;
 CREATE TABLE `inspection_testplan`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
-  `vendor_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
+  `vendor_id` int NULL DEFAULT NULL,
   `contractor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `inspection_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `doc_rev` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `ins_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -616,8 +616,8 @@ CREATE TABLE `inspection_testplan`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `inspection_testplan_detail`;
 CREATE TABLE `inspection_testplan_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inspection_textplan_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inspection_textplan_id` int NULL DEFAULT NULL,
   `process` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `sub_process` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `applicable` bit(1) NULL DEFAULT NULL,
@@ -639,8 +639,8 @@ CREATE TABLE `inspection_testplan_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `job_detail_discount`;
 CREATE TABLE `job_detail_discount`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `position` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `discount` float NULL DEFAULT NULL,
@@ -649,20 +649,21 @@ CREATE TABLE `job_detail_discount`  (
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_detail_discount
 -- ----------------------------
 INSERT INTO `job_detail_discount` VALUES (1, 1, 'sadasdasd', 'asdas', 100, 'asdas', '2021-03-18 00:31:38', '2021-04-01 09:46:50', b'1');
+INSERT INTO `job_detail_discount` VALUES (2, 2, '', '', 0, '', '2021-04-02 23:51:59', NULL, b'1');
 
 -- ----------------------------
 -- Table structure for job_detail_inv
 -- ----------------------------
 DROP TABLE IF EXISTS `job_detail_inv`;
 CREATE TABLE `job_detail_inv`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `invoice_date` date NULL DEFAULT NULL,
   `invoice_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -673,7 +674,7 @@ CREATE TABLE `job_detail_inv`  (
   `modified_date` datetime(0) NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 67 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_detail_inv
@@ -738,13 +739,14 @@ INSERT INTO `job_detail_inv` VALUES (63, 1, '2021-03-18', 'xzccccc', '100', '202
 INSERT INTO `job_detail_inv` VALUES (64, 1, '2021-03-18', 'asdasd', '200', '2020-12-09', '', '', NULL, NULL, b'0');
 INSERT INTO `job_detail_inv` VALUES (65, 1, '2021-03-18', 'asdas', '200', '2020-12-09', '', '', NULL, NULL, b'0');
 INSERT INTO `job_detail_inv` VALUES (66, 1, '2021-03-18', 'asda', '100', '2020-12-09', '', '', NULL, NULL, b'0');
+INSERT INTO `job_detail_inv` VALUES (67, 2, '0000-00-00', '', '', '0000-00-00', '', '', NULL, NULL, b'1');
 
 -- ----------------------------
 -- Table structure for job_order
 -- ----------------------------
 DROP TABLE IF EXISTS `job_order`;
 CREATE TABLE `job_order`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `quotation_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `job_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_internal` bit(1) NULL DEFAULT NULL,
@@ -780,34 +782,35 @@ CREATE TABLE `job_order`  (
 -- Records of job_order
 -- ----------------------------
 INSERT INTO `job_order` VALUES (1, '0001/BMM/XII/2020', 'BMM-20-0001', b'0', '2020-12-03', '2020-12-10', '', 'IDR', '10', 4000, 's', '1', 'Waiting for Approval', '', '', '', '', '', '', '', '', '', '', '', '2020-12-03 18:31:31', '2021-03-14 03:08:56', b'1', NULL, '1');
-INSERT INTO `job_order` VALUES (2, '0003/BMM/XII/2020', 'BMM-20-002', b'0', '2020-12-20', NULL, '', '', '10', 0, 'terms', '', 'Waiting for Approval', '', '', '', '', '', '', '', '', '', '', '', '2020-12-20 17:16:18', '2021-03-14 02:38:27', b'1', NULL, '1');
+INSERT INTO `job_order` VALUES (2, '0003/BMM/XII/2020', 'BMM-20-002', b'0', '2020-12-20', '2021-04-02', '', '', '10', 0, 'terms', '', 'Waiting for Approval', '', '', '', '', '', '', '', '', '', '', '', '2020-12-20 17:16:18', '2021-04-02 23:51:59', b'1', NULL, '1');
 
 -- ----------------------------
 -- Table structure for job_order_log
 -- ----------------------------
 DROP TABLE IF EXISTS `job_order_log`;
 CREATE TABLE `job_order_log`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `jo_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT current_timestamp(0),
   `user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_order_log
 -- ----------------------------
 INSERT INTO `job_order_log` VALUES (1, 'BMM-20-0001', 'job order updated', '2021-04-01 09:46:50', '1', b'1');
+INSERT INTO `job_order_log` VALUES (2, 'BMM-20-002', 'job order updated', '2021-04-02 23:51:59', '1', b'1');
 
 -- ----------------------------
 -- Table structure for kickoff_meeting
 -- ----------------------------
 DROP TABLE IF EXISTS `kickoff_meeting`;
 CREATE TABLE `kickoff_meeting`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -823,8 +826,8 @@ CREATE TABLE `kickoff_meeting`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `kickoff_meeting_detail`;
 CREATE TABLE `kickoff_meeting_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `kickoff_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kickoff_id` int NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `applicable` bit(1) NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -846,8 +849,8 @@ CREATE TABLE `kickoff_meeting_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `kickoff_meeting_template`;
 CREATE TABLE `kickoff_meeting_template`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NULL DEFAULT NULL,
   `parent_item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `order` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -868,7 +871,7 @@ CREATE TABLE `kickoff_meeting_template`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `marketing_document`;
 CREATE TABLE `marketing_document`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `jo_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -902,7 +905,7 @@ INSERT INTO `marketing_document` VALUES (9, 'BMM-20-0001', 'a', '', '', 'Drawing
 -- ----------------------------
 DROP TABLE IF EXISTS `master_material`;
 CREATE TABLE `master_material`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `material_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `part_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -1510,7 +1513,7 @@ INSERT INTO `master_material` VALUES (557, 'PLS642', 'A36', 'PLATE 50 thk', 'STE
 -- ----------------------------
 DROP TABLE IF EXISTS `master_part_material`;
 CREATE TABLE `master_part_material`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `material_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `part_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -1541,8 +1544,8 @@ CREATE TABLE `master_part_material`  (
   `drawing_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `volume_formula` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `area_formula` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `minimum_order_qty` int(11) NULL DEFAULT NULL,
-  `minimum_stock` int(11) NULL DEFAULT NULL,
+  `minimum_order_qty` int NULL DEFAULT NULL,
+  `minimum_stock` int NULL DEFAULT NULL,
   `process_cost_supplier_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2099,11 +2102,11 @@ INSERT INTO `master_part_material` VALUES (540, 'ra', 'sa', NULL, 'sa', 'BKG', N
 -- ----------------------------
 DROP TABLE IF EXISTS `mpk`;
 CREATE TABLE `mpk`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bill_quotation_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bill_quotation_id` int NULL DEFAULT NULL,
   `mpk_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `checked_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `approved_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2138,8 +2141,8 @@ CREATE TABLE `mpk`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `mpk_detail`;
 CREATE TABLE `mpk_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `assembly_mark_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `assembly_mark_id` int NULL DEFAULT NULL,
   `material` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `marking` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `cutting` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2159,7 +2162,7 @@ CREATE TABLE `mpk_detail`  (
   `is_active` bit(1) NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT current_timestamp(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of mpk_detail
@@ -2170,7 +2173,7 @@ CREATE TABLE `mpk_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_consumable`;
 CREATE TABLE `ms_consumable`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qualification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2196,7 +2199,7 @@ INSERT INTO `ms_consumable` VALUES (3, 'GM', '01', '01w', 'size', '100', '1000',
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_destination`;
 CREATE TABLE `ms_destination`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `destination` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2216,7 +2219,7 @@ INSERT INTO `ms_destination` VALUES (2, 'JKT TMR', 'Jakarta timur', '2020-11-29 
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_document_type`;
 CREATE TABLE `ms_document_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2246,7 +2249,7 @@ INSERT INTO `ms_document_type` VALUES (12, 'ganti', NULL, '2020-11-28 15:10:36',
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_menu`;
 CREATE TABLE `ms_menu`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `module` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `menu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -2299,7 +2302,7 @@ INSERT INTO `ms_menu` VALUES (37, 'PPC', 'MPK', b'1');
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_pic`;
 CREATE TABLE `ms_pic`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2319,7 +2322,7 @@ INSERT INTO `ms_pic` VALUES (2, 'CK', 'Cheon sa', '2020-11-29 02:58:53', '2020-1
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_product`;
 CREATE TABLE `ms_product`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2340,8 +2343,8 @@ INSERT INTO `ms_product` VALUES (3, 'BKG', 'barang Kilo Gram', '2020-12-03 20:36
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_submenu`;
 CREATE TABLE `ms_submenu`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `menu_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `menu_id` int NULL DEFAULT NULL,
   `sub_menu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -2451,7 +2454,7 @@ INSERT INTO `ms_submenu` VALUES (89, 36, 'Add New BSK', 'production/bsk/create',
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_vendor`;
 CREATE TABLE `ms_vendor`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `ppn` bit(1) NULL DEFAULT NULL,
   `outsource` bit(1) NULL DEFAULT NULL,
   `vendor_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2488,7 +2491,7 @@ INSERT INTO `ms_vendor` VALUES (1, b'1', b'1', 'CODE', 'name', 'asdasdnk', 'knas
 -- ----------------------------
 DROP TABLE IF EXISTS `ms_warehouse`;
 CREATE TABLE `ms_warehouse`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2513,19 +2516,19 @@ INSERT INTO `ms_warehouse` VALUES (2, 'WRH1', 'Gudang Kedep', 'Kedep, Gunung Put
 -- ----------------------------
 DROP TABLE IF EXISTS `packing_list`;
 CREATE TABLE `packing_list`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
-  `vendor_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
+  `vendor_id` int NULL DEFAULT NULL,
   `packing_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `bsk` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `fabricator` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `loading_part` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `packing_list_no` int(11) NULL DEFAULT NULL,
+  `packing_list_no` int NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `total_no_of_package` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `metric_ton` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
@@ -2542,7 +2545,7 @@ CREATE TABLE `packing_list`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `parent_item`;
 CREATE TABLE `parent_item`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `parent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `id_group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -2560,7 +2563,7 @@ CREATE TABLE `parent_item`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `part_type`;
 CREATE TABLE `part_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2585,8 +2588,8 @@ INSERT INTO `part_type` VALUES (6, 'GM01', 'test', 'ss', '2020-12-03 00:22:34', 
 -- ----------------------------
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2612,8 +2615,8 @@ INSERT INTO `project` VALUES (3, 3, 'nyamuk', '', '                             
 -- ----------------------------
 DROP TABLE IF EXISTS `project_contact`;
 CREATE TABLE `project_contact`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `project_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `project_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2640,15 +2643,15 @@ INSERT INTO `project_contact` VALUES (7, 0, 'bannn', '', '', '', '2020-12-20 17:
 -- ----------------------------
 DROP TABLE IF EXISTS `purchase_order`;
 CREATE TABLE `purchase_order`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `purchase_request_id` int(11) NULL DEFAULT NULL,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `purchase_request_id` int NULL DEFAULT NULL,
+  `job_id` int NULL DEFAULT NULL,
   `purchase_order_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `deliver_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `deliver_date` datetime(0) NULL DEFAULT NULL,
-  `sup_id` int(11) NULL DEFAULT NULL,
+  `sup_id` int NULL DEFAULT NULL,
   `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `payment_term` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `percent_vat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2669,7 +2672,7 @@ CREATE TABLE `purchase_order`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `purchase_request`;
 CREATE TABLE `purchase_request`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `delivery_date` datetime(0) NULL DEFAULT NULL,
@@ -2691,8 +2694,8 @@ CREATE TABLE `purchase_request`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `purchase_request_detail`;
 CREATE TABLE `purchase_request_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `purchase_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `purchase_id` int NULL DEFAULT NULL,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `item` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2713,17 +2716,17 @@ CREATE TABLE `purchase_request_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `quotation`;
 CREATE TABLE `quotation`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NULL DEFAULT NULL,
-  `project_id` int(11) NULL DEFAULT NULL,
-  `pic_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NULL DEFAULT NULL,
+  `project_id` int NULL DEFAULT NULL,
+  `pic_id` int NULL DEFAULT NULL,
   `pic_handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `pic_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `order_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qn_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qn_date` date NULL DEFAULT NULL,
   `inquiry_reff` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` date NULL DEFAULT NULL,
   `delivery_date` date NULL DEFAULT NULL,
   `delivery_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2769,8 +2772,8 @@ INSERT INTO `quotation` VALUES (3, 3, 3, 7, NULL, NULL, 'Repair', '0003/BMM/XII/
 -- ----------------------------
 DROP TABLE IF EXISTS `quotation_calc`;
 CREATE TABLE `quotation_calc`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `quotation_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `quotation_id` int NULL DEFAULT NULL,
   `total` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `grand_summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `rounding_discount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2788,15 +2791,15 @@ CREATE TABLE `quotation_calc`  (
 -- ----------------------------
 INSERT INTO `quotation_calc` VALUES (1, 1, NULL, 'IDR 80,000', 'IDR 2,000', 'IDR 84,000', 'IDR 162,000', 'IDR 178,200', '2020-12-03 06:04:54', '2021-03-14 03:15:48', b'1');
 INSERT INTO `quotation_calc` VALUES (2, 2, NULL, 'IDR 10,000', 'IDR 0', 'IDR 1,000', NULL, 'IDR 12,000', '2020-12-20 17:01:07', NULL, b'1');
-INSERT INTO `quotation_calc` VALUES (3, 3, NULL, 'IDR 10,000', 'IDR 0', 'IDR 0', '', 'IDR 11,000', '2020-12-20 17:07:45', '2021-02-27 11:23:07', b'1');
+INSERT INTO `quotation_calc` VALUES (3, 3, NULL, 'IDR 10,000', 'IDR 0', 'IDR 10,000', 'IDR 20,000', 'IDR 22,000', '2020-12-20 17:07:45', '2021-04-02 23:51:59', b'1');
 
 -- ----------------------------
 -- Table structure for quotation_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `quotation_detail`;
 CREATE TABLE `quotation_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `quotation_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `quotation_id` int NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `qty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `completed_qty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2810,7 +2813,7 @@ CREATE TABLE `quotation_detail`  (
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of quotation_detail
@@ -2829,7 +2832,7 @@ INSERT INTO `quotation_detail` VALUES (11, 3, '', '2', NULL, 'BTG', '5,000', NUL
 INSERT INTO `quotation_detail` VALUES (12, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-02-27 11:21:34', '2021-02-27 11:22:06', b'0');
 INSERT INTO `quotation_detail` VALUES (13, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-02-27 11:22:06', '2021-02-27 11:22:40', b'0');
 INSERT INTO `quotation_detail` VALUES (14, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-02-27 11:22:40', '2021-03-14 02:08:25', b'0');
-INSERT INTO `quotation_detail` VALUES (15, 3, '', '2', NULL, 'BTG', '5,000', NULL, '10,000', NULL, NULL, '2021-02-27 11:23:07', NULL, b'1');
+INSERT INTO `quotation_detail` VALUES (15, 3, '', '2', NULL, 'BTG', '5,000', NULL, '10,000', NULL, NULL, '2021-02-27 11:23:07', '2021-04-02 23:51:59', b'0');
 INSERT INTO `quotation_detail` VALUES (16, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 02:08:25', '2021-03-14 02:59:23', b'0');
 INSERT INTO `quotation_detail` VALUES (17, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 02:59:23', '2021-03-14 03:02:41', b'0');
 INSERT INTO `quotation_detail` VALUES (18, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-14 03:02:41', '2021-03-14 03:03:06', b'0');
@@ -2851,13 +2854,14 @@ INSERT INTO `quotation_detail` VALUES (33, 1, '', '2', NULL, 'BTG', '10,000.00',
 INSERT INTO `quotation_detail` VALUES (34, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:31:49', '2021-03-18 00:33:43', b'0');
 INSERT INTO `quotation_detail` VALUES (35, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-03-18 00:33:43', '2021-04-01 09:46:50', b'0');
 INSERT INTO `quotation_detail` VALUES (36, 1, '', '2', NULL, 'BTG', '10,000.00', NULL, '20,000.00', NULL, NULL, '2021-04-01 09:46:50', NULL, b'1');
+INSERT INTO `quotation_detail` VALUES (37, 3, '', '2', NULL, 'BTG', '5,000', NULL, '10,000', NULL, NULL, '2021-04-02 23:51:59', NULL, b'1');
 
 -- ----------------------------
 -- Table structure for request_consumable
 -- ----------------------------
 DROP TABLE IF EXISTS `request_consumable`;
 CREATE TABLE `request_consumable`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `form_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
@@ -2878,9 +2882,9 @@ CREATE TABLE `request_consumable`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `request_consumable_detail`;
 CREATE TABLE `request_consumable_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `request_consumable_id` int(11) NULL DEFAULT NULL,
-  `consumable_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `request_consumable_id` int NULL DEFAULT NULL,
+  `consumable_id` int NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
@@ -2896,7 +2900,7 @@ CREATE TABLE `request_consumable_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sales_order_type`;
 CREATE TABLE `sales_order_type`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `po_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -2916,56 +2920,62 @@ INSERT INTO `sales_order_type` VALUES (2, 's2', 's', '2020-11-29 23:16:46', NULL
 -- ----------------------------
 DROP TABLE IF EXISTS `schedule`;
 CREATE TABLE `schedule`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
-  `date` datetime(0) NULL DEFAULT NULL,
-  `period_start` datetime(0) NULL DEFAULT NULL,
-  `period_end` datetime(0) NULL DEFAULT NULL,
-  `rev_date` datetime(0) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `date` date NULL DEFAULT NULL,
+  `period_start` date NULL DEFAULT NULL,
+  `period_end` date NULL DEFAULT NULL,
+  `revision` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `rev_date` date NULL DEFAULT NULL,
   `rev_ms` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `current_phase` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `created_date` datetime(0) NULL DEFAULT NULL,
-  `modified_date` datetime(0) NULL DEFAULT NULL,
+  `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
+  `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
+  `created_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of schedule
 -- ----------------------------
+INSERT INTO `schedule` VALUES (1, 'BMM-20-0001', '2021-04-02', '2021-04-02', '2021-04-10', NULL, NULL, '', 'PRE', '2021-04-02 18:28:40', NULL, b'1', '1');
 
 -- ----------------------------
 -- Table structure for schedule_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `schedule_detail`;
 CREATE TABLE `schedule_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `schedule_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `schedule_id` int NULL DEFAULT NULL,
   `process` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `sub_process` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `department` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `weight` double NULL DEFAULT NULL,
   `days` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `weeks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `start_date` datetime(0) NULL DEFAULT NULL,
-  `end_date` datetime(0) NULL DEFAULT NULL,
+  `start_date` date NULL DEFAULT NULL,
+  `end_date` date NULL DEFAULT NULL,
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `is_active` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of schedule_detail
 -- ----------------------------
+INSERT INTO `schedule_detail` VALUES (1, 1, 'MOM', 'MOM', 'Marketing', 20, '1', '0', '2021-04-02', '2021-04-03', 'here we go', '2021-04-02 18:28:40', NULL, b'1');
+INSERT INTO `schedule_detail` VALUES (2, 1, 'preparation Work', 'Bending', 'Engineering', 80, '8', '1', '2021-04-02', '2021-04-10', 'ban', '2021-04-02 18:28:40', NULL, b'1');
+INSERT INTO `schedule_detail` VALUES (3, 1, 'preparation Work', 'Galvanize', 'Engineering', 80, '8', '1', '2021-04-02', '2021-04-10', 'mulusin', '2021-04-02 18:28:40', '2021-04-04 17:14:41', b'1');
 
 -- ----------------------------
 -- Table structure for scopeofwork
 -- ----------------------------
 DROP TABLE IF EXISTS `scopeofwork`;
 CREATE TABLE `scopeofwork`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `kickoff_meeting` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -2986,7 +2996,7 @@ INSERT INTO `scopeofwork` VALUES (1, 'MOM', 'test2', 'test', '1', '2020-11-30 01
 -- ----------------------------
 DROP TABLE IF EXISTS `spb`;
 CREATE TABLE `spb`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `spb_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `receiver` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3006,12 +3016,12 @@ CREATE TABLE `spb`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `spb_detail`;
 CREATE TABLE `spb_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `spb_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `spb_id` int NULL DEFAULT NULL,
   `po` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `item_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `qty_po` int(11) NULL DEFAULT NULL,
-  `qty_spb` int(11) NULL DEFAULT NULL,
+  `qty_po` int NULL DEFAULT NULL,
+  `qty_spb` int NULL DEFAULT NULL,
   `unit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `eta` datetime(0) NULL DEFAULT NULL,
   `actual_date` datetime(0) NULL DEFAULT NULL,
@@ -3030,9 +3040,9 @@ CREATE TABLE `spb_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `tr_menu_access`;
 CREATE TABLE `tr_menu_access`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NULL DEFAULT NULL,
-  `sub_menu_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NULL DEFAULT NULL,
+  `sub_menu_id` int NULL DEFAULT NULL,
   `create` bit(1) NULL DEFAULT NULL,
   `edit` bit(1) NULL DEFAULT NULL,
   `delete` bit(1) NULL DEFAULT NULL,
@@ -3199,11 +3209,11 @@ INSERT INTO `tr_menu_access` VALUES (172, 4, 89, b'1', NULL, NULL, NULL, NULL, N
 -- ----------------------------
 DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE `transaction`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `job_id` int NULL DEFAULT NULL,
   `date` datetime(0) NULL DEFAULT NULL,
   `applied_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `rev_no` int(11) NULL DEFAULT NULL,
+  `rev_no` int NULL DEFAULT NULL,
   `rev_date` datetime(0) NULL DEFAULT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -3221,9 +3231,9 @@ CREATE TABLE `transaction`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `transaction_detail`;
 CREATE TABLE `transaction_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `transaction_id` int(11) NULL DEFAULT NULL,
-  `equipment_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `transaction_id` int NULL DEFAULT NULL,
+  `equipment_id` int NULL DEFAULT NULL,
   `brand` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `size` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `inv_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3245,7 +3255,7 @@ CREATE TABLE `transaction_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `unit_of_measures`;
 CREATE TABLE `unit_of_measures`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
@@ -3270,7 +3280,7 @@ INSERT INTO `unit_of_measures` VALUES (7, 'M', 'Meter', '2020-11-29 01:41:28', '
 -- ----------------------------
 DROP TABLE IF EXISTS `user_account`;
 CREATE TABLE `user_account`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `employee_id` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `username` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3321,7 +3331,7 @@ INSERT INTO `user_account` VALUES (28, '', 'Eka', 'eka', '', 'eka@buanamasa.com'
 -- ----------------------------
 DROP TABLE IF EXISTS `user_group`;
 CREATE TABLE `user_group`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `level` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3352,8 +3362,8 @@ INSERT INTO `user_group` VALUES (12, 'MNT', 'Maintenance', '1', b'1', '2020-11-2
 -- ----------------------------
 DROP TABLE IF EXISTS `user_group_detail`;
 CREATE TABLE `user_group_detail`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_group_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_group_id` int NULL DEFAULT NULL,
   `document_access` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_date` datetime(0) NULL DEFAULT current_timestamp(0),
   `modified_date` datetime(0) NULL DEFAULT NULL,
@@ -3387,8 +3397,8 @@ INSERT INTO `user_group_detail` VALUES (33, 4, 'Inspection Test and Plan', '2020
 -- ----------------------------
 DROP TABLE IF EXISTS `vendor_cs`;
 CREATE TABLE `vendor_cs`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vendor_id` int(11) NULL DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `vendor_id` int NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `handphone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -3411,7 +3421,7 @@ INSERT INTO `vendor_cs` VALUES (2, 1, 'gandhi', '98124912', '7481274', '19741291
 -- ----------------------------
 DROP TABLE IF EXISTS `yearly_report`;
 CREATE TABLE `yearly_report`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `year` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `currency` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `jan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,

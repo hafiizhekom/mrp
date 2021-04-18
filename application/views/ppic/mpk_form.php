@@ -392,12 +392,12 @@ tr.mpk-detail > td {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="label-control col-md-3" style="color: red">Bill of Quotation No</label>
+                            <label class="label-control col-md-3" style="color: red">Job Order No</label>
                             <div class="col-md-7">
-                                <select class="selectpicker form-control" name="boq_no" required>
+                                <select class="selectpicker form-control" name="job_no" required>
                                   <option selected disabled>Please Choose</option>
-                                  <?php foreach ($boq as $key => $value) {?>
-                                    <option value="<?php echo $value->bill_no??'' ?>"><?php echo $value->bill_no??'' ?></option>
+                                  <?php foreach ($jono as $key => $value) {?>
+                                    <option value="<?php echo $value->job_number??'' ?>"><?php echo $value->job_number??'' ?></option>
                                   <?php } ?>
                                 </select>
                             </div>
@@ -414,12 +414,12 @@ tr.mpk-detail > td {
                                 <input type="text" readonly="" class="form-control input-size-md" name="project">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="label-control col-md-3" style="color: red">Job Order</label>
                             <div class="col-md-7">
                                 <input type="text" readonly="" class="form-control input-size-md" name="joborder">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label class="control-label col-md-3" style="color: red">Quotation</label>
                             <div class="col-md-9">
@@ -466,7 +466,7 @@ tr.mpk-detail > td {
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-hover table-striped table-bordered table-condensed datatable">
-                                <thead>
+                                <thead class="mpk-detail-head">
                                 <tr>
                                     <th rowspan="2" style="width: 30px;text-align: center">No</th>
                                     <th rowspan="2" style="width: 100px;text-align: center">Assembly Mark</th>
@@ -598,7 +598,7 @@ tr.mpk-detail > td {
                                       </td>
                                   </tr>
                                 </tbody>
-                                <tfoot>
+                                <tfoot class="mpk-detail-footer">
                                 <tr>
                                     <th colspan="3">Total</th>
                                     <th>0</th>
@@ -660,14 +660,14 @@ tr.mpk-detail > td {
 <script>
   var mpk=$("input[name='mpk_no']").val();
      
-$(document).on("change","select[name='boq_no']",function(){
+$(document).on("change","select[name='job_no']",function(){
   // console.log($(this).val());
   var data1=$(this).val();
   $.ajax({
             url: '<?php echo base_url() ?>ppc/mpk_select',
             type: 'POST',
             data: {
-              boq_no: data1,
+              job_no: data1,
               mpk:mpk
             },
         })
@@ -709,14 +709,40 @@ $(document).on("change","select[name='boq_no']",function(){
             $("input[name='project']").val(res.header.project_name);
             $("input[name='joborder']").val(res.header.job_order);
             $("input[name='quotation']").val(res.header.quotation);
-            $(".mpk-detail-body").html("");
-            for (var i = 0; i < res.assembly_list.length; i++) {
-              var text="";
-              text+="<tr class='mpk-detail'> <td style='text-align: center;'>"+parseInt(i+1)+" <input type='hidden' id='assembly_id' value=''/> </td><td>"+res.assembly_list[i].assembly_mark+"</td>"+res.assembly_list[i].desc+"<td></td><td>"+res.assembly_list[i].qty+"</td><td>"+res.assembly_list[i].area+"</td><td>"+res.assembly_list[i].weight+"</td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='material_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='marking_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='cutting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='rolling_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='bending_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='drilling_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='machining_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='setting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='welding_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='assembly_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='sandblasting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='galvanize_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='painting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='packing_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='delivery_actual[]'></td><td>0%</td><td>0%</td><td> <input type='text' class='form-control' name='remark[]'> </td></tr>";
-              // res.assembly_list[i]
-              $(".mpk-detail-body").append(text);
+            $(".mpk-detail-head").html("");
+            var text="";
+            text+='<tr><th rowspan="2" style="width: 30px;text-align: center">No</th><th rowspan="3" style="width: 100px;text-align: center">Assembly Mark</th><th rowspan="3" style="text-align: center">Description</th><th colspan="3" style="text-align: center">Total</th><th rowspan="3" style="text-align: center; width: 65px">Load</th>';
+            for (var i = 0; i < res.detail_header.length; i++) {
+              text+='<th colspan="'+(res.detail_header[i].colspan*2)+'" style="width:'+(res.detail_header[i].colspan*50)+';text-align:center">'+res.detail_header[i].process+'</th>';
+            }
+            text+='<th rowspan="3" style="width: 65px; text-align: center">Total</th><th rowspan="3" style="width: 100px;text-align: center">Remark</th></tr>';
+            
+            text+='<th style="width: 50px;">Quantity</th><th style="width: 50px;">Area</th><th style="width: 50px;">Weight</th>';
+
+            for (var i = 0; i < res.detail.length; i++) {
+              text+='<th style="width: 50px;" colspan="2">'+res.detail[i].sub_process+'</th>';
             }
 
+            $(".mpk-detail-head").append(text);
+            $(".mpk-detail-body").html("");
+            
+            var textbody="";
+            // for (var i = 0; i < res.assembly_list.length; i++) {
+            //   var text="";
+            //   text+="<tr class='mpk-detail'> <td style='text-align: center;'>"+parseInt(i+1)+" <input type='hidden' id='assembly_id' value=''/> </td><td>"+res.assembly_list[i].assembly_mark+"</td>"+res.assembly_list[i].desc+"<td></td><td>"+res.assembly_list[i].qty+"</td><td>"+res.assembly_list[i].area+"</td><td>"+res.assembly_list[i].weight+"</td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='material_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='marking_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='cutting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='rolling_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='bending_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='drilling_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='machining_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='setting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='welding_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='assembly_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='sandblasting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='galvanize_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='painting_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='packing_actual[]'></td><td>0%</td><td><input type='text' class='form-control' style='min-width: 40px;' name='delivery_actual[]'></td><td>0%</td><td>0%</td><td> <input type='text' class='form-control' name='remark[]'> </td></tr>";
+            //   // res.assembly_list[i]
+            //   $(".mpk-detail-body").append(text);
+            // }
+            footer="";
+            $(".mpk-detail-footer").html("");
+            footer+='<tr><th colspan="3">Total</th>';
+            footer+='<th class="footer_qty">0</th><th class="footer_area">0</th><th class="footer_weight">0</th><th class="footer_load">0</th>';
+            for (var i = 0; i < res.detail.length; i++) {
+              var sub_process=res.detail[i].sub_process;
+              footer+='<th class="footer_'+sub_process.toLowerCase()+'_total">0</th><th class="footer_'+sub_process.toLowerCase()+'_percent">0%</th>';
+            }
+            footer+='<th class="footer_total">0%</th><th></th></tr>';
+            $(".mpk-detail-footer").append(footer);
         });
 })
 </script>

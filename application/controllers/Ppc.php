@@ -455,19 +455,166 @@ class ppc extends CI_Controller {
 		if($param=="monitoring"){
 			$this->load->view('ppic/monitoring', $data);
 		}else if($param=="create"){
+			$data_input=$this->input->post();
+			if(!empty($data_input['id'])){
+				$this->db->select('s.id,s.job_id,s.period_start,s.period_end,s.date,s.current_phase,s.rev_date,s.rev_ms,s.revision,c.name as customer_name,d.name as project_name');
+				$this->db->from('schedule as s');
+				$this->db->join('job_order as a', 's.job_id=a.job_number', 'left');
+				$this->db->join('quotation as b', 'a.quotation_id = b.qn_number', 'left');
+				$this->db->join('customer as c', 'b.customer_id=c.id', 'left');
+				$this->db->join('project as d', 'b.project_id = d.id', 'left');
+				$this->db->where('a.is_active', 1);
+				$this->db->where('s.id', $data_input['id']);
+				$data['header']=$this->db->get()->row();
+
+				$this->db->select('*');
+				$this->db->from('schedule_detail');
+				$this->db->where('schedule_id', $data_input['id']);
+				$this->db->where('is_active', 1);
+				$data['detail']=$this->db->get()->result();
+
+				$this->db->select('*');
+				$this->db->from('job_order');
+				$this->db->where('is_active', 1);
+				$data['job']=$this->db->get()->result();
+
+			}else{
+				$this->db->select('*');
+				$this->db->from('job_order');
+				$this->db->where('is_active', 1);
+				$data['job']=$this->db->get()->result();
+			}
+			
+
 			$this->load->view('ppic/schedule_form', $data);
+		}else if($param=="add"){
+			$data_input=$this->input->post();
+			// var_dump($data_input);
+			if(!empty($data_input['id'])){
+				$insertheader = array(
+					'job_id' =>$data_input['job_no']??"",
+					'date'=>$data_input['date']??"",
+					'period_start'=>$data_input['start_date']??"",
+					'period_end'=>$data_input['end_date']??"",
+					'rev_ms'=>$data_input['revision_ms']??"",
+					'current_phase'=>$data_input['current_phase'],
+					'created_by'=>$this->session->userdata('id'),
+					'is_active'=>1 
+				);
+				$this->db->where('id', $data_input['id']);
+				$this->db->update('schedule', $insertheader);
+
+				$arraydelete = array('is_active' => 0, );
+				$this->db->where('schedule_id', $data_input['id']);
+				$this->db->update('schedule_detail', $arraydelete);
+
+				if(count($data_input['detail_process'])>0){
+					for ($i=0; $i < count($data_input['detail_process']) ; $i++) { 
+						$detail = array(
+							'schedule_id' => $data_input['id']??"",
+							'process'=>$data_input['detail_process'][$i]??"",
+							'sub_process'=>$data_input['detail_subprocess'][$i]??"",
+							'department'=>$data_input['detail_department'][$i]??"",
+							'weight'=>$data_input['detail_weight'][$i]??"",
+							'days'=>$data_input['detail_day'][$i]??"",
+							'weeks'=>$data_input['detail_week'][$i]??"",
+							'start_date'=>$data_input['detail_startdate'][$i]??"",
+							'end_date'=>$data_input['detail_enddate'][$i]??"",
+							'remarks'=>$data_input['detail_remark'][$i]??"",
+							'is_active'=>1 
+						);
+						$this->db->insert('schedule_detail', $detail);
+					}
+				}
+				header("Location:".base_url()."ppc/schedule?res=success");	
+			}else{
+				$insertheader = array(
+					'job_id' =>$data_input['job_no']??"",
+					'date'=>$data_input['date']??"",
+					'period_start'=>$data_input['start_date']??"",
+					'period_end'=>$data_input['end_date']??"",
+					'rev_ms'=>$data_input['revision_ms']??"",
+					'current_phase'=>$data_input['current_phase'],
+					'created_by'=>$this->session->userdata('id'),
+					'is_active'=>1 
+				);
+				$this->db->insert('schedule', $insertheader);
+
+				$this->db->select('*');
+				$this->db->from('schedule');
+				$this->db->where('is_active', 1);
+				$this->db->limit(1);
+				$header=$this->db->get()->row();
+
+				if(count($data_input['detail_process'])>0){
+					for ($i=0; $i < count($data_input['detail_process']) ; $i++) { 
+						$detail = array(
+							'schedule_id' => $header->id,
+							'process'=>$data_input['detail_process'][$i]??"",
+							'sub_process'=>$data_input['detail_subprocess'][$i]??"",
+							'department'=>$data_input['detail_department'][$i]??"",
+							'weight'=>$data_input['detail_weight'][$i]??"",
+							'days'=>$data_input['detail_day'][$i]??"",
+							'weeks'=>$data_input['detail_week'][$i]??"",
+							'start_date'=>$data_input['detail_startdate'][$i]??"",
+							'end_date'=>$data_input['detail_enddate'][$i]??"",
+							'remarks'=>$data_input['detail_remark'][$i]??"",
+							'is_active'=>1 
+						);
+						$this->db->insert('schedule_detail', $detail);
+					}
+				}	
+			}
+			
+
+			header("Location:".base_url()."ppc/schedule?res=success");
+
 		}else{
+
+			$this->db->select('a.id,b.job_number,cust.name as customer,proj.name as project,a.period_start,a.period_end,user.name as creator');
+			$this->db->from('schedule as a');
+			$this->db->join('job_order as b', 'a.job_id=b.job_number', 'left');
+			$this->db->join('quotation as c', 'b.quotation_id=c.id', 'left');
+			$this->db->join('customer as cust', 'cust.id=c.customer_id', 'left');
+			$this->db->join('project as proj', 'proj.id=c.project_id', 'left');
+			$this->db->join('user_account as user', 'user.id=a.created_by', 'left');
+			$this->db->where('a.is_active', 1);
+			$data['table']=$this->db->get()->result();
+
 			$this->load->view('ppic/schedule', $data);
 		}
+	}
+
+	public function schedule_select(){
+		$data_input=$this->input->post();
+
+		$this->db->select('c.name as customer_name,d.name as project_name');
+		$this->db->from('job_order as a');
+		$this->db->join('quotation as b', 'a.quotation_id = b.qn_number', 'left');
+		$this->db->join('customer as c', 'b.customer_id=c.id', 'left');
+		$this->db->join('project as d', 'b.project_id = d.id', 'left');
+		$this->db->where('a.is_active', 1);
+		$this->db->where('a.job_number', $data_input['job_no']);
+		$header=$this->db->get()->row();
+
+		$response = array(
+			'header'=>$header,
+			'status'=>'success' 
+		);
+		$response=json_encode($response);
+		$phpEncryptedText = $this->userPHPEncrypt($this->session->userdata('token'), $response);
+		echo $phpEncryptedText;
+
 	}
 
 	public function mpk($param=null){
 		if($param=="create"){
 
-			$this->db->select('*');
-			$this->db->from('bill_quotation');
-			$this->db->where('is_active', 1);
-			$data['boq']=$this->db->get()->result();
+			$this->db->select('a.*');
+			$this->db->from('schedule as b');
+			$this->db->join('job_order as a', 'a.job_number=b.job_id', 'left');
+			$this->db->where('a.is_active', 1);
+			$data['jono']=$this->db->get()->result();
 
 			$this->db->select('*');
 			$this->db->from('doc_numbering');
@@ -578,17 +725,31 @@ class ppc extends CI_Controller {
 		$this->db->from('bill_quotation as a');
 		$this->db->join('bill_quotation_assembly as b', 'a.id = bill_id', 'left');
 		$this->db->where('b.is_active', 1);
-		$this->db->where('a.bill_no', $data_input['boq_no']);
+		$this->db->where('a.job_id', $data_input['job_no']);
 		$assembly_list=$this->db->get()->result();
 
-		$this->db->select('d.name as customer_name,e.name as project_name,a.job_id as job_order,c.qn_number as quotation');
+		$this->db->select('d.name as customer_name,e.name as project_name,a.job_id as job_order,c.qn_number as quotation,sc.id');
 		$this->db->from('bill_quotation as a');
 		$this->db->join('job_order as b', 'a.job_id = b.job_number', 'left');
 		$this->db->join('quotation as c', 'b.quotation_id=c.qn_number', 'left');
 		$this->db->join('customer as d', 'c.customer_id = d.id', 'left');
 		$this->db->join('project as e', 'c.project_id = e.id', 'left');
-		$this->db->where('a.bill_no', $data_input['boq_no']);
+		$this->db->join('schedule as sc', 'sc.job_id=a.job_id', 'left');
+		$this->db->where('a.job_id', $data_input['job_no']);
 		$header=$this->db->get()->row();
+
+		$this->db->select('*');
+		$this->db->from('schedule_detail');
+		$this->db->where('schedule_id', $header->id);
+		$this->db->where('is_active', 1);
+		$detail=$this->db->get()->result();
+
+		$this->db->select('process,count(sub_process) as colspan');
+		$this->db->from('schedule_detail');
+		$this->db->where('schedule_id', $header->id);
+		$this->db->where('is_active', 1);
+		$this->db->group_by('process');
+		$detail_header=$this->db->get()->result();
 
 		$mpk_no=$data_input['mpk'];
 		$jo_no=explode("-", $header->job_order);
@@ -600,6 +761,8 @@ class ppc extends CI_Controller {
 			'assembly_list' => $assembly_list,
 			'header'=>$header,
 			'mpk_no'=>$mpk_no,
+			'detail'=>$detail,
+			'detail_header'=>$detail_header,
 			'status'=>'success' 
 		);
 		$response=json_encode($response);

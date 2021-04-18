@@ -32,15 +32,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <?php foreach ($table as $key => $value) {?>
+                            <tr>
+                                <td><?php echo $value->job_number??"" ?></td>
+                                <td><?php echo $value->customer??"" ?></td>
+                                <td><?php echo $value->project??"" ?></td>
+                                <td><?php echo $value->period_start??"" ?></td>
+                                <td><?php echo $value->period_end??"" ?></td>
+                                <td><?php echo $value->creator??"" ?></td>
+                                <td>
+                                    <center>
+                                    <?php if($sub_menu_access->edit=="1") {?>
+                                    <button class="btn btn-info edit_button" data="<?php echo $value->id; ?>" ><i class="fa fa-edit"></i> Edit</button>
+                                    &nbsp;<?php } ?>
+                                    <?php if($sub_menu_access->delete=="1") {?>
+                                    <button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button>&nbsp;
+                                    <?php } ?>
+                                    </center>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        
                         
                         <!-- <td><center><button class="btn btn-info edit_button" data="<?php echo $value->id; ?>"><i class="fa fa-edit"></i> Edit</button>&nbsp;<button class="btn btn-danger remove_button" data="<?php echo $value->id; ?>"><i class="fa fa-trash"></i> Delete</button>&nbsp;<button class="btn btn-success permission_button" data="<?php echo $value->id; ?>"><i class="fa fa-users"></i> Permission</button></center></td> -->
                     </tbody>
@@ -56,6 +68,24 @@
 </form>
 <?php $this->load->view('template/footer'); ?>
 <script type="text/javascript">
+     var response="<?php echo $_GET['res']??''; ?>";
+      if(response=="success"){
+        $.toast({
+              heading: 'Success',
+              text: 'Schedule Created',
+              showHideTransition: 'slide',
+              icon: 'success',
+              position : 'top-right'
+          })
+      }else if(response=="failed"){
+        $.toast({
+              heading: 'Error',
+              text: 'Schedule Failed to Create',
+              showHideTransition: 'slide',
+              icon: 'error',
+              position : 'top-right'
+          })
+      }
      $("#table_1").DataTable( {
         "scrollX": true
         });
