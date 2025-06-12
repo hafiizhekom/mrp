@@ -3301,30 +3301,9 @@ CREATE TABLE `user_account`  (
 -- ----------------------------
 -- Records of user_account
 -- ----------------------------
-INSERT INTO `user_account` VALUES (1, '2020', 'admin', 'admin', 'administrator', 'admin@mail.co', '21232f297a57a5a743894a0e4a801fc3', '2', '1', '1', 'ADM', NULL, b'1', '2020-11-27 02:10:58', '2020-12-05 20:09:01');
-INSERT INTO `user_account` VALUES (2, '20122233', 'test', 'test', 'test', 'test@mail.com', '0c909a141f1f2c0a1cb602b0b2d7d050', '2', '1', '1', 'ADM', b'1', b'1', '2020-11-27 03:33:57', '2020-11-27 13:27:13');
-INSERT INTO `user_account` VALUES (3, '', 'Admin PPIC', 'ppic', '', 'ppic@buanamasa.com', '9e9d48c4c811be0741cac028b1af47d4', '7', '', '', 'PPC', b'0', b'0', '2020-12-04 08:52:23', '2020-12-04 09:06:57');
-INSERT INTO `user_account` VALUES (8, '', 'Henry', 'henry', '', 'henry@buanamasa.com', 'f9d540d4f6e1269bd14d2d4f39da72ca', '2', '', 'BMM', 'ADM', b'0', b'1', '2020-12-04 09:05:58', '2020-12-04 10:10:39');
-INSERT INTO `user_account` VALUES (9, '', 'Amo', 'Engineering', '', 'amo@buanamasa.com', 'ad0eb4646c67d80adfe214494a3cebad', '4', '', 'BMM', 'ENG', b'0', b'1', '2020-12-04 09:06:54', '2020-12-04 09:08:06');
-INSERT INTO `user_account` VALUES (10, '', 'Marketing', 'adminmkt', '', 'admin@buanamasa.com', 'ca2ef7e0e5d0777b7fe718a20abc2592', '5', '', 'BMM', 'MKT', b'0', b'1', '2020-12-04 09:07:55', NULL);
-INSERT INTO `user_account` VALUES (11, '', 'Edy', 'edy', '', 'edy@buanamasa.com', '21940a6ca07fd2d640215f599ebd456c', '5', '', 'BMM', 'MKT', b'1', b'1', '2020-12-04 09:10:39', '2020-12-04 09:11:56');
-INSERT INTO `user_account` VALUES (12, '', 'Admin PPIC', 'ppic', '', 'ppic@buanamasa.com', '6500263ef3f085afbcdfd93e9b7f622d', '7', '', 'BMM', 'PPC', b'0', b'1', '2020-12-04 09:11:50', '2020-12-04 09:36:10');
-INSERT INTO `user_account` VALUES (13, '', 'martin', 'martin', 'dev', 'test', '925d7518fc597af0e43f5606f9a51512', '2', '', '', 'ADM', b'0', b'1', '2020-12-04 09:12:56', NULL);
-INSERT INTO `user_account` VALUES (14, '', 'Wiwilee', 'wiwilee', '', 'wiwilee@buanamasa.com', '90efa272e97f24a4db99407e8603f687', '5', '', 'BMM', 'MKT', b'1', b'1', '2020-12-04 09:23:09', NULL);
-INSERT INTO `user_account` VALUES (15, '', 'Production', 'production', '', 'production@buanamasa.com', 'fd89784e59c72499525556f80289b2c7', '8', '', 'BMM', 'PROD', b'0', b'1', '2020-12-04 09:24:18', NULL);
-INSERT INTO `user_account` VALUES (16, '', 'Engineering', 'engineering', '', 'engineering@buanamasa.com', '5d554bc5f3d2cd182cdd0952b1fb87ca', '4', '', 'BMM', 'ENG', b'0', b'1', '2020-12-04 09:24:51', NULL);
-INSERT INTO `user_account` VALUES (17, '', 'Verry', 'verry', '', 'verry@buanamasa.com', 'eb871e9999c25e97f6ec37672450cd0b', '5', '', 'BMM', 'MKT', b'1', b'1', '2020-12-04 09:28:31', NULL);
-INSERT INTO `user_account` VALUES (18, '', 'Ramina', 'ramina', '', 'ramina@buanamasa.com', '644146ee465c5fe67cbe7aa9086a7028', '8', '', 'BMM', 'PROD', b'0', b'1', '2020-12-04 09:29:14', NULL);
-INSERT INTO `user_account` VALUES (19, '', 'Slamet', 'slamet', '', 'slamet@buanamasa.com', 'c5a42d9667c760e1b7c064e25536e570', '8', '', 'BMM', 'PROD', b'0', b'1', '2020-12-04 09:29:44', NULL);
-INSERT INTO `user_account` VALUES (20, '', 'Junanto', 'toto', '', 'junanto@buanamasa.com', 'f71dbe52628a3f83a77ab494817525c6', '6', '', 'BMM', 'PUR', b'0', b'1', '2020-12-04 09:30:30', NULL);
-INSERT INTO `user_account` VALUES (21, '', 'Sustiono', 'sustiono', '', 'sustiono@buanamasa.com', '4838005eb319369cf9a2b0c86579bc03', '5', '', 'BMM', 'MKT', b'0', b'1', '2020-12-04 09:31:11', NULL);
-INSERT INTO `user_account` VALUES (22, '', 'Galih', 'galih', '', 'galih@buanamasa.com', '027dc74f0bbf09a61a36ec7f0d9e08ca', '5', '', 'BMM', 'MKT', b'1', b'1', '2020-12-04 09:31:37', NULL);
-INSERT INTO `user_account` VALUES (23, '', 'Admin Purchasing', 'admpcg', '', 'admpcg@buanamasa.com', '8ee5f759d0bbff8100236325fee85425', '6', '', 'BMM', 'PUR', b'0', b'1', '2020-12-04 09:32:26', NULL);
-INSERT INTO `user_account` VALUES (24, '', 'Admin Maintenance', 'admmt', '', 'admmt@buanamasa.com', 'a961f3ca97adfd201e51755f442a573b', '12', '', 'BMM', 'MNT', b'0', b'1', '2020-12-04 09:32:58', NULL);
-INSERT INTO `user_account` VALUES (25, '', 'QCWS1', 'qcws1', '', 'qcws1@buanamasa.com', '66edd5a16091afa2760f4414db8bda41', '10', '', 'BMM', 'QC', b'0', b'1', '2020-12-04 09:33:11', '2020-12-04 09:34:09');
-INSERT INTO `user_account` VALUES (26, '', 'QCWS2', 'qcws2', '', 'qcws2@buanamasa.com', '0b981e3948ad510735216120db577faa', '10', '', 'BMM', 'QC', b'0', b'1', '2020-12-04 09:34:42', NULL);
-INSERT INTO `user_account` VALUES (27, '', 'Untung', 'untung', '', 'untung@buanamasa.com', '71e58dd33998440f0bde00af1bfbf741', '9', '', 'BMM', 'LOG', b'0', b'1', '2020-12-04 09:36:44', NULL);
-INSERT INTO `user_account` VALUES (28, '', 'Eka', 'eka', '', 'eka@buanamasa.com', '79ee82b17dfb837b1be94a6827fa395a', '12', '', 'BMM', 'MNT', b'0', b'1', '2020-12-04 09:37:17', NULL);
+INSERT INTO `user_account` VALUES (1, '1001', 'Dummy User 1', 'dummy1', 'staff', 'dummy1@mail.com', 'd41d8cd98f00b204e9800998ecf8427e', '2', '', '', 'ADM', NULL, b'1', '2024-06-01 00:00:00', NULL);
+INSERT INTO `user_account` VALUES (2, '1002', 'Dummy User 2', 'dummy2', 'staff', 'dummy2@mail.com', 'd41d8cd98f00b204e9800998ecf8427e', '3', '', '', 'DEV', NULL, b'1', '2024-06-01 00:00:00', NULL);
+INSERT INTO `user_account` VALUES (3, '1003', 'Dummy User 3', 'dummy3', 'staff', 'dummy3@mail.com', 'd41d8cd98f00b204e9800998ecf8427e', '4', '', '', 'ENG', NULL, b'1', '2024-06-01 00:00:00', NULL);
 
 -- ----------------------------
 -- Table structure for user_group
